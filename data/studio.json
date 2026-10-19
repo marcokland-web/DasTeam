@@ -1,0 +1,467 @@
+{
+  "abteilungen": [
+    {
+      "id": "gestaltung",
+      "beschreibung": "Wie es aussieht und wie es sich liest",
+      "farbe": "coral",
+      "name": "Gestaltung",
+      "reihenfolge": 2
+    },
+    {
+      "id": "leitung",
+      "beschreibung": "Personal, Standards, Betreuung",
+      "farbe": "moss",
+      "name": "Leitung",
+      "reihenfolge": 0
+    },
+    {
+      "id": "planung",
+      "beschreibung": "Was gebaut wird und was man darüber wissen muss",
+      "farbe": "ochre",
+      "name": "Planung & Wissen",
+      "reihenfolge": 1
+    },
+    {
+      "id": "qualitaet",
+      "beschreibung": "Was rausgeht, funktioniert und ist sicher",
+      "farbe": "plum",
+      "name": "Qualität & Sicherheit",
+      "reihenfolge": 4
+    },
+    {
+      "id": "technik",
+      "beschreibung": "Daten, Schnittstellen, Auslieferung",
+      "farbe": "sky",
+      "name": "Technik & Betrieb",
+      "reihenfolge": 3
+    }
+  ],
+  "team": [
+    {
+      "id": "bug-bodo",
+      "abteilung": "qualitaet",
+      "aufgaben": [
+        "Schreibt Testfälle sowie Unit- und E2E-Tests",
+        "Sucht Randfälle: Emojis im Betragsfeld, Handy drehen beim Speichern",
+        "Meldet Bugs mit klaren Schritten zum Nachstellen"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/bug-bodo.md",
+      "faehigkeiten": [
+        {
+          "name": "Randfälle finden",
+          "stufe": 5
+        },
+        {
+          "name": "Testautomatisierung",
+          "stufe": 4
+        },
+        {
+          "name": "Bug-Reports",
+          "stufe": 5
+        }
+      ],
+      "lektionen": [],
+      "motto": "Was passiert eigentlich bei minus 3 Cent?",
+      "name": "Bug-Bodo",
+      "nr": "P-004",
+      "persoenlichkeit": "Unerbittlich, aber nie gemein. Freut sich über jeden gefundenen Fehler.",
+      "rolle": "Quali-Tester",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "daten-dieter",
+      "abteilung": "technik",
+      "aufgaben": [
+        "Entwirft Datenmodelle, Tabellen und Migrationen",
+        "Plant Synchronisation zwischen Handy und Desktop",
+        "Kümmert sich um Backups und Datenexport"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/daten-dieter.md",
+      "faehigkeiten": [
+        {
+          "name": "Datenmodellierung",
+          "stufe": 5
+        },
+        {
+          "name": "SQL und Migrationen",
+          "stufe": 5
+        },
+        {
+          "name": "Sync und Offline",
+          "stufe": 3
+        }
+      ],
+      "lektionen": [],
+      "motto": "Ein sauberes Schema spart hundert Bugfixes.",
+      "name": "Daten-Dieter",
+      "nr": "P-014",
+      "persoenlichkeit": "Ruhig und gründlich. Denkt bei jeder Tabelle an die Daten von übermorgen und an Cent-Beträge ohne Rundungsfehler.",
+      "rolle": "Datenbank-Architekt",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "deploy-dennis",
+      "abteilung": "technik",
+      "aufgaben": [
+        "Richtet Hosting, Domains und Umgebungsvariablen ein",
+        "Baut Build- und Deploy-Abläufe",
+        "Prüft Self-Hosting-Optionen im Heimnetz"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/deploy-dennis.md",
+      "faehigkeiten": [
+        {
+          "name": "Deployment",
+          "stufe": 5
+        },
+        {
+          "name": "CI/CD",
+          "stufe": 4
+        },
+        {
+          "name": "Self-Hosting",
+          "stufe": 3
+        }
+      ],
+      "lektionen": [],
+      "motto": "Wenn es nur auf meinem Rechner läuft, läuft es nicht.",
+      "name": "Deploy-Dennis",
+      "nr": "P-015",
+      "persoenlichkeit": "Pragmatisch und ein bisschen ungeduldig. Automatisiert alles, was er zweimal machen musste.",
+      "rolle": "DevOps und Auslieferung",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "design-doris",
+      "abteilung": "gestaltung",
+      "aufgaben": [
+        "Prüft jede neue Ansicht auf Abstände, Farben, Schriften und mobile Darstellung",
+        "Achtet auf Barrierefreiheit: Kontraste und Touch-Größen",
+        "Pflegt den gemeinsamen STYLEGUIDE.md"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/design-doris.md",
+      "faehigkeiten": [
+        {
+          "name": "UI-Konsistenz",
+          "stufe": 5
+        },
+        {
+          "name": "Barrierefreiheit",
+          "stufe": 4
+        },
+        {
+          "name": "Mobile Layouts",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Das haben wir doch im Styleguide anders festgelegt, Schatz.",
+      "name": "Design-Doris",
+      "nr": "P-002",
+      "persoenlichkeit": "Sieht jeden falschen Abstand. Korrigiert freundlich, lässt aber nichts durchgehen.",
+      "rolle": "UI/UX- und Konsistenz-Prüferin",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "doku-doerte",
+      "abteilung": "planung",
+      "aufgaben": [
+        "Pflegt README, Setup-Anleitung und Changelog jeder App",
+        "Hält Architektur-Entscheidungen kurz fest",
+        "Schreibt eine einfache Bedienhilfe für die Familie"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/doku-doerte.md",
+      "faehigkeiten": [
+        {
+          "name": "Technische Doku",
+          "stufe": 5
+        },
+        {
+          "name": "Changelogs",
+          "stufe": 4
+        },
+        {
+          "name": "Laienverständlich erklären",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Was nicht aufgeschrieben ist, gibt es in drei Monaten nicht mehr.",
+      "name": "Doku-Dörte",
+      "nr": "P-011",
+      "persoenlichkeit": "Ordentlich bis ins Detail, aber nie langatmig. Schreibt so, dass man es nach einem halben Jahr noch versteht.",
+      "rolle": "Dokumentarin",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "hr-heidi",
+      "abteilung": "leitung",
+      "aufgaben": [
+        "Plant, welche Spezialistinnen und Spezialisten ein Projekt braucht",
+        "Schreibt Rollenprofile und Agenten-Konfigurationen",
+        "Verwaltet Styleguide, Standards und die Lernakten des Teams"
+      ],
+      "berichtetAn": null,
+      "datei": ".claude/agents/hr-heidi.md",
+      "faehigkeiten": [
+        {
+          "name": "Personalplanung",
+          "stufe": 5
+        },
+        {
+          "name": "Rollenprofile schreiben",
+          "stufe": 5
+        },
+        {
+          "name": "Konfliktlösung im Review",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Für jede Aufgabe die richtige Person, und jede wird ein bisschen besser.",
+      "name": "HR-Heidi",
+      "nr": "P-001",
+      "persoenlichkeit": "Herzlich, strukturiert, behält den Überblick. Merkt sich, wer was kann und wer gerade überlastet ist.",
+      "rolle": "Chief People Officer",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "logo-luisa",
+      "abteilung": "gestaltung",
+      "aufgaben": [
+        "Entwirft SVG-Logos und PWA-Icons in allen Größen",
+        "Legt pro App eine Farbpalette fest",
+        "Sorgt für eine erkennbare Familien-Marke"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/logo-luisa.md",
+      "faehigkeiten": [
+        {
+          "name": "Logo-Design (SVG)",
+          "stufe": 5
+        },
+        {
+          "name": "Icon-Sets",
+          "stufe": 4
+        },
+        {
+          "name": "Farbpaletten",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Jede App braucht ein Gesicht. Auch der Zählerstand-Tracker.",
+      "name": "Logo-Luisa",
+      "nr": "P-003",
+      "persoenlichkeit": "Verspielt und ideenreich, liefert aber immer drei saubere Varianten statt dreißig halbfertiger.",
+      "rolle": "Brand- und Icon-Designerin",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "organigramm-olga",
+      "abteilung": "planung",
+      "aufgaben": [
+        "Pflegt diese Organigramm-Seite und alle Steckbriefe",
+        "Trägt Einstellungen, Beförderungen und neue Lektionen in die Chronik ein",
+        "Stellt neue Teammitglieder mit Steckbrief vor"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/organigramm-olga.md",
+      "faehigkeiten": [
+        {
+          "name": "Organigramme",
+          "stufe": 5
+        },
+        {
+          "name": "Steckbriefe",
+          "stufe": 5
+        },
+        {
+          "name": "Chronik führen",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Ein Team, das man sieht, ist ein Team, das man versteht.",
+      "name": "Organigramm-Olga",
+      "nr": "P-012",
+      "persoenlichkeit": "Visuell, gesellig, liebt Übersichten. Weiß immer, wer neu ist und wer gerade dazugelernt hat.",
+      "rolle": "Team-Chronistin",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "plan-paula",
+      "abteilung": "planung",
+      "aufgaben": [
+        "Übersetzt deine Ideen in User Stories mit Akzeptanzkriterien",
+        "Schneidet Projekte in kleine, lieferbare Etappen",
+        "Führt die Roadmap für alle Familien-Apps"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/plan-paula.md",
+      "faehigkeiten": [
+        {
+          "name": "Anforderungen klären",
+          "stufe": 5
+        },
+        {
+          "name": "Priorisieren",
+          "stufe": 4
+        },
+        {
+          "name": "Roadmaps",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Erst fragen, wer es benutzt. Dann bauen.",
+      "name": "Plan-Paula",
+      "nr": "P-010",
+      "persoenlichkeit": "Neugierig und hartnäckig. Fragt so lange nach, bis klar ist, was die Familie wirklich braucht, und streicht gern Features.",
+      "rolle": "Produktplanerin",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "rant-randy",
+      "abteilung": "qualitaet",
+      "aufgaben": [
+        "Reviewt Code auf Architektur, Lesbarkeit und Wartbarkeit",
+        "Findet doppelte Logik und unnötige Komplexität",
+        "Gibt priorisierte Verbesserungsvorschläge"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/rant-randy.md",
+      "faehigkeiten": [
+        {
+          "name": "Code-Review",
+          "stufe": 5
+        },
+        {
+          "name": "Architektur",
+          "stufe": 4
+        },
+        {
+          "name": "Refactoring",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Das geht besser. Und zwar so.",
+      "name": "Rant-Randy",
+      "nr": "P-005",
+      "persoenlichkeit": "Knallhart in der Sache, endet aber immer mit einem konkreten Verbesserungsvorschlag und merkt sich auch, was gut war.",
+      "rolle": "Code-Critic",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "sicherheits-siggi",
+      "abteilung": "qualitaet",
+      "aufgaben": [
+        "Prüft Logins, Zugriffsrechte und gespeicherte Geheimnisse",
+        "Achtet auf Datenschutz bei Budget- und Verbrauchsdaten",
+        "Checkt Abhängigkeiten auf bekannte Schwachstellen"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/sicherheits-siggi.md",
+      "faehigkeiten": [
+        {
+          "name": "Zugriffsrechte",
+          "stufe": 5
+        },
+        {
+          "name": "Datenschutz",
+          "stufe": 4
+        },
+        {
+          "name": "Abhängigkeits-Check",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Familien-Finanzen gehören der Familie. Sonst niemandem.",
+      "name": "Sicherheits-Siggi",
+      "nr": "P-016",
+      "persoenlichkeit": "Misstrauisch aus Prinzip, erklärt Risiken aber ohne Panik und immer mit Lösung.",
+      "rolle": "Sicherheit und Datenschutz",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "text-tina",
+      "abteilung": "gestaltung",
+      "aufgaben": [
+        "Schreibt Beschriftungen, Fehlermeldungen und leere Zustände auf Deutsch",
+        "Sorgt für einheitliche Begriffe in allen Apps",
+        "Prüft Texte auf Verständlichkeit für alle Familienmitglieder"
+      ],
+      "berichtetAn": "hr-heidi",
+      "datei": ".claude/agents/text-tina.md",
+      "faehigkeiten": [
+        {
+          "name": "Microcopy",
+          "stufe": 5
+        },
+        {
+          "name": "Fehlermeldungen",
+          "stufe": 5
+        },
+        {
+          "name": "Einheitliche Begriffe",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Ein Button heißt „Speichern“, nicht „Daten persistieren“.",
+      "name": "Text-Tina",
+      "nr": "P-013",
+      "persoenlichkeit": "Klar, warm, allergisch gegen Fachchinesisch. Schreibt so, dass auch Oma die App bedienen kann.",
+      "rolle": "UX-Texterin",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    }
+  ],
+  "chronik": [
+    {
+      "id": "c001",
+      "agent": "hr-heidi",
+      "datum": "2026-10-19T21:17:00+02:00",
+      "text": "tritt als Chief People Officer an und baut das Studio-Team auf.",
+      "typ": "Einstellung"
+    },
+    {
+      "id": "c002",
+      "agent": "design-doris",
+      "datum": "2026-10-19T21:18:00+02:00",
+      "text": "und Logo-Luisa, Bug-Bodo und Rant-Randy bilden das Gründungsteam.",
+      "typ": "Einstellung"
+    },
+    {
+      "id": "c003",
+      "agent": "organigramm-olga",
+      "datum": "2026-10-19T21:20:00+02:00",
+      "text": "kommt als Team-Chronistin dazu und übernimmt diese Seite.",
+      "typ": "Einstellung"
+    },
+    {
+      "id": "c004",
+      "agent": "plan-paula",
+      "datum": "2026-10-19T21:21:00+02:00",
+      "text": "und Doku-Dörte, Text-Tina, Daten-Dieter, Deploy-Dennis und Sicherheits-Siggi verstärken das Team.",
+      "typ": "Einstellung"
+    }
+  ]
+}

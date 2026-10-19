@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Studio-Team Organigramm</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Personalakte. Kopf mit Kennzahlen, darunter das Organigramm als Baum
+   (Leitung oben, Abteilungen als Äste), danach die Chronik. Steckbrief als Dialog-Ausweis. */
+:root{
+  --bg:#EFF1EC; --surface:#FFFFFF; --fg:#1C2420; --muted:#5B6660; --line:#D3D8D0; --accent:#2D5B4E;
+  --moss:#3E7A5F; --coral:#C0533A; --plum:#7B4B8E; --sky:#2F6E9E; --ochre:#A67614;
+  --tint:color-mix(in srgb,var(--hue,var(--accent)) 12%,var(--surface));
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131715; --surface:#1B201E; --fg:#E6EAE5; --muted:#9BA59F; --line:#2D3431; --accent:#86C4AC;
+  --moss:#7FC09F; --coral:#EE8D74; --plum:#C29AD3; --sky:#82B6DD; --ochre:#E0B455; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131715; --surface:#1B201E; --fg:#E6EAE5; --muted:#9BA59F; --line:#2D3431; --accent:#86C4AC;
+  --moss:#7FC09F; --coral:#EE8D74; --plum:#C29AD3; --sky:#82B6DD; --ochre:#E0B455; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:44px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Kopf */
+header{display:grid;gap:14px}
+h1{font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;margin:6px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
+.facts div{display:flex;align-items:baseline;gap:8px}
+.facts dt{font-size:13px;color:var(--muted)}
+.facts dd{margin:0;font:500 18px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Organigramm */
+.section-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:20px}
+h2{font-size:26px;font-weight:700}
+.hint{font-size:14px;color:var(--muted)}
+.chart{overflow-x:auto;padding-bottom:8px}
+.tree{min-width:max-content;display:grid;justify-items:center}
+.root{position:relative;padding-bottom:28px}
+.root::after{content:"";position:absolute;left:50%;bottom:0;height:28px;border-left:2px solid var(--line)}
+.branches{display:flex;gap:20px;align-items:flex-start}
+.dept{--hue:var(--accent);position:relative;width:220px;padding-top:26px;display:grid;gap:10px}
+.dept::before{content:"";position:absolute;top:0;left:-10px;right:-10px;border-top:2px solid var(--line)}
+.dept:first-child::before{left:50%}
+.dept:last-child::before{right:50%}
+.dept:only-child::before{display:none}
+.dept::after{content:"";position:absolute;top:0;left:50%;height:26px;border-left:2px solid var(--line)}
+.dept-tab{background:var(--hue);color:var(--surface);border-radius:6px 6px 2px 2px;padding:8px 12px;display:grid;gap:2px}
+.dept-tab h3{font-size:16px;font-weight:700}
+.dept-tab p{margin:0;font-size:12.5px;line-height:1.35;opacity:.92}
+
+.card{--hue:var(--accent);all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;
+  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--hue);border-radius:4px;padding:12px;width:100%;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-2px);border-color:var(--hue)}
+.card:focus-visible{outline:3px solid var(--hue);outline-offset:2px}
+.card .who{min-width:0;display:grid;gap:2px}
+.card strong{font:700 16px/1.15 var(--f-display)}
+.card .role{font-size:13px;color:var(--muted);line-height:1.3}
+.card .meta{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px;font:12px/1 var(--f-mono);color:var(--muted);padding-top:8px;margin-top:4px;border-top:1px dashed var(--line)}
+.card.big{width:300px;padding:16px;border-left-width:6px}
+.card.big strong{font-size:20px}
+
+.mono-badge{--hue:var(--accent);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:var(--tint);color:var(--hue);font:800 15px/1 var(--f-display);letter-spacing:.02em;border:2px solid var(--hue)}
+.big .mono-badge{width:54px;height:54px;font-size:18px}
+
+@media (max-width:760px){
+  .tree{min-width:0;justify-items:stretch}
+  .root{padding-bottom:20px;padding-left:0}
+  .root::after{left:24px;height:20px}
+  .card.big{width:100%}
+  .branches{flex-direction:column;gap:22px;border-left:2px solid var(--line);margin-left:23px;padding-left:18px}
+  .dept{width:100%;padding-top:0}
+  .dept::before{top:18px;left:-18px;right:auto;width:16px}
+  .dept:first-child::before,.dept:last-child::before{left:-18px;right:auto}
+  .dept::after{display:none}
+}
+
+/* Zustände */
+.notice{border:1px dashed var(--line);border-radius:6px;padding:28px;text-align:center;color:var(--muted);display:grid;gap:6px;justify-items:center}
+.notice strong{color:var(--fg);font-family:var(--f-display);font-size:18px}
+
+/* Chronik */
+.chronik ol{list-style:none;margin:0;padding:0;display:grid;max-width:760px}
+.chronik li{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--line)}
+.chronik time{font:13px/1.5 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.chronik .entry{min-width:0;display:grid;gap:4px}
+.pill{--hue:var(--accent);justify-self:start;font:500 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:99px;background:var(--tint);color:var(--hue)}
+.chronik a,.linkish{all:unset;cursor:pointer;color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.linkish:focus-visible{outline:2px solid var(--accent)}
+
+/* Steckbrief */
+dialog{border:none;padding:0;background:var(--surface);color:var(--fg);border-radius:10px;width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 48px);
+  box-shadow:0 24px 60px rgb(0 0 0 / .28)}
+dialog::backdrop{background:rgb(10 14 12 / .55)}
+.sb{--hue:var(--accent);display:grid}
+.sb-head{background:var(--hue);color:var(--surface);padding:20px 22px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;position:relative}
+.sb-head .mono-badge{width:64px;height:64px;font-size:22px;background:var(--surface);color:var(--hue);border-color:var(--surface)}
+.sb-head h3{font-size:24px;font-weight:800}
+.sb-head p{margin:2px 0 0;font-size:14px;opacity:.92}
+.close{all:unset;cursor:pointer;align-self:start;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;font-size:20px;line-height:1;color:var(--surface);border:1.5px solid currentColor}
+.close:focus-visible{outline:2px solid var(--surface);outline-offset:2px}
+.sb-strip{display:flex;flex-wrap:wrap;gap:6px 18px;padding:10px 22px;border-bottom:1px solid var(--line);font:12.5px/1.4 var(--f-mono);color:var(--muted)}
+.sb-strip b{color:var(--fg);font-weight:500}
+.sb-body{padding:18px 22px 24px;display:grid;gap:20px}
+.motto{margin:0;font:500 19px/1.35 var(--f-display);color:var(--hue);text-wrap:balance}
+.sb-body h4{margin:0 0 6px;font:500 11.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.sb-body p{margin:0}
+.sb-body ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.skills{display:grid;gap:8px}
+.skill{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;font-size:14.5px}
+.dots{display:flex;gap:4px}
+.dots i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--hue)}
+.dots i.on{background:var(--hue)}
+.lessons-empty{color:var(--muted);font-style:italic;font-size:14.5px}
+.file{font:13px/1.4 var(--f-mono);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px 10px;overflow-x:auto;white-space:nowrap}
+
+footer{font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;max-width:760px}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Personalakte · Familien-App-Studio</span>
+    <h1>Das Studio-<em>Team</em></h1>
+    <p class="lede">Wer bei uns was macht, wem berichtet und was gerade dazugelernt hat. Tippe auf eine Person, um ihren Steckbrief zu öffnen. Neue Einstellungen und Lernfortschritte erscheinen hier automatisch.</p>
+    <dl class="facts" id="facts">
+      <div><dt>Mitarbeitende</dt><dd id="f-team">–</dd></div>
+      <div><dt>Abteilungen</dt><dd id="f-depts">–</dd></div>
+      <div><dt>Gelernte Lektionen</dt><dd id="f-lessons">–</dd></div>
+      <div><dt>Zuletzt geändert</dt><dd id="f-last">–</dd></div>
+    </dl>
+  </header>
+
+  <section aria-labelledby="org-h">
+    <div class="section-head">
+      <h2 id="org-h">Organigramm</h2>
+      <span class="hint">Gepflegt von Organigramm-Olga</span>
+    </div>
+    <div class="chart" id="chart">
+      <div class="notice"><strong>Personalakte wird geöffnet …</strong><span>Das Team wird gleich geladen.</span></div>
+    </div>
+  </section>
+
+  <section class="chronik" aria-labelledby="chr-h">
+    <div class="section-head"><h2 id="chr-h">Chronik</h2><span class="hint">Einstellungen, Beförderungen, neue Lektionen</span></div>
+    <ol id="chronik"><li><span></span><span class="hint">Noch keine Einträge.</span></li></ol>
+  </section>
+
+  <footer>Diese Seite liest die Personalakte live. Wenn HR-Heidi jemanden einstellt oder ein Teammitglied aus deinem Feedback eine neue Lektion lernt, ändert sich die Seite von selbst – ohne Neuveröffentlichung.</footer>
+</div>
+
+<dialog id="sb" aria-labelledby="sb-name"></dialog>
+
+<script>
+const HUES = {moss:1,coral:1,plum:1,sky:1,ochre:1};
+const state = {team:[], depts:[], chronik:[]};
+const $ = s => document.querySelector(s);
+
+function h(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})){
+    if (v==null || v===false) continue;
+    if (k==="class") n.className=v;
+    else if (k==="style") n.setAttribute("style",v);
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2),v);
+    else n.setAttribute(k,v);
+  }
+  for (const c of kids.flat()){ if (c==null||c===false) continue; n.append(c.nodeType?c:document.createTextNode(String(c))); }
+  return n;
+}
+const hueVar = key => HUES[key] ? `--hue:var(--${key})` : "";
+const initials = name => (name||"?").split(/[-\s]+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("");
+const arr = v => Array.isArray(v) ? v : [];
+const fmtDate = iso => { if(!iso) return "–"; const d=new Date(iso); return isNaN(d)?iso:d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"}); };
+const deptOf = a => state.depts.find(d=>d.id===a.abteilung);
+const agentHue = a => (deptOf(a)||{}).farbe || a.farbe || "";
+
+function badge(a){ return h("span",{class:"mono-badge","aria-hidden":"true",style:hueVar(agentHue(a))}, initials(a.name)); }
+
+function card(a, big){
+  const n = arr(a.lektionen).length;
+  return h("button",{class:"card"+(big?" big":""),style:hueVar(agentHue(a)),type:"button",onclick:()=>openSb(a.id),"aria-label":`Steckbrief von ${a.name} öffnen`},
+    badge(a),
+    h("span",{class:"who"}, h("strong",{},a.name||"Ohne Namen"), h("span",{class:"role"},a.rolle||"")),
+    h("span",{class:"meta"}, h("span",{},a.nr||""), h("span",{}, `v${a.version||"1.0"} · ${n} ${n===1?"Lektion":"Lektionen"}`))
+  );
+}
+
+function render(){
+  const team = state.team, depts = [...state.depts].sort((a,b)=>(a.reihenfolge??99)-(b.reihenfolge??99));
+  $("#f-team").textContent = team.length;
+  $("#f-depts").textContent = depts.filter(d=>team.some(a=>a.abteilung===d.id && a.berichtetAn)).length;
+  $("#f-lessons").textContent = team.reduce((s,a)=>s+arr(a.lektionen).length,0);
+  $("#f-last").textContent = state.chronik[0] ? fmtDate(state.chronik[0].datum) : "–";
+
+  if (!state.loaded) return;
+  const chart = $("#chart");
+  chart.replaceChildren();
+  if (!team.length){
+    chart.append(h("div",{class:"notice"},h("strong",{},"Noch niemand eingestellt"),h("span",{},"Sobald HR-Heidi die erste Person einstellt, erscheint sie hier.")));
+    return;
+  }
+  const root = team.find(a=>!a.berichtetAn) || team[0];
+  const rest = team.filter(a=>a!==root).sort((a,b)=>String(a.nr).localeCompare(String(b.nr)));
+  const groups = depts.map(d=>({d, members:rest.filter(a=>a.abteilung===d.id)})).filter(g=>g.members.length);
+  const loose = rest.filter(a=>!depts.some(d=>d.id===a.abteilung));
+  if (loose.length) groups.push({d:{id:"_",name:"Ohne Abteilung",beschreibung:"Noch keiner Abteilung zugeordnet"}, members:loose});
+
+  const tree = h("div",{class:"tree"}, h("div",{class:"root"}, card(root,true)));
+  if (groups.length){
+    tree.append(h("div",{class:"branches"}, groups.map(({d,members}) =>
+      h("div",{class:"dept",style:hueVar(d.farbe)},
+        h("div",{class:"dept-tab"}, h("h3",{},d.name), d.beschreibung?h("p",{},d.beschreibung):null),
+        members.map(a=>card(a,false))
+      ))));
+  }
+  chart.append(tree);
+  renderChronik();
+  const open = $("#sb").open && $("#sb").dataset.id;
+  if (open) fillSb(open);
+}
+
+function renderChronik(){
+  const ol = $("#chronik"); ol.replaceChildren();
+  if (!state.chronik.length){ ol.append(h("li",{},h("span"),h("span",{class:"hint"},"Noch keine Einträge."))); return; }
+  for (const e of state.chronik){
+    const a = state.team.find(x=>x.id===e.agent);
+    ol.append(h("li",{},
+      h("time",{datetime:e.datum||""}, fmtDate(e.datum)),
+      h("div",{class:"entry"},
+        h("span",{class:"pill",style:hueVar(a?agentHue(a):"")}, e.typ||"Notiz"),
+        h("span",{}, a ? h("button",{class:"linkish",type:"button",onclick:()=>openSb(a.id)},a.name) : null, a?" – ":"", e.text||"")
+      )));
+  }
+}
+
+function fillSb(id){
+  const a = state.team.find(x=>x.id===id); const dlg = $("#sb");
+  if (!a){ dlg.close(); return; }
+  dlg.dataset.id = id;
+  const d = deptOf(a); const boss = state.team.find(x=>x.id===a.berichtetAn);
+  const lessons = arr(a.lektionen);
+  dlg.replaceChildren(h("article",{class:"sb",style:hueVar(agentHue(a))},
+    h("div",{class:"sb-head"},
+      badge(a),
+      h("div",{}, h("h3",{id:"sb-name"},a.name), h("p",{},a.rolle||"")),
+      h("button",{class:"close",type:"button","aria-label":"Steckbrief schließen",onclick:()=>dlg.close()},"×")),
+    h("div",{class:"sb-strip"},
+      h("span",{},"Nr. ",h("b",{},a.nr||"–")),
+      h("span",{},"Abteilung ",h("b",{},d?d.name:"–")),
+      h("span",{},"Berichtet an ",h("b",{},boss?boss.name:"dich")),
+      h("span",{},"Seit ",h("b",{},fmtDate(a.seit))),
+      h("span",{},"Version ",h("b",{},a.version||"1.0"))),
+    h("div",{class:"sb-body"},
+      a.motto ? h("p",{class:"motto"},"„"+a.motto+"“") : null,
+      a.persoenlichkeit ? h("div",{},h("h4",{},"Persönlichkeit"),h("p",{},a.persoenlichkeit)) : null,
+      arr(a.aufgaben).length ? h("div",{},h("h4",{},"Übernimmt für dich"),h("ul",{},arr(a.aufgaben).map(t=>h("li",{},t)))) : null,
+      arr(a.faehigkeiten).length ? h("div",{},h("h4",{},"Fähigkeiten"),h("div",{class:"skills"},arr(a.faehigkeiten).map(s=>{
+        const lv = Math.max(0,Math.min(5,Number(s.stufe)||0));
+        return h("div",{class:"skill"},h("span",{},s.name),h("span",{class:"dots",role:"img","aria-label":`Stufe ${lv} von 5`},[1,2,3,4,5].map(i=>h("i",{class:i<=lv?"on":""}))));
+      }))) : null,
+      h("div",{},h("h4",{},`Gelernte Lektionen (${lessons.length})`),
+        lessons.length ? h("ul",{},lessons.map(l=>h("li",{}, typeof l==="string"?l:`${l.text||""}${l.datum?" ("+fmtDate(l.datum)+")":""}`)))
+                       : h("p",{class:"lessons-empty"},"Noch keine. Dein erstes Feedback landet hier und in ihrer AGENT_MEMORY.md.")),
+      a.datei ? h("div",{},h("h4",{},"Agenten-Datei"),h("div",{class:"file"},a.datei)) : null
+    )));
+}
+function openSb(id){ fillSb(id); const dlg=$("#sb"); if(!dlg.open){ try{dlg.showModal()}catch(e){dlg.setAttribute("open","")} } }
+$("#sb").addEventListener("click",e=>{ if(e.target===e.currentTarget) e.currentTarget.close(); });
+
+function fail(msg){
+  $("#chart").replaceChildren(h("div",{class:"notice"},h("strong",{},"Personalakte nicht erreichbar"),h("span",{},msg)));
+}
+
+(async () => {
+  const db = window.claude?.use ? await window.claude.use("db") : null;
+  if (!db){
+    // Außerhalb von Claude (z. B. GitHub Pages oder lokal): Daten aus data/studio.json
+    try{
+      const r = await fetch("data/studio.json",{cache:"no-store"});
+      if(!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      state.depts = d.abteilungen||[]; state.team = d.team||[];
+      state.chronik = [...(d.chronik||[])].sort((a,b)=>String(b.datum).localeCompare(String(a.datum)));
+      state.loaded = true; render();
+    }catch(e){ fail("Die Datei data/studio.json konnte nicht geladen werden. Öffne die Seite über einen Webserver, zum Beispiel GitHub Pages."); }
+    return;
+  }
+  const onErr = () => fail("Die Verbindung wurde unterbrochen. Lade die Seite neu, um es erneut zu versuchen.");
+  db.collection("abteilungen").onSnapshot(s=>{ state.depts=s.docs.map(d=>({id:d.id,...d.data()})); render(); }, onErr);
+  db.collection("team").onSnapshot(s=>{ state.team=s.docs.map(d=>({id:d.id,...d.data()})); state.loaded=true; render(); }, onErr);
+  db.collection("chronik").orderBy("datum","desc").limit(40).onSnapshot(s=>{ state.chronik=s.docs.map(d=>({id:d.id,...d.data()})); render(); }, onErr);
+})();
+</script>
+</body>
+</html>

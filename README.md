@@ -25,6 +25,14 @@ Diese Regeln hat Marco festgelegt. Sie gelten für jede Seite und jede App des S
 1. **Desktop, iPad und iPhone prüfen.** Eine Seite ist erst fertig, wenn sie auf allen drei Geräten optimal aussieht: kein seitliches Scrollen, kein Zoomen, gut tippbar. Zuständig sind Design-Doris (Ansicht) und Bug-Bodo (Tests).
 2. **Das ganze Team einbeziehen.** Prüfungen machen die zuständigen Fachleute, nicht HR allein.
 3. **Das Logo wird direkt mitentwickelt** und sofort eingebaut, zuständig ist Logo-Luisa.
+4. **Jede App ist installierbar und zeigt dabei das richtige Logo.** Dazu gehören auf dem iPhone „Zum Home-Bildschirm“ (`apple-touch-icon`, 180 px) und auf dem Desktop die Installation als App (Web-Manifest mit Icons in 192 und 512 px plus Masken-Icon). Zuständig sind Logo-Luisa (Icons), Deploy-Dennis (Manifest) und Bug-Bodo (Test auf beiden Geräten).
+
+## App-Installation
+
+- `manifest.webmanifest`: Name, Farben und Icons für die Installation als App
+- `icons/`: App-Icons, aus dem Logo erzeugt (iPhone 180 px, Desktop 192 und 512 px, Masken-Icon, Favicon)
+
+Kommt eine Abteilung dazu, werden die Icons beim nächsten Erzeugen der Seite neu gezeichnet. Auf bereits installierten Apps aktualisieren iPhone und Desktop das Icon erst, wenn man die App einmal entfernt und neu hinzufügt.
 
 ## Porträts
 

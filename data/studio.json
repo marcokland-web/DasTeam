@@ -41,12 +41,11 @@
       "id": "bug-bodo",
       "abteilung": "qualitaet",
       "aufgaben": [
-        "Schreibt Testfälle sowie Unit- und E2E-Tests",
+        "Schreibt automatische Tests, die Fehler früh finden",
         "Sucht Randfälle: Emojis im Betragsfeld, Handy drehen beim Speichern",
         "Meldet Bugs mit klaren Schritten zum Nachstellen"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/bug-bodo.md",
       "faehigkeiten": [
         {
           "name": "Randfälle finden",
@@ -66,7 +65,7 @@
       "name": "Bug-Bodo",
       "nr": "P-004",
       "persoenlichkeit": "Unerbittlich, aber nie gemein. Freut sich über jeden gefundenen Fehler.",
-      "rolle": "Quali-Tester",
+      "rolle": "Fehlersucher",
       "seit": "2026-10-19",
       "version": "1.0"
     },
@@ -79,7 +78,6 @@
         "Kümmert sich um Backups und Datenexport"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/daten-dieter.md",
       "faehigkeiten": [
         {
           "name": "Datenmodellierung",
@@ -107,23 +105,22 @@
       "id": "deploy-dennis",
       "abteilung": "technik",
       "aufgaben": [
-        "Richtet Hosting, Domains und Umgebungsvariablen ein",
-        "Baut Build- und Deploy-Abläufe",
-        "Prüft Self-Hosting-Optionen im Heimnetz"
+        "Bringt die Apps ins Netz: Server, Webadressen und Zugangsdaten",
+        "Baut automatische Abläufe, die neue Versionen ausliefern",
+        "Prüft, ob Apps auch zu Hause auf eigener Hardware laufen können"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/deploy-dennis.md",
       "faehigkeiten": [
         {
-          "name": "Deployment",
+          "name": "Auslieferung",
           "stufe": 5
         },
         {
-          "name": "CI/CD",
+          "name": "Automatische Auslieferung",
           "stufe": 4
         },
         {
-          "name": "Self-Hosting",
+          "name": "Eigene Server",
           "stufe": 3
         }
       ],
@@ -132,7 +129,7 @@
       "name": "Deploy-Dennis",
       "nr": "P-015",
       "persoenlichkeit": "Pragmatisch und ein bisschen ungeduldig. Automatisiert alles, was er zweimal machen musste.",
-      "rolle": "DevOps und Auslieferung",
+      "rolle": "Auslieferung und Betrieb",
       "seit": "2026-10-19",
       "version": "1.0"
     },
@@ -145,7 +142,6 @@
         "Pflegt den gemeinsamen STYLEGUIDE.md"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/design-doris.md",
       "faehigkeiten": [
         {
           "name": "UI-Konsistenz",
@@ -165,7 +161,7 @@
       "name": "Design-Doris",
       "nr": "P-002",
       "persoenlichkeit": "Sieht jeden falschen Abstand. Korrigiert freundlich, lässt aber nichts durchgehen.",
-      "rolle": "UI/UX- und Konsistenz-Prüferin",
+      "rolle": "Prüferin für Aussehen und Bedienung",
       "seit": "2026-10-19",
       "version": "1.0"
     },
@@ -178,7 +174,6 @@
         "Schreibt eine einfache Bedienhilfe für die Familie"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/doku-doerte.md",
       "faehigkeiten": [
         {
           "name": "Technische Doku",
@@ -210,8 +205,7 @@
         "Schreibt Rollenprofile und Agenten-Konfigurationen",
         "Verwaltet Styleguide, Standards und die Lernakten des Teams"
       ],
-      "berichtetAn": null,
-      "datei": ".claude/agents/hr-heidi.md",
+      "berichtetAn": "chef",
       "faehigkeiten": [
         {
           "name": "Personalplanung",
@@ -226,14 +220,19 @@
           "stufe": 4
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-19",
+          "text": "Das ganze Team wird einbezogen: Prüfungen machen die zuständigen Fachleute, nicht HR allein."
+        }
+      ],
       "motto": "Für jede Aufgabe die richtige Person, und jede wird ein bisschen besser.",
       "name": "HR-Heidi",
       "nr": "P-001",
       "persoenlichkeit": "Herzlich, strukturiert, behält den Überblick. Merkt sich, wer was kann und wer gerade überlastet ist.",
-      "rolle": "Chief People Officer",
+      "rolle": "Personalchefin",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "logo-luisa",
@@ -244,7 +243,6 @@
         "Sorgt für eine erkennbare Familien-Marke"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/logo-luisa.md",
       "faehigkeiten": [
         {
           "name": "Logo-Design (SVG)",
@@ -259,14 +257,35 @@
           "stufe": 4
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-19",
+          "text": "Das Logo wird bei jeder Seite und App direkt mitentwickelt und sofort eingebaut, nicht erst auf Nachfrage."
+        }
+      ],
       "motto": "Jede App braucht ein Gesicht. Auch der Zählerstand-Tracker.",
       "name": "Logo-Luisa",
       "nr": "P-003",
       "persoenlichkeit": "Verspielt und ideenreich, liefert aber immer drei saubere Varianten statt dreißig halbfertiger.",
-      "rolle": "Brand- und Icon-Designerin",
+      "rolle": "Logo- und Icon-Designerin",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
+    },
+    {
+      "id": "chef",
+      "abteilung": "leitung",
+      "aufgaben": [
+        "Entscheidet, welche App als Nächstes gebaut wird",
+        "Gibt dem Team Rückmeldung, aus der es lernt",
+        "Probiert die Apps mit der Familie aus"
+      ],
+      "berichtetAn": null,
+      "lektionen": [],
+      "mensch": true,
+      "name": "Marco",
+      "nr": "Chef",
+      "rolle": "Studio-Chef",
+      "seit": "2026-10-19"
     },
     {
       "id": "organigramm-olga",
@@ -277,7 +296,6 @@
         "Stellt neue Teammitglieder mit Steckbrief vor"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/organigramm-olga.md",
       "faehigkeiten": [
         {
           "name": "Organigramme",
@@ -305,12 +323,11 @@
       "id": "plan-paula",
       "abteilung": "planung",
       "aufgaben": [
-        "Übersetzt deine Ideen in User Stories mit Akzeptanzkriterien",
+        "Macht aus deinen Ideen klare Aufgaben mit Kriterien für „fertig“",
         "Schneidet Projekte in kleine, lieferbare Etappen",
         "Führt die Roadmap für alle Familien-Apps"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/plan-paula.md",
       "faehigkeiten": [
         {
           "name": "Anforderungen klären",
@@ -338,12 +355,11 @@
       "id": "rant-randy",
       "abteilung": "qualitaet",
       "aufgaben": [
-        "Reviewt Code auf Architektur, Lesbarkeit und Wartbarkeit",
+        "Prüft den Code auf Aufbau, Lesbarkeit und Wartbarkeit",
         "Findet doppelte Logik und unnötige Komplexität",
         "Gibt priorisierte Verbesserungsvorschläge"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/rant-randy.md",
       "faehigkeiten": [
         {
           "name": "Code-Review",
@@ -363,7 +379,7 @@
       "name": "Rant-Randy",
       "nr": "P-005",
       "persoenlichkeit": "Knallhart in der Sache, endet aber immer mit einem konkreten Verbesserungsvorschlag und merkt sich auch, was gut war.",
-      "rolle": "Code-Critic",
+      "rolle": "Code-Prüfer",
       "seit": "2026-10-19",
       "version": "1.0"
     },
@@ -373,10 +389,9 @@
       "aufgaben": [
         "Prüft Logins, Zugriffsrechte und gespeicherte Geheimnisse",
         "Achtet auf Datenschutz bei Budget- und Verbrauchsdaten",
-        "Checkt Abhängigkeiten auf bekannte Schwachstellen"
+        "Prüft eingebaute Fremd-Bausteine auf bekannte Sicherheitslücken"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/sicherheits-siggi.md",
       "faehigkeiten": [
         {
           "name": "Zugriffsrechte",
@@ -409,10 +424,9 @@
         "Prüft Texte auf Verständlichkeit für alle Familienmitglieder"
       ],
       "berichtetAn": "hr-heidi",
-      "datei": ".claude/agents/text-tina.md",
       "faehigkeiten": [
         {
-          "name": "Microcopy",
+          "name": "Kurze Bedientexte",
           "stufe": 5
         },
         {
@@ -425,7 +439,7 @@
         }
       ],
       "lektionen": [],
-      "motto": "Ein Button heißt „Speichern“, nicht „Daten persistieren“.",
+      "motto": "Ein Knopf heißt ‚Speichern‘, nicht ‚Daten persistieren‘.",
       "name": "Text-Tina",
       "nr": "P-013",
       "persoenlichkeit": "Klar, warm, allergisch gegen Fachchinesisch. Schreibt so, dass auch Oma die App bedienen kann.",
@@ -439,29 +453,64 @@
       "id": "c001",
       "agent": "hr-heidi",
       "datum": "2026-10-19T21:17:00+02:00",
-      "text": "tritt als Chief People Officer an und baut das Studio-Team auf.",
-      "typ": "Einstellung"
+      "text": "tritt als Personalchefin an und baut das Studio-Team auf.",
+      "typ": "Neuzugang"
     },
     {
       "id": "c002",
       "agent": "design-doris",
       "datum": "2026-10-19T21:18:00+02:00",
-      "text": "und Logo-Luisa, Bug-Bodo und Rant-Randy bilden das Gründungsteam.",
-      "typ": "Einstellung"
+      "text": "gründet zusammen mit Logo-Luisa, Bug-Bodo und Rant-Randy das Team.",
+      "typ": "Neuzugang"
     },
     {
       "id": "c003",
       "agent": "organigramm-olga",
       "datum": "2026-10-19T21:20:00+02:00",
       "text": "kommt als Team-Chronistin dazu und übernimmt diese Seite.",
-      "typ": "Einstellung"
+      "typ": "Neuzugang"
     },
     {
       "id": "c004",
       "agent": "plan-paula",
       "datum": "2026-10-19T21:21:00+02:00",
-      "text": "und Doku-Dörte, Text-Tina, Daten-Dieter, Deploy-Dennis und Sicherheits-Siggi verstärken das Team.",
-      "typ": "Einstellung"
+      "text": "verstärkt zusammen mit Doku-Dörte, Text-Tina, Daten-Dieter, Deploy-Dennis und Sicherheits-Siggi das Team.",
+      "typ": "Neuzugang"
+    },
+    {
+      "id": "c005",
+      "agent": "chef",
+      "datum": "2026-10-19T21:56:00+02:00",
+      "text": "steht als Chef an der Spitze des Studios.",
+      "typ": "Leitung"
+    },
+    {
+      "id": "c006",
+      "agent": "logo-luisa",
+      "datum": "2026-10-19T21:57:00+02:00",
+      "text": "zeichnet das Logo „Runde“: ein Punkt pro Abteilung, die Leitung in der Mitte.",
+      "typ": "Logo"
+    },
+    {
+      "id": "c007",
+      "agent": "logo-luisa",
+      "datum": "2026-10-19T21:58:00+02:00",
+      "text": "entwickelt Logos ab jetzt immer gleich mit der Seite oder App.",
+      "typ": "Lektion"
+    },
+    {
+      "id": "c008",
+      "agent": "hr-heidi",
+      "datum": "2026-10-19T21:58:30+02:00",
+      "text": "gibt Prüfungen ab jetzt immer an die zuständigen Fachleute im Team.",
+      "typ": "Lektion"
+    },
+    {
+      "id": "c009",
+      "agent": "design-doris",
+      "datum": "2026-10-19T22:10:00+02:00",
+      "text": "prüft die Seite zusammen mit Text-Tina, Bug-Bodo, Rant-Randy und Sicherheits-Siggi und liefert mit ihnen 33 Hinweise für Verbesserungen.",
+      "typ": "Prüfung"
     }
   ]
 }

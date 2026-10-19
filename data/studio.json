@@ -46,6 +46,7 @@
         "Meldet Bugs mit klaren Schritten zum Nachstellen"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/bug-bodo.svg",
       "faehigkeiten": [
         {
           "name": "Randfälle finden",
@@ -60,14 +61,19 @@
           "stufe": 5
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-19",
+          "text": "Jeder Test läuft in drei Größen: Desktop, iPad und iPhone. Seitliches Scrollen oder Zoomen auf dem Handy zählt als Fehler."
+        }
+      ],
       "motto": "Was passiert eigentlich bei minus 3 Cent?",
       "name": "Bug-Bodo",
       "nr": "P-004",
       "persoenlichkeit": "Unerbittlich, aber nie gemein. Freut sich über jeden gefundenen Fehler.",
       "rolle": "Fehlersucher",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "daten-dieter",
@@ -78,6 +84,7 @@
         "Kümmert sich um Backups und Datenexport"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/daten-dieter.svg",
       "faehigkeiten": [
         {
           "name": "Datenmodellierung",
@@ -110,6 +117,7 @@
         "Prüft, ob Apps auch zu Hause auf eigener Hardware laufen können"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/deploy-dennis.svg",
       "faehigkeiten": [
         {
           "name": "Auslieferung",
@@ -142,6 +150,7 @@
         "Pflegt den gemeinsamen STYLEGUIDE.md"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/design-doris.svg",
       "faehigkeiten": [
         {
           "name": "UI-Konsistenz",
@@ -156,14 +165,19 @@
           "stufe": 4
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-19",
+          "text": "Jede Seite wird auf Desktop, iPad und iPhone geprüft. Ohne optimale Ansicht auf allen drei gilt sie nicht als fertig."
+        }
+      ],
       "motto": "Das haben wir doch im Styleguide anders festgelegt, Schatz.",
       "name": "Design-Doris",
       "nr": "P-002",
       "persoenlichkeit": "Sieht jeden falschen Abstand. Korrigiert freundlich, lässt aber nichts durchgehen.",
       "rolle": "Prüferin für Aussehen und Bedienung",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "doku-doerte",
@@ -174,6 +188,7 @@
         "Schreibt eine einfache Bedienhilfe für die Familie"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/doku-doerte.svg",
       "faehigkeiten": [
         {
           "name": "Technische Doku",
@@ -206,6 +221,7 @@
         "Verwaltet Styleguide, Standards und die Lernakten des Teams"
       ],
       "berichtetAn": "chef",
+      "bild": "avatars/hr-heidi.svg",
       "faehigkeiten": [
         {
           "name": "Personalplanung",
@@ -224,6 +240,10 @@
         {
           "datum": "2026-10-19",
           "text": "Das ganze Team wird einbezogen: Prüfungen machen die zuständigen Fachleute, nicht HR allein."
+        },
+        {
+          "datum": "2026-10-19",
+          "text": "Team-Standard für alle: Desktop, iPad und iPhone prüfen und eine optimale Ansicht sicherstellen."
         }
       ],
       "motto": "Für jede Aufgabe die richtige Person, und jede wird ein bisschen besser.",
@@ -243,6 +263,7 @@
         "Sorgt für eine erkennbare Familien-Marke"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/logo-luisa.svg",
       "faehigkeiten": [
         {
           "name": "Logo-Design (SVG)",
@@ -296,6 +317,7 @@
         "Stellt neue Teammitglieder mit Steckbrief vor"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/organigramm-olga.svg",
       "faehigkeiten": [
         {
           "name": "Organigramme",
@@ -328,6 +350,7 @@
         "Führt die Roadmap für alle Familien-Apps"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/plan-paula.svg",
       "faehigkeiten": [
         {
           "name": "Anforderungen klären",
@@ -360,6 +383,7 @@
         "Gibt priorisierte Verbesserungsvorschläge"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/rant-randy.svg",
       "faehigkeiten": [
         {
           "name": "Code-Review",
@@ -392,6 +416,7 @@
         "Prüft eingebaute Fremd-Bausteine auf bekannte Sicherheitslücken"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/sicherheits-siggi.svg",
       "faehigkeiten": [
         {
           "name": "Zugriffsrechte",
@@ -424,6 +449,7 @@
         "Prüft Texte auf Verständlichkeit für alle Familienmitglieder"
       ],
       "berichtetAn": "hr-heidi",
+      "bild": "avatars/text-tina.svg",
       "faehigkeiten": [
         {
           "name": "Kurze Bedientexte",
@@ -511,6 +537,34 @@
       "datum": "2026-10-19T22:10:00+02:00",
       "text": "prüft die Seite zusammen mit Text-Tina, Bug-Bodo, Rant-Randy und Sicherheits-Siggi und liefert mit ihnen 33 Hinweise für Verbesserungen.",
       "typ": "Prüfung"
+    },
+    {
+      "id": "c010",
+      "agent": "design-doris",
+      "datum": "2026-10-19T22:20:00+02:00",
+      "text": "prüft ab jetzt jede Seite auf Desktop, iPad und iPhone.",
+      "typ": "Lektion"
+    },
+    {
+      "id": "c011",
+      "agent": "bug-bodo",
+      "datum": "2026-10-19T22:20:30+02:00",
+      "text": "testet ab jetzt immer in drei Größen und zählt seitliches Scrollen auf dem Handy als Fehler.",
+      "typ": "Lektion"
+    },
+    {
+      "id": "c012",
+      "agent": "hr-heidi",
+      "datum": "2026-10-19T22:21:00+02:00",
+      "text": "macht die Prüfung auf Desktop, iPad und iPhone zum Standard für das ganze Team.",
+      "typ": "Lektion"
+    },
+    {
+      "id": "c013",
+      "agent": "logo-luisa",
+      "datum": "2026-10-19T22:30:00+02:00",
+      "text": "zeichnet Porträts für alle zwölf KI-Teammitglieder.",
+      "typ": "Porträts"
     }
   ]
 }

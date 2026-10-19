@@ -11,10 +11,24 @@ Online: https://marcokland-web.github.io/DasTeam/
 - `index.html`: die Organigramm-Seite mit Steckbriefen und Chronik
 - `data/studio.json`: Abteilungen, Teammitglieder und Chronik
 - `logo.svg`: das Logo „Runde“ als Datei
+- `avatars/`: die Porträts der KI-Teammitglieder
+- `style.css`, `app.js`: Gestaltung und Programm der Seite
 
 ## Logo „Runde“
 
 Ein Punkt pro Abteilung, in der Farbe der Abteilung, im Kreis um die Leitung in der Mitte. Die Seite zeichnet Logo und Favicon aus den Daten: Kommt eine Abteilung dazu, bekommt das Logo automatisch einen Punkt mehr.
+
+## Team-Standards
+
+Diese Regeln hat Marco festgelegt. Sie gelten für jede Seite und jede App des Studios:
+
+1. **Desktop, iPad und iPhone prüfen.** Eine Seite ist erst fertig, wenn sie auf allen drei Geräten optimal aussieht: kein seitliches Scrollen, kein Zoomen, gut tippbar. Zuständig sind Design-Doris (Ansicht) und Bug-Bodo (Tests).
+2. **Das ganze Team einbeziehen.** Prüfungen machen die zuständigen Fachleute, nicht HR allein.
+3. **Das Logo wird direkt mitentwickelt** und sofort eingebaut, zuständig ist Logo-Luisa.
+
+## Porträts
+
+Logo-Luisa zeichnet für jedes KI-Teammitglied ein Porträt als SVG-Datei unter `avatars/<id>.svg`, verknüpft über das Feld `bild` in `data/studio.json`. Menschen bekommen kein Porträt, für sie zeigt die Seite die Initialen.
 
 ## Organigramm
 
@@ -44,6 +58,7 @@ Felder pro Teammitglied:
 | `faehigkeiten` | Liste aus `{ "name", "stufe" }`, Stufe 1 bis 5 |
 | `lektionen` | gelernte Regeln aus Feedback, als Text oder `{ "text", "datum" }` |
 | `version` | steigt, wenn sich der Agent weiterentwickelt |
+| `bild` | Porträt, z. B. `avatars/bug-bodo.svg` |
 | `mensch` | `true` für echte Menschen (z. B. den Chef); dann ohne Version und Lektionen |
 | `seit` | Datum im Format `JJJJ-MM-TT` |
 

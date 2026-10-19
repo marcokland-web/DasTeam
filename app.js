@@ -79,11 +79,21 @@ function renderBrand(){
   $("#favicon").href = faviconHref(model.ringDepts);
 }
 
+/* ---------- Porträt: Bild aus avatars/, sonst Initialen ---------- */
+const BILD = /^avatars\/[a-z0-9-]+\.svg$/;
+function portrait(a){
+  const badge = () => h("span",{class:"mono-badge","aria-hidden":"true"}, initials(a.name));
+  if (a.mensch===true || !BILD.test(str(a.bild))) return badge();
+  const img = h("img",{class:"avatar",src:a.bild,alt:"",width:"64",height:"64",decoding:"async"});
+  img.addEventListener("error",()=>img.replaceWith(badge()),{once:true});
+  return img;
+}
+
 /* ---------- Organigramm ---------- */
 function card(a, big){
   const human = a.mensch===true, n = arr(a.lektionen).filter(Boolean).length;
   return h("button",{class:"card"+(big?" big":"")+(human?" human":""),hue:hueOf(a),type:"button","data-fid":a.id,onclick:()=>openSb(a.id),"aria-label":`Steckbrief von ${str(a.name)||"Ohne Namen"} öffnen`},
-    h("span",{class:"mono-badge","aria-hidden":"true"}, initials(a.name)),
+    portrait(a),
     h("span",{class:"who"}, h("strong",{},str(a.name)||"Ohne Namen"), h("span",{class:"role"},str(a.rolle))),
     h("span",{class:"meta"}, h("span",{},str(a.nr)), h("span",{}, human ? "Mensch" : `Version ${str(a.version)||"1.0"} · ${n} ${n===1?"Lektion":"Lektionen"}`))
   );
@@ -140,10 +150,32 @@ function renderFacts(){
   $("#f-last").textContent = last ? fmtDate(last.datum) : "–";
 }
 
+/* Chronik-Filter: Auswahl bleibt pro Gerät gemerkt */
+let chronikFilter = "";
+try { chronikFilter = localStorage.getItem("chronikFilter") || ""; } catch(e){}
+function setFilter(t){
+  chronikFilter = t;
+  try { localStorage.setItem("chronikFilter", t); } catch(e){}
+  renderChronik();
+  $("#filters").querySelector(`[data-typ="${CSS.escape(t)}"]`)?.focus();
+}
+function renderFilters(){
+  const counts = new Map();
+  for (const e of state.chronik){ const t = str(e.typ)||"Notiz"; counts.set(t,(counts.get(t)||0)+1); }
+  if (chronikFilter && !counts.has(chronikFilter)) chronikFilter = "";
+  const chip = (t,label,n) => h("button",{class:"chip",type:"button","data-typ":t,"aria-pressed":String(chronikFilter===t),onclick:()=>setFilter(t)},
+    label, h("span",{class:"count"},n));
+  $("#filters").replaceChildren(
+    chip("","Alle",state.chronik.length),
+    ...[...counts.keys()].sort((a,b)=>a.localeCompare(b,"de")).map(t=>chip(t,t,counts.get(t))));
+  $("#filters").hidden = counts.size < 2;
+}
 function renderChronik(){
   const ol = $("#chronik"); ol.replaceChildren();
+  renderFilters();
   if (!state.chronik.length){ ol.append(h("li",{},h("span"),h("span",{class:"hint"},"Noch keine Einträge."))); return; }
-  for (const e of state.chronik){
+  const list = chronikFilter ? state.chronik.filter(e=>(str(e.typ)||"Notiz")===chronikFilter) : state.chronik;
+  for (const e of list){
     const a = model ? model.byId.get(e.agent) : null;
     ol.append(h("li",{},
       h("time",{datetime:str(e.datum)}, fmtDate(e.datum)),
@@ -165,7 +197,7 @@ function fillSb(id){
   const skills = arr(a.faehigkeiten).filter(Boolean);
   dlg.replaceChildren(h("article",{class:"sb",hue:hueOf(a)},
     h("div",{class:"sb-head"},
-      h("span",{class:"mono-badge","aria-hidden":"true"}, initials(a.name)),
+      portrait(a),
       h("div",{}, h("h3",{id:"sb-name"},str(a.name)||"Ohne Namen"), h("p",{},str(a.rolle))),
       h("button",{class:"close",type:"button","aria-label":"Steckbrief schließen",onclick:()=>dlg.close()},"×")),
     h("div",{class:"sb-strip"},

@@ -83,6 +83,17 @@ h2{font-size:26px;font-weight:700}
 .big .mono-badge{width:54px;height:54px;font-size:18px}
 .human .mono-badge{background:var(--fg);color:var(--surface);border-color:var(--fg)}
 
+/* Teamleitung an der Spitze ihrer Abteilung */
+.card.lead{border-left-width:6px;background:color-mix(in srgb,var(--hue) 7%,var(--surface))}
+.lead-tag{justify-self:start;font:500 var(--fs-xs)/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--hue);margin-bottom:2px}
+
+/* Stabsstelle (z. B. HR) seitlich an der Linie */
+.staff{position:relative;justify-self:stretch;display:grid;grid-template-columns:1fr 1fr;padding-bottom:28px}
+.staff::before{content:"";position:absolute;left:calc(50% - 1px);top:0;bottom:0;border-left:2px solid var(--line)}
+.staff-item{grid-column:2;position:relative;padding-left:32px;display:grid;gap:6px;max-width:300px}
+.staff-item::before{content:"";position:absolute;left:0;top:calc(50% + 10px);width:30px;border-top:2px dashed var(--line)}
+.staff-label{font:500 var(--fs-xs)/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
 /* Senkrechte Darstellung, wenn der Baum nicht in die Breite passt (per JS gesetzt) */
 .chart.vertical .tree,.chart.vertical .level{min-width:0;justify-items:stretch}
 .chart.vertical .card.big{width:100%}
@@ -92,6 +103,10 @@ h2{font-size:26px;font-weight:700}
 .chart.vertical .branch::before,.chart.vertical .branch:first-child::before,.chart.vertical .branch:last-child::before{display:block;top:20px;left:-18px;right:auto;width:16px}
 .chart.vertical .branch::after{display:none}
 .chart.vertical .dept{width:100%}
+.chart.vertical .staff{grid-template-columns:1fr;padding-left:41px}
+.chart.vertical .staff::before{left:23px}
+.chart.vertical .staff-item{grid-column:1;padding-left:0;max-width:none}
+.chart.vertical .staff-item::before{left:-18px;width:16px}
 /* iPad hochkant: Karten einer Abteilung nebeneinander */
 @media (min-width:640px){
   .chart.vertical .dept{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
@@ -116,6 +131,27 @@ h2{font-size:26px;font-weight:700}
 /* Zustände */
 .notice{border:1px dashed var(--line);border-radius:var(--r-m);padding:28px;text-align:center;color:var(--muted);display:grid;gap:6px;justify-items:center}
 .notice strong{color:var(--fg);font-family:var(--f-display);font-size:18px}
+
+/* So arbeiten wir */
+.flows{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.flow{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:18px 20px;display:grid;gap:10px;align-content:start}
+.flow h3{font-size:18px;font-weight:700}
+.flow ol{margin:0;padding-left:22px;display:grid;gap:6px;font-size:var(--fs-m)}
+.flow p{margin:0;font-size:var(--fs-s);color:var(--muted)}
+
+/* Ideen der Teams */
+.ideas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px}
+.idea{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hue);border-radius:var(--r-m);padding:16px 18px;display:grid;gap:8px;align-content:start;min-width:0}
+.idea h3{font-size:17px;font-weight:700;overflow-wrap:anywhere}
+.idea p{margin:0;font-size:var(--fs-m)}
+.idea .nutzen{color:var(--muted)}
+.idea .idea-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:var(--fs-s);color:var(--muted);padding-top:8px;border-top:1px dashed var(--line)}
+.status{display:inline-flex;align-items:center;gap:6px;font:500 var(--fs-xs)/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--fg)}
+.status::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--muted)}
+.status.ok::before{background:var(--moss)}
+.status.wait::before{background:var(--ochre)}
+.status.no::before{background:var(--coral)}
+.status.new::before{background:var(--sky)}
 
 /* Chronik */
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;max-width:760px}

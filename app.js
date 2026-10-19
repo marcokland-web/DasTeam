@@ -2,7 +2,7 @@
 const HUES = new Set(["moss","coral","plum","sky","ochre"]);
 const ICON_HUES = {moss:"#7FC09F",coral:"#EE8D74",plum:"#C29AD3",sky:"#82B6DD",ochre:"#E0B455"};
 const SVGNS = "http://www.w3.org/2000/svg";
-const state = {team:[], depts:[], chronik:[], got:{}, error:false};
+const state = {team:[], depts:[], chronik:[], ideen:[], got:{}, error:false};
 const $ = s => document.querySelector(s);
 
 /* ---------- Hilfsfunktionen ---------- */
@@ -90,32 +90,48 @@ function portrait(a){
 }
 
 /* ---------- Organigramm ---------- */
-function card(a, big){
+function card(a, big, lead){
   const human = a.mensch===true, n = arr(a.lektionen).filter(Boolean).length;
-  return h("button",{class:"card"+(big?" big":"")+(human?" human":""),hue:hueOf(a),type:"button","data-fid":a.id,onclick:()=>openSb(a.id),"aria-label":`Steckbrief von ${str(a.name)||"Ohne Namen"} öffnen`},
+  return h("button",{class:"card"+(big?" big":"")+(human?" human":"")+(lead?" lead":""),hue:hueOf(a),type:"button","data-fid":a.id,onclick:()=>openSb(a.id),"aria-label":`Steckbrief von ${str(a.name)||"Ohne Namen"} öffnen`},
     portrait(a),
-    h("span",{class:"who"}, h("strong",{},str(a.name)||"Ohne Namen"), h("span",{class:"role"},str(a.rolle))),
+    h("span",{class:"who"}, lead ? h("span",{class:"lead-tag"},"Teamleitung") : null, h("strong",{},str(a.name)||"Ohne Namen"), h("span",{class:"role"},str(a.rolle))),
     h("span",{class:"meta"}, h("span",{},str(a.nr)), h("span",{}, human ? "Mensch" : `Version ${str(a.version)||"1.0"} · ${n} ${n===1?"Lektion":"Lektionen"}`))
   );
 }
-function deptColumn(d, members){
+function deptColumn(d, members, lead){
   return h("div",{class:"branch dept",hue:d.farbe},
     h("div",{class:"dept-tab"}, h("h3",{},str(d.name)||"Abteilung"), d.beschreibung?h("p",{},str(d.beschreibung)):null),
+    lead ? card(lead,false,true) : null,
     members.map(a=>card(a,false)));
 }
+const kidsOf = a => model.kids.get(a.id)||[];
+const deptOrder = id => { const i = model.depts.findIndex(d=>d.id===id); return i<0 ? 999 : i; };
 function nodeEl(a, seen){
   seen.add(a.id);
-  const ks = (model.kids.get(a.id)||[]).filter(k=>!seen.has(k.id));
-  const leads = ks.filter(k=>(model.kids.get(k.id)||[]).length);
-  const leaves = ks.filter(k=>!leads.includes(k));
-  const items = [];
-  for (const d of model.depts){ const m = leaves.filter(k=>k.abteilung===d.id); if (m.length){ m.forEach(k=>seen.add(k.id)); items.push(deptColumn(d,m)); } }
+  const ks = kidsOf(a).filter(k=>!seen.has(k.id));
+  // Stabsstelle: berichtet direkt, führt kein eigenes Team (z. B. HR-Heidi)
+  const staff = ks.filter(k=>k.stab===true && !kidsOf(k).length);
+  const rest = ks.filter(k=>!staff.includes(k));
+  const leads = rest.filter(k=>kidsOf(k).length);
+  const leaves = rest.filter(k=>!leads.includes(k));
+  const items = [];   // {order, el}
+  for (const l of leads){
+    const lk = kidsOf(l).filter(k=>!seen.has(k.id));
+    const simple = lk.every(k=>!kidsOf(k).length && k.abteilung===l.abteilung) && model.deptById.has(l.abteilung);
+    if (simple){
+      seen.add(l.id); lk.forEach(k=>seen.add(k.id));
+      items.push({order:deptOrder(l.abteilung), el:deptColumn(model.deptById.get(l.abteilung), lk, l)});
+    } else items.push({order:deptOrder(l.abteilung), el:h("div",{class:"branch"}, nodeEl(l,seen))});
+  }
+  for (const d of model.depts){ const m = leaves.filter(k=>k.abteilung===d.id); if (m.length){ m.forEach(k=>seen.add(k.id)); items.push({order:deptOrder(d.id), el:deptColumn(d,m)}); } }
   const loose = leaves.filter(k=>!seen.has(k.id));
-  if (loose.length){ loose.forEach(k=>seen.add(k.id)); items.push(deptColumn({name:"Ohne Abteilung",beschreibung:"Noch keiner Abteilung zugeordnet"},loose)); }
-  const sub = leads.map(l=>nodeEl(l,seen));
-  const level = h("div",{class:"level"}, h("div",{class:"node"+(sub.length||items.length?" has-kids":"")}, card(a,true)));
-  if (sub.length===1 && !items.length) level.append(sub[0]);
-  else if (sub.length || items.length) level.append(h("div",{class:"branches"}, sub.map(s=>h("div",{class:"branch"},s)), items));
+  if (loose.length){ loose.forEach(k=>seen.add(k.id)); items.push({order:1000, el:deptColumn({name:"Ohne Abteilung",beschreibung:"Noch keiner Abteilung zugeordnet"},loose)}); }
+  staff.forEach(s=>seen.add(s.id));
+  items.sort((x,y)=>x.order-y.order);
+  const level = h("div",{class:"level"}, h("div",{class:"node"+(staff.length||items.length?" has-kids":"")}, card(a,true)));
+  if (staff.length) level.append(h("div",{class:"staff"}, staff.map(s=>h("div",{class:"staff-item"}, h("span",{class:"staff-label"},"Stabsstelle"), card(s,false)))));
+  if (items.length===1 && items[0].el.classList.contains("branch") && !items[0].el.classList.contains("dept")) level.append(items[0].el.firstChild);
+  else if (items.length) level.append(h("div",{class:"branches"}, items.map(i=>i.el)));
   return level;
 }
 function renderChart(){
@@ -186,6 +202,41 @@ function renderChronik(){
   }
 }
 
+/* ---------- Ideen der Teams ---------- */
+let ideaFilter = "";
+try { ideaFilter = localStorage.getItem("ideaFilter") || ""; } catch(e){}
+const STATUS_CLASS = s => /umgesetzt|genehmigt/i.test(s) ? "ok" : /wartet|prüfung|umsetzung/i.test(s) ? "wait" : /abgelehnt/i.test(s) ? "no" : "new";
+function renderIdeas(){
+  const box = $("#ideas"), bar = $("#idea-filters");
+  const ideas = [...state.ideen].sort((a,b)=>ts(b.datum)-ts(a.datum));
+  const deptsUsed = model.depts.filter(d=>ideas.some(i=>i.abteilung===d.id));
+  const hasAll = ideas.some(i=>!model.deptById.has(i.abteilung));
+  if (ideaFilter && ideaFilter!=="_alle" && !deptsUsed.some(d=>d.id===ideaFilter)) ideaFilter = "";
+  const chip = (id,label,n) => h("button",{class:"chip",type:"button","data-typ":id,"aria-pressed":String(ideaFilter===id),onclick:()=>{ ideaFilter=id; try{localStorage.setItem("ideaFilter",id)}catch(e){} renderIdeas(); bar.querySelector(`[data-typ="${CSS.escape(id)}"]`)?.focus(); }}, label, h("span",{class:"count"},n));
+  bar.replaceChildren(chip("","Alle",ideas.length),
+    ...(hasAll ? [chip("_alle","Teamübergreifend",ideas.filter(i=>!model.deptById.has(i.abteilung)).length)] : []),
+    ...deptsUsed.map(d=>chip(d.id,str(d.name),ideas.filter(i=>i.abteilung===d.id).length)));
+  bar.hidden = ideas.length < 2;
+  const list = !ideaFilter ? ideas : ideaFilter==="_alle" ? ideas.filter(i=>!model.deptById.has(i.abteilung)) : ideas.filter(i=>i.abteilung===ideaFilter);
+  box.replaceChildren();
+  if (!list.length){ box.append(h("p",{class:"hint"},"Noch keine Ideen eingebracht.")); return; }
+  for (const i of list){
+    const d = model.deptById.get(i.abteilung);
+    const authors = (Array.isArray(i.von) ? i.von : [i.von]).map(id=>model.byId.get(id)).filter(Boolean);
+    const by = [];
+    authors.forEach((a,k)=>{ if (k) by.push(k===authors.length-1 ? " und " : ", "); by.push(h("button",{class:"linkish",type:"button",onclick:()=>openSb(a.id)},str(a.name))); });
+    box.append(h("article",{class:"idea",hue:d ? d.farbe : ""},
+      h("span",{class:"pill",hue:d ? d.farbe : ""}, d ? str(d.name) : "Teamübergreifend"),
+      h("h3",{},str(i.titel)||"Ohne Titel"),
+      i.beschreibung ? h("p",{},str(i.beschreibung)) : null,
+      i.nutzen ? h("p",{class:"nutzen"},"Nutzen: "+str(i.nutzen)) : null,
+      h("div",{class:"idea-meta"},
+        h("span",{class:"status "+STATUS_CLASS(str(i.status))}, str(i.status)||"Neu"),
+        i.art ? h("span",{},"· "+str(i.art)) : null,
+        by.length ? h("span",{},"· von ", ...by) : null)));
+  }
+}
+
 /* ---------- Steckbrief ---------- */
 function fillSb(id){
   const dlg = $("#sb"), a = model && model.byId.get(id);
@@ -235,6 +286,7 @@ function flush(){
     if (state.got.team && state.got.depts){
       if (dirty.has("org")){ renderFacts(); renderChart(); renderBrand(); }
       else renderFacts();
+      renderIdeas();
       const dlg = $("#sb"); if (dlg.open && dirty.has("org")) fillSb(dlg.dataset.id);
     }
   } catch(e){ console.error(e); showBanner("Ein Eintrag in der Personalakte ist fehlerhaft. Marco kann ihn prüfen."); }
@@ -247,7 +299,7 @@ function fail(msg){
 function setData(part, docs){
   if (part==="chronik") docs = [...docs].sort((a,b)=>ts(b.datum)-ts(a.datum));
   state[part] = docs; state.got[part] = true;
-  invalidate(part==="chronik" ? "chronik" : "org");
+  invalidate(part==="chronik" ? "chronik" : part==="ideen" ? "ideen" : "org");
 }
 
 /* ---------- Daten: claude.ai-Datenbank, sonst data/studio.json ---------- */
@@ -256,7 +308,7 @@ async function connect(){
   try { db = window.claude?.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
   if (db){
     const onErr = () => showBanner("Die Verbindung ist abgerissen. Lade die Seite bitte neu.");
-    for (const [part,coll] of [["depts","abteilungen"],["team","team"],["chronik","chronik"]])
+    for (const [part,coll] of [["depts","abteilungen"],["team","team"],["chronik","chronik"],["ideen","ideen"]])
       db.collection(coll).onSnapshot(s=>setData(part, s.docs.map(d=>({id:d.id,...d.data()}))), onErr);
     return;
   }
@@ -270,6 +322,6 @@ async function connect(){
     fail("Lade die Seite bitte neu. Klappt es dann immer noch nicht, sag Marco Bescheid.");
     return;
   }
-  setData("depts", arr(d.abteilungen)); setData("team", arr(d.team)); setData("chronik", arr(d.chronik));
+  setData("depts", arr(d.abteilungen)); setData("team", arr(d.team)); setData("chronik", arr(d.chronik)); setData("ideen", arr(d.ideen));
 }
 connect().catch(e=>{ console.error(e); fail("Lade die Seite bitte neu. Klappt es dann immer noch nicht, sag Marco Bescheid."); });

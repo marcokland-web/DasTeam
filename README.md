@@ -12,6 +12,7 @@ Online: https://marcokland-web.github.io/DasTeam/
 - `data/studio.json`: Abteilungen, Teammitglieder und Chronik
 - `logo.svg`: das Logo „Runde“ als Datei
 - `avatars/`: die Porträts der KI-Teammitglieder
+- `tools/freigabe-check.js`: die Freigabe-Prüfung vor jeder Auslieferung
 - `style.css`, `app.js`: Gestaltung und Programm der Seite
 
 ## Logo „Runde“
@@ -26,6 +27,7 @@ Diese Regeln hat Marco festgelegt. Sie gelten für jede Seite und jede App des S
 2. **Das ganze Team einbeziehen.** Prüfungen machen die zuständigen Fachleute, nicht HR allein.
 3. **Das Logo wird direkt mitentwickelt** und sofort eingebaut, zuständig ist Logo-Luisa.
 4. **Jede App ist installierbar und zeigt dabei das richtige Logo.** Dazu gehören auf dem iPhone „Zum Home-Bildschirm“ (`apple-touch-icon`, 180 px) und auf dem Desktop die Installation als App (Web-Manifest mit Icons in 192 und 512 px plus Masken-Icon). Zuständig sind Logo-Luisa (Icons), Deploy-Dennis (Manifest) und Bug-Bodo (Test auf beiden Geräten).
+5. **Vor jeder Auslieferung läuft die Freigabe-Prüfung** (`tools/freigabe-check.js`). Ausgeliefert wird nur, was alle Punkte besteht.
 
 ## App-Installation
 
@@ -33,6 +35,21 @@ Diese Regeln hat Marco festgelegt. Sie gelten für jede Seite und jede App des S
 - `icons/`: App-Icons, aus dem Logo erzeugt (iPhone 180 px, Desktop 192 und 512 px, Masken-Icon, Favicon)
 
 Kommt eine Abteilung dazu, werden die Icons beim nächsten Erzeugen der Seite neu gezeichnet. Auf bereits installierten Apps aktualisieren iPhone und Desktop das Icon erst, wenn man die App einmal entfernt und neu hinzufügt.
+
+## Organisation
+
+- **Marco** ist Chef. Alle Teamleitungen berichten direkt an ihn.
+- **HR-Heidi** ist Stabsstelle bei Marco. Braucht eine Teamleitung Personal, meldet sie es bei Heidi. Heidi schreibt das Rollenprofil und holt die Stellengenehmigung bei Marco ein. Erst danach wird eingestellt.
+- **Teamleitungen**, je Abteilung eine: Wissens-Wilma (Planung & Wissen), Gestaltungs-Greta (Gestaltung), Technik-Toni (Technik & Betrieb), Qualitäts-Quentin (Qualität & Sicherheit). Sie entwickeln selbstständig Ideen, wie ihr Team besser wird, und bringen sie unter „Ideen der Teams“ ein. Marco entscheidet.
+- **Teamleiter-Runde:** Die Teamleitungen treffen sich jeden Montagmorgen, bringen je eine neue Idee ein und vereinbaren einen Punkt zur besseren Zusammenarbeit. Das Ergebnis steht in der Chronik.
+
+## Freigabe-Prüfung
+
+Gemeinsame Idee aller vier Teamleitungen. Sie prüft eine laufende Seite auf iPhone, iPad und Desktop (hell und dunkel), außerdem Manifest, App-Icons und Installierbarkeit. Screenshots und ein Bericht landen im Ausgabeordner.
+
+```
+PLAYWRIGHT_MODULE=<pfad-zu-playwright> CHROME_PATH=<chrome> node tools/freigabe-check.js http://127.0.0.1:8765/ freigabe
+```
 
 ## Porträts
 
@@ -67,7 +84,11 @@ Felder pro Teammitglied:
 | `lektionen` | gelernte Regeln aus Feedback, als Text oder `{ "text", "datum" }` |
 | `version` | steigt, wenn sich der Agent weiterentwickelt |
 | `bild` | Porträt, z. B. `avatars/bug-bodo.svg` |
+| `fuehrt` | `true` für Teamleitungen |
+| `stab` | `true` für Stabsstellen wie HR, die direkt an den Chef berichten |
 | `mensch` | `true` für echte Menschen (z. B. den Chef); dann ohne Version und Lektionen |
 | `seit` | Datum im Format `JJJJ-MM-TT` |
+
+Ideen (`ideen`) haben `titel`, `beschreibung`, `nutzen`, `art`, `status` (z. B. „Wartet auf Marco“, „Genehmigt“, „Umgesetzt“), `abteilung` und `von` (eine oder mehrere `id`s).
 
 Chronik-Einträge (`chronik`) haben `datum` (ISO-Zeit), `typ`, `agent` (die `id` der Person) und `text`. Der Text beginnt mit einem Verb, weil die Seite den Namen davorsetzt: „Bug-Bodo **findet** …“.

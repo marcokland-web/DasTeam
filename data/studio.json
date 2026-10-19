@@ -45,7 +45,7 @@
         "Sucht Randfälle: Emojis im Betragsfeld, Handy drehen beim Speichern",
         "Meldet Bugs mit klaren Schritten zum Nachstellen"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "qualitaets-quentin",
       "bild": "avatars/bug-bodo.svg",
       "faehigkeiten": [
         {
@@ -87,7 +87,7 @@
         "Plant Synchronisation zwischen Handy und Desktop",
         "Kümmert sich um Backups und Datenexport"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "technik-toni",
       "bild": "avatars/daten-dieter.svg",
       "faehigkeiten": [
         {
@@ -120,7 +120,7 @@
         "Baut automatische Abläufe, die neue Versionen ausliefern",
         "Prüft, ob Apps auch zu Hause auf eigener Hardware laufen können"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "technik-toni",
       "bild": "avatars/deploy-dennis.svg",
       "faehigkeiten": [
         {
@@ -158,7 +158,7 @@
         "Achtet auf Barrierefreiheit: Kontraste und Touch-Größen",
         "Pflegt den gemeinsamen STYLEGUIDE.md"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "gestaltungs-greta",
       "bild": "avatars/design-doris.svg",
       "faehigkeiten": [
         {
@@ -196,7 +196,7 @@
         "Hält Architektur-Entscheidungen kurz fest",
         "Schreibt eine einfache Bedienhilfe für die Familie"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "wissens-wilma",
       "bild": "avatars/doku-doerte.svg",
       "faehigkeiten": [
         {
@@ -222,11 +222,46 @@
       "version": "1.0"
     },
     {
+      "id": "gestaltungs-greta",
+      "abteilung": "gestaltung",
+      "aufgaben": [
+        "Entwickelt selbstständig Ideen, wie die Gestaltung besser wird",
+        "Führt Design-Doris, Logo-Luisa und Text-Tina und berichtet an Marco",
+        "Meldet Personalbedarf bei HR-Heidi",
+        "Stimmt sich jede Woche in der Teamleiter-Runde ab"
+      ],
+      "berichtetAn": "chef",
+      "bild": "avatars/gestaltungs-greta.svg",
+      "faehigkeiten": [
+        {
+          "name": "Gestaltungssysteme",
+          "stufe": 5
+        },
+        {
+          "name": "Qualität im Detail",
+          "stufe": 5
+        },
+        {
+          "name": "Team führen",
+          "stufe": 4
+        }
+      ],
+      "fuehrt": true,
+      "lektionen": [],
+      "motto": "Erst geprüft auf drei Geräten, dann bei Marco.",
+      "name": "Gestaltungs-Greta",
+      "nr": "P-021",
+      "persoenlichkeit": "Hat ein Auge fürs Detail, baut aber lieber einmal ein gutes System, als zehnmal dasselbe Problem einzeln zu reparieren. Schön ist nur, was auf dem iPhone der Familie wirklich funktioniert.",
+      "rolle": "Teamleiterin Gestaltung",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
       "id": "hr-heidi",
       "abteilung": "leitung",
       "aufgaben": [
-        "Plant, welche Spezialistinnen und Spezialisten ein Projekt braucht",
-        "Schreibt Rollenprofile und Agenten-Konfigurationen",
+        "Plant, welche Fachleute ein Projekt braucht, und stellt sie ein",
+        "Nimmt Personalbedarf der Teamleitungen auf und holt die Stellengenehmigung bei Marco ein",
         "Verwaltet Styleguide, Standards und die Lernakten des Teams"
       ],
       "berichtetAn": "chef",
@@ -265,6 +300,7 @@
       "persoenlichkeit": "Herzlich, strukturiert, behält den Überblick. Merkt sich, wer was kann und wer gerade überlastet ist.",
       "rolle": "Personalchefin",
       "seit": "2026-10-19",
+      "stab": true,
       "version": "1.2"
     },
     {
@@ -275,7 +311,7 @@
         "Legt pro App eine Farbpalette fest",
         "Sorgt für eine erkennbare Familien-Marke"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "gestaltungs-greta",
       "bild": "avatars/logo-luisa.svg",
       "faehigkeiten": [
         {
@@ -333,7 +369,7 @@
         "Trägt Einstellungen, Beförderungen und neue Lektionen in die Chronik ein",
         "Stellt neue Teammitglieder mit Steckbrief vor"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "wissens-wilma",
       "bild": "avatars/organigramm-olga.svg",
       "faehigkeiten": [
         {
@@ -366,7 +402,7 @@
         "Schneidet Projekte in kleine, lieferbare Etappen",
         "Führt die Roadmap für alle Familien-Apps"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "wissens-wilma",
       "bild": "avatars/plan-paula.svg",
       "faehigkeiten": [
         {
@@ -392,6 +428,41 @@
       "version": "1.0"
     },
     {
+      "id": "qualitaets-quentin",
+      "abteilung": "qualitaet",
+      "aufgaben": [
+        "Entwickelt selbstständig Ideen, wie Qualität & Sicherheit besser wird",
+        "Führt Bug-Bodo, Rant-Randy und Sicherheits-Siggi und berichtet an Marco",
+        "Meldet Personalbedarf bei HR-Heidi",
+        "Stimmt sich jede Woche in der Teamleiter-Runde ab"
+      ],
+      "berichtetAn": "chef",
+      "bild": "avatars/qualitaets-quentin.svg",
+      "faehigkeiten": [
+        {
+          "name": "Prüfprozesse",
+          "stufe": 5
+        },
+        {
+          "name": "Fehler-Nachbetrachtung",
+          "stufe": 5
+        },
+        {
+          "name": "Team führen",
+          "stufe": 4
+        }
+      ],
+      "fuehrt": true,
+      "lektionen": [],
+      "motto": "Wir finden es zuerst, nicht Marco.",
+      "name": "Qualitäts-Quentin",
+      "nr": "P-023",
+      "persoenlichkeit": "Gründlich und streng in der Sache, aber fair zu den Menschen. Sucht Lücken im Prüfprozess, keine Schuldigen, und will Beweise statt „sieht gut aus“.",
+      "rolle": "Teamleiter Qualität & Sicherheit",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
       "id": "rant-randy",
       "abteilung": "qualitaet",
       "aufgaben": [
@@ -399,7 +470,7 @@
         "Findet doppelte Logik und unnötige Komplexität",
         "Gibt priorisierte Verbesserungsvorschläge"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "qualitaets-quentin",
       "bild": "avatars/rant-randy.svg",
       "faehigkeiten": [
         {
@@ -432,7 +503,7 @@
         "Achtet auf Datenschutz bei Budget- und Verbrauchsdaten",
         "Prüft eingebaute Fremd-Bausteine auf bekannte Sicherheitslücken"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "qualitaets-quentin",
       "bild": "avatars/sicherheits-siggi.svg",
       "faehigkeiten": [
         {
@@ -458,6 +529,41 @@
       "version": "1.0"
     },
     {
+      "id": "technik-toni",
+      "abteilung": "technik",
+      "aufgaben": [
+        "Entwickelt selbstständig Ideen, wie Technik & Betrieb besser wird",
+        "Führt Daten-Dieter und Deploy-Dennis und berichtet an Marco",
+        "Meldet Personalbedarf bei HR-Heidi",
+        "Stimmt sich jede Woche in der Teamleiter-Runde ab"
+      ],
+      "berichtetAn": "chef",
+      "bild": "avatars/technik-toni.svg",
+      "faehigkeiten": [
+        {
+          "name": "Automatisierung",
+          "stufe": 5
+        },
+        {
+          "name": "Betrieb und Sicherung",
+          "stufe": 4
+        },
+        {
+          "name": "Team führen",
+          "stufe": 4
+        }
+      ],
+      "fuehrt": true,
+      "lektionen": [],
+      "motto": "Einmal automatisiert, nie wieder vergessen.",
+      "name": "Technik-Toni",
+      "nr": "P-022",
+      "persoenlichkeit": "Ruhig und pragmatisch. Fragt bei jedem Fehler zuerst, welcher automatische Check ihn verhindert hätte, und baut genau diesen Check ein.",
+      "rolle": "Teamleiter Technik & Betrieb",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
       "id": "text-tina",
       "abteilung": "gestaltung",
       "aufgaben": [
@@ -465,7 +571,7 @@
         "Sorgt für einheitliche Begriffe in allen Apps",
         "Prüft Texte auf Verständlichkeit für alle Familienmitglieder"
       ],
-      "berichtetAn": "hr-heidi",
+      "berichtetAn": "gestaltungs-greta",
       "bild": "avatars/text-tina.svg",
       "faehigkeiten": [
         {
@@ -487,6 +593,41 @@
       "nr": "P-013",
       "persoenlichkeit": "Klar, warm, allergisch gegen Fachchinesisch. Schreibt so, dass auch Oma die App bedienen kann.",
       "rolle": "UX-Texterin",
+      "seit": "2026-10-19",
+      "version": "1.0"
+    },
+    {
+      "id": "wissens-wilma",
+      "abteilung": "planung",
+      "aufgaben": [
+        "Entwickelt selbstständig Ideen, wie Planung & Wissen besser wird",
+        "Führt Plan-Paula, Doku-Dörte und Organigramm-Olga und berichtet an Marco",
+        "Meldet Personalbedarf bei HR-Heidi",
+        "Stimmt sich jede Woche in der Teamleiter-Runde ab"
+      ],
+      "berichtetAn": "chef",
+      "bild": "avatars/wissens-wilma.svg",
+      "faehigkeiten": [
+        {
+          "name": "Wissen nutzbar machen",
+          "stufe": 5
+        },
+        {
+          "name": "Abläufe gestalten",
+          "stufe": 4
+        },
+        {
+          "name": "Team führen",
+          "stufe": 4
+        }
+      ],
+      "fuehrt": true,
+      "lektionen": [],
+      "motto": "Was wir einmal lernen, prüfen wir für immer.",
+      "name": "Wissens-Wilma",
+      "nr": "P-020",
+      "persoenlichkeit": "Strukturiert und vorausschauend. Macht aus jeder Erfahrung eine Regel, die das Team auch wirklich anwendet, damit Marco Fehler nicht selbst finden muss.",
+      "rolle": "Teamleiterin Planung & Wissen",
       "seit": "2026-10-19",
       "version": "1.0"
     }
@@ -610,6 +751,125 @@
       "datum": "2026-10-19T22:46:30+02:00",
       "text": "macht installierbare Apps mit richtigem Logo zum Standard für das ganze Team.",
       "typ": "Lektion"
+    },
+    {
+      "id": "c018",
+      "agent": "chef",
+      "datum": "2026-10-19T22:58:00+02:00",
+      "text": "setzt je Abteilung eine Teamleitung ein, die direkt an ihn berichtet.",
+      "typ": "Leitung"
+    },
+    {
+      "id": "c019",
+      "agent": "hr-heidi",
+      "datum": "2026-10-19T22:59:00+02:00",
+      "text": "stellt die Teamleitungen Wissens-Wilma, Gestaltungs-Greta, Technik-Toni und Qualitäts-Quentin ein.",
+      "typ": "Neuzugang"
+    },
+    {
+      "id": "c020",
+      "agent": "wissens-wilma",
+      "datum": "2026-10-19T23:05:00+02:00",
+      "text": "einigt sich in der ersten Teamleiter-Runde mit Gestaltungs-Greta, Technik-Toni und Qualitäts-Quentin auf eine gemeinsame Freigabe-Prüfung vor jeder Auslieferung.",
+      "typ": "Teamleiter-Runde"
+    },
+    {
+      "id": "c021",
+      "agent": "technik-toni",
+      "datum": "2026-10-19T23:15:00+02:00",
+      "text": "baut mit Deploy-Dennis die gemeinsame Freigabe-Prüfung als festes Werkzeug. Die Organigramm-Seite besteht alle 22 Prüfpunkte.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c022",
+      "agent": "hr-heidi",
+      "datum": "2026-10-19T23:16:00+02:00",
+      "text": "lädt die Teamleitungen ab jetzt jeden Montagmorgen zur Teamleiter-Runde ein.",
+      "typ": "Leitung"
+    }
+  ],
+  "ideen": [
+    {
+      "id": "i001",
+      "abteilung": "alle",
+      "art": "Zusammenarbeit",
+      "beschreibung": "Ein automatischer Check prüft jede App vor der Auslieferung auf iPhone, iPad und Desktop (kein seitliches Scrollen), dazu Manifest, App-Icons und Installierbarkeit. Deploy-Dennis liefert erst aus, wenn Doris, Luisa, Bodo und Siggi ihre Punkte abgezeichnet haben.",
+      "datum": "2026-10-19T23:05:00+02:00",
+      "nutzen": "Fehler wie die fehlende Handy-Ansicht oder das Standard-„S“ findet das Team, nicht mehr Marco.",
+      "status": "Umgesetzt",
+      "titel": "Gemeinsame Freigabe-Prüfung vor jeder Auslieferung",
+      "von": [
+        "wissens-wilma",
+        "gestaltungs-greta",
+        "technik-toni",
+        "qualitaets-quentin"
+      ]
+    },
+    {
+      "id": "i002",
+      "abteilung": "planung",
+      "art": "Verbesserung",
+      "beschreibung": "Doku-Dörte führt ein Register mit Fehler, wer ihn bemerkt hat, Ursache, neuer Regel und zuständiger Person. Jede neue Regel wandert direkt in die Freigabe-Prüfung, und die Seite zeigt, wie viele Fehler Marco selbst finden musste.",
+      "datum": "2026-10-19T23:01:00+02:00",
+      "nutzen": "Ein Fehler passiert nur einmal, und Marco sieht, ob das Team selbstständig besser wird.",
+      "status": "Wartet auf Marco",
+      "titel": "Lernregister: aus jedem Fehler eine Prüfregel",
+      "von": "wissens-wilma"
+    },
+    {
+      "id": "i003",
+      "abteilung": "planung",
+      "art": "Neues Angebot",
+      "beschreibung": "Doku-Dörte und Text-Tina schreiben für jede App eine kurze, bebilderte Hilfe direkt in der App: installieren, mit dem Handy erfassen, mit dem Desktop abgleichen. Plan-Paula ergänzt bei jeder neuen Version „Was ist neu“.",
+      "datum": "2026-10-19T23:01:30+02:00",
+      "nutzen": "Die Familie kommt ohne Rückfragen bei Marco zurecht und nutzt neue Funktionen wirklich.",
+      "status": "Wartet auf Marco",
+      "titel": "Familien-Bedienhilfe je App auf einer Seite",
+      "von": "wissens-wilma"
+    },
+    {
+      "id": "i004",
+      "abteilung": "gestaltung",
+      "art": "Verbesserung",
+      "beschreibung": "Design-Doris baut eine zentrale Datei mit geprüften Farben für Hell und Dunkel, Schriften ohne Google, Abständen und Touch-Größen ab 44 px, die jede neue App von Anfang an nutzt. Dazu kommt eine Übersichtsseite mit allen Bausteinen.",
+      "datum": "2026-10-19T23:02:00+02:00",
+      "nutzen": "Budget, Habit Tracker und Zählerstände sehen aus wie aus einer Familie, und typische Fehler entstehen gar nicht erst.",
+      "status": "Wartet auf Marco",
+      "titel": "Gemeinsames Designsystem für alle Familien-Apps",
+      "von": "gestaltungs-greta"
+    },
+    {
+      "id": "i005",
+      "abteilung": "gestaltung",
+      "art": "Neues Angebot",
+      "beschreibung": "Text-Tina pflegt eine kurze Wortliste (z. B. „Kategorie“ statt englischer Fachbegriffe, Du-Ansprache, Euro- und Datumsformate) und fertige Bausteine für Leerzustände, Fehler, Löschen und Sync-Hinweise.",
+      "datum": "2026-10-19T23:02:30+02:00",
+      "nutzen": "Die Familie versteht alle Apps gleich, besonders den YNAB-Nachbau.",
+      "status": "Wartet auf Marco",
+      "titel": "Familien-Wortliste und Textbausteine",
+      "von": "gestaltungs-greta"
+    },
+    {
+      "id": "i006",
+      "abteilung": "technik",
+      "art": "Neues Angebot",
+      "beschreibung": "Daten-Dieter legt feste Testfälle an: offline am Handy erfassen, parallel am Desktop ändern, dann abgleichen, ohne Datenverlust. Dazu ein nächtliches, versioniertes Backup aufs NAS der FRITZ!Box mit monatlichem Wiederherstellungstest.",
+      "datum": "2026-10-19T23:03:00+02:00",
+      "nutzen": "Keine Buchung und kein Zählerstand geht verloren, und das ist nachweisbar.",
+      "status": "Wartet auf Marco",
+      "titel": "Sync- und Backup-Prüfstand für Familiendaten",
+      "von": "technik-toni"
+    },
+    {
+      "id": "i007",
+      "abteilung": "qualitaet",
+      "art": "Verbesserung",
+      "beschreibung": "Für jeden Fehler, den Marco zuerst findet, schreibt Rant-Randy eine kurze Nachbetrachtung: Warum hat unsere Prüfung ihn nicht gefunden? Daraus entsteht ein neuer automatischer Prüfpunkt.",
+      "datum": "2026-10-19T23:04:00+02:00",
+      "nutzen": "Derselbe Fehlertyp kommt nicht wieder, und Marco muss nicht mehr selbst testen.",
+      "status": "Wartet auf Marco",
+      "titel": "Fehler-Nachbetrachtung mit neuem Prüfpunkt",
+      "von": "qualitaets-quentin"
     }
   ]
 }

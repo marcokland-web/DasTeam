@@ -25,7 +25,7 @@ if "style=" in src or "style=" in js.replace("e.style", "").replace(".style.", "
 
 cut = src.index('<div class="app"')
 head, body = src[:cut].rstrip(), src[cut:].rstrip()
-CSP = ("default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; "
+CSP = ("default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://asfwbuptsfcrgmmgdgim.supabase.co; manifest-src 'self'; "
        "base-uri 'none'; form-action 'none'; object-src 'none'")
 APP = "\n".join([
     '<link rel="icon" id="favicon" href="icons/icon.svg" type="image/svg+xml">',
@@ -45,6 +45,8 @@ page = ('<!doctype html>\n<html lang="de">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
         f'<meta http-equiv="Content-Security-Policy" content="{CSP}">\n'
         + head + "\n</head>\n<body>\n" + body + "\n</body>\n</html>\n")
+import shutil
+shutil.copyfile(os.path.join(HERE, "sw.js"), os.path.join(OUT, "sw.js"))
 for name, content in [("index.html", page), ("style.css", css), ("app.js", js)]:
     open(os.path.join(OUT, name), "w", encoding="utf-8").write(content)
 

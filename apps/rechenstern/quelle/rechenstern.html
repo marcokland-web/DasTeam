@@ -471,6 +471,139 @@ body.playing .app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 @keyframes spin{from{transform:rotate(0) scale(.6)}to{transform:rotate(720deg) scale(1)}}
 @keyframes twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.08) rotate(8deg)}}
 
+/* Stella */
+.stella{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;min-width:0}
+.stella-fig{all:unset;cursor:pointer;width:84px;height:84px;display:block;flex:none;border-radius:50%}
+.stella-fig:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.stella-fig.wiggle{animation:wiggle .5s ease}
+.stella-svg{width:100%;height:100%;display:block;overflow:visible}
+.stella-svg .se{fill:#3A2414}.stella-svg .sw{fill:#FFFFFF}.stella-svg .se-l{fill:none;stroke:#3A2414;stroke-width:3;stroke-linecap:round}
+.stella-svg .sm{fill:none;stroke:#3A2414;stroke-width:3;stroke-linecap:round}.stella-svg .sm-f{fill:#7A1E3A}
+.stella-svg .sc{fill:#F08A8A;opacity:.55}
+.stella-svg .acc-leaf{fill:#C8642A}.stella-svg .acc-stem{fill:none;stroke:#6E4026;stroke-width:2.2;stroke-linecap:round}
+.stella-svg .acc-hat{fill:#B3261E}.stella-svg .acc-band{fill:#FFFFFF}
+.stella-svg .acc-pet{fill:#F2A7C0}.stella-svg .acc-mid{fill:#F6D98E}
+.stella-svg .acc-glass{fill:#1D1A1C;opacity:.85}
+.bubble{position:relative;display:flex;gap:8px;align-items:flex-start;background:var(--surface);border-radius:16px;padding:12px 12px 12px 14px;box-shadow:var(--shadow);border:1px solid var(--tile-line);min-width:0}
+.bubble::before{content:"";position:absolute;left:-7px;top:50%;width:14px;height:14px;background:inherit;border-left:1px solid var(--tile-line);border-bottom:1px solid var(--tile-line);transform:translateY(-50%) rotate(45deg)}
+.bubble p{font:600 16px/1.4 var(--f-body);flex:1;min-width:0}
+.bubble.pop{animation:pop .3s ease}
+.res-stella{width:96px;height:96px;margin:0 auto}
+.res-stella .stella-svg{animation:pop .5s ease}
+.surprise{grid-template-columns:minmax(0,1fr)}
+.surprise .btn{grid-column:auto}
+@media (min-width:600px){.surprise{grid-template-columns:minmax(0,1fr) auto}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg) scale(1.05)}75%{transform:rotate(10deg) scale(1.05)}}
+
+/* Vorlesen */
+.spk{all:unset;cursor:pointer;width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--fill);color:var(--accent)}
+.spk svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.spk:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.qcard > .spk{position:absolute;top:12px;right:12px}
+.qcard .plus{right:64px}
+.storyrow{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.storyrow.center{justify-content:center;align-items:center}
+.st-group .seg + .seg,.st-group .seg + .st-in{margin-top:6px}
+.st-in{margin:6px 10px 2px}
+
+/* Duell */
+.duel{position:fixed;inset:0;z-index:30;background:var(--bg);display:grid;grid-template-rows:minmax(0,1fr) auto minmax(0,1fr);
+  padding:calc(8px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:8px}
+@media (orientation:landscape) and (min-width:700px){.duel{grid-template-rows:none;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}.dmid{flex-direction:column}}
+.duel.opp .dp:first-child{transform:rotate(180deg)}
+@media (orientation:landscape) and (min-width:700px){.duel.opp .dp:first-child{transform:none}}
+.dp{display:grid;grid-template-rows:auto auto 1fr auto auto;gap:8px;align-content:center;padding:14px;border-radius:var(--r-xl);background:var(--surface);border:1px solid var(--tile-line);box-shadow:var(--shadow);min-height:0;min-width:0}
+.dp:nth-of-type(2){background:color-mix(in srgb,var(--gold-tint) 50%,var(--surface))}
+.dp.frozen{animation:shake .35s ease}
+.dphead{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.dphead b{font:700 20px/1.2 var(--f-round);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dpts{font:700 16px/1 var(--f-round);color:var(--gold-ink)}
+.dbar{height:10px;border-radius:99px;background:var(--fill);overflow:hidden}
+.dbar i{display:block;height:100%;width:0;background:var(--gold);border-radius:99px;transition:width .3s}
+.dq{margin:0;text-align:center;font:700 clamp(36px,9vh,64px)/1 var(--f-round);align-self:center}
+.dchoices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dchoice{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:grid;place-items:center;min-height:clamp(48px,8vh,72px);border-radius:var(--r-l);background:var(--key);border:1px solid var(--tile-line);box-shadow:var(--shadow);font:700 26px/1 var(--f-round);touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.dchoice small{position:absolute;left:8px;top:6px;font:500 11px/1 var(--f-body);color:var(--muted);display:none}
+@media (hover:hover) and (pointer:fine){.dchoice small{display:block}}
+.dchoice:active{transform:scale(.96)}
+.dchoice[disabled]{opacity:.5}
+.dchoice:focus-visible{outline:3px solid var(--accent)}
+.dstat{margin:0;text-align:center;font-size:14px;color:var(--bad);min-height:1.4em}
+.dmid{display:flex;align-items:center;justify-content:center;gap:12px}
+.dmid .kbd{font-size:12px}
+.dwin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(380px,calc(100% - 32px));display:grid;gap:12px;justify-items:center;text-align:center;z-index:2;box-shadow:0 20px 60px rgb(0 0 0 / .3)}
+.dwin svg.stella-svg{width:96px;height:96px}
+.dwin h2{font:700 26px/1.2 var(--f-round)}
+.dwin .acts{display:grid;gap:8px;width:100%}
+.duelform .seg{margin-top:6px}
+
+/* Wochenbericht */
+.wk{display:grid;gap:14px}
+.wkchart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;height:140px;align-items:end}
+.wkcol{display:grid;grid-template-rows:1fr auto;gap:4px;height:100%;justify-items:center}
+.wkstack{width:100%;max-width:34px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;border-radius:6px;overflow:hidden;background:var(--fill)}
+.wkstack i{display:block;width:100%;height:0}
+.wkstack .wc{background:var(--gold)}
+.wkstack .wr{background:color-mix(in srgb,var(--bad) 55%,var(--fill))}
+.wkcol small{font-size:12px;color:var(--muted)}
+.keyrow i.wcl{background:var(--gold)}
+.keyrow i.wrl{background:color-mix(in srgb,var(--bad) 55%,var(--fill))}
+.wknums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (min-width:600px){.wknums{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.wknums div{display:grid;gap:2px;background:var(--bg);border-radius:10px;padding:10px}
+.wknums b{font:700 22px/1 var(--f-round)}
+.wknums small{font-size:12px;color:var(--muted)}
+
+/* Urkunde */
+.certwrap{margin-top:18px}
+.row .ic.gold{background:var(--gold-tint);color:var(--gold-ink)}
+.row .ic.gold svg{fill:var(--gold);stroke:none}
+.cert{background:#FFFDF8;color:#1D1A1C;border-radius:8px;padding:14px;box-shadow:var(--shadow);aspect-ratio:1.414;max-width:100%}
+.cert-in{height:100%;border:3px double #C8963E;outline:1px solid #E7D3A6;outline-offset:-10px;border-radius:4px;display:grid;justify-items:center;align-content:center;gap:4px;padding:18px;text-align:center}
+.cert-stella{width:clamp(56px,12vw,96px);height:clamp(56px,12vw,96px)}
+.cert-k{margin:0;font:600 12px/1 var(--f-body);letter-spacing:.3em;text-transform:uppercase;color:#7A1E3A}
+.cert-t{margin:0;font:800 clamp(28px,7vw,56px)/1 var(--f-round);color:#7A1E3A}
+.cert-f{margin:4px 0 0;color:#675E62;font-size:14px}
+.cert-n{margin:0;font:700 clamp(22px,5.5vw,40px)/1.1 var(--f-round);border-bottom:2px solid #C8963E;padding:0 18px 4px}
+.cert-x{margin:6px 0 0;font:600 clamp(14px,3vw,20px)/1.3 var(--f-body)}
+.cert .bigstars svg{width:clamp(22px,5vw,36px);height:clamp(22px,5vw,36px)}
+.cert .bigstars .on{fill:#C8963E}
+.cert-foot{display:flex;justify-content:space-between;gap:16px;width:100%;margin-top:8px;font-size:12px;color:#675E62}
+.cert-name{background:var(--surface);border-radius:var(--r-l)}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  body *{visibility:hidden!important}
+  .cert,.cert *{visibility:visible!important}
+  .cert{position:fixed;inset:0;box-shadow:none;border-radius:0;aspect-ratio:auto;padding:0}
+  .noprint{display:none!important}
+}
+
+/* Advent */
+.adv{display:grid;gap:12px;background:linear-gradient(160deg,var(--surface),var(--tint))}
+.learn .advsec{grid-column:1/-1}
+.doors{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+@media (min-width:700px){.doors{grid-template-columns:repeat(12,minmax(0,1fr))}}
+.door{all:unset;box-sizing:border-box;cursor:pointer;aspect-ratio:1;display:grid;place-items:center;border-radius:10px;background:var(--accent);color:var(--on-accent);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--gold) 60%,transparent)}
+.door b{font:700 18px/1 var(--f-round)}
+.door.locked{background:var(--fill);color:var(--muted);box-shadow:none}
+.door.solved{background:var(--gold-tint);box-shadow:inset 0 0 0 2px var(--gold)}
+.door.solved svg{width:60%;height:60%;fill:var(--gold)}
+.door:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Sync und Erinnerung */
+.ok-ink{color:var(--ok)}
+.sycode{margin:6px 0;font:700 20px/1.3 var(--f-round);letter-spacing:.06em;user-select:all;-webkit-user-select:all;word-break:break-all}
+.daychips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.daychip{position:relative}
+.daychip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.daychip span{display:grid;place-items:center;min-width:46px;min-height:40px;padding:0 8px;border-radius:99px;background:var(--fill);color:var(--muted);font-weight:600;font-size:14px}
+.daychip input:checked + span{background:var(--accent);color:var(--on-accent)}
+.daychip input:focus-visible + span{outline:3px solid var(--accent);outline-offset:2px}
+.field input[type="time"]{max-width:160px}
+.checkrow{display:flex!important;align-items:center;gap:12px;cursor:pointer}
+.field .checkrow input,.checkrow input{all:revert;width:22px;height:22px;accent-color:var(--accent);flex:none;margin:0}
+.hist .row .btn{min-height:40px;padding:0 12px}
+
 /* Einstellungsmenü (Studio-Baustein, Team-Standard 6 und 7) */
 dialog.settings{border:0;padding:0;border-radius:var(--r-xl);width:min(440px,calc(100vw - 32px));background:var(--bg);color:var(--fg);box-shadow:0 20px 60px rgb(0 0 0 / .3)}
 dialog.settings::backdrop{background:rgb(20 10 15 / .45)}
@@ -576,6 +709,12 @@ body.playing .toast{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
         <label><input type="radio" name="st-sound" id="st-sound-on" value="on"><span data-i18n="soundOn">Töne an</span></label>
         <label><input type="radio" name="st-sound" id="st-sound-off" value="off"><span data-i18n="soundOff">Töne aus</span></label>
       </div>
+      <div class="seg" role="radiogroup" aria-label="Vorlesen" id="st-speech-g">
+        <label><input type="radio" name="st-speech" id="st-speech-off" value="off"><span data-i18n="spOff">Aus</span></label>
+        <label><input type="radio" name="st-speech" id="st-speech-tap" value="tap"><span data-i18n="spTap">Auf Knopfdruck</span></label>
+        <label><input type="radio" name="st-speech" id="st-speech-auto" value="auto"><span data-i18n="spAuto">Automatisch</span></label>
+      </div>
+      <p class="st-foot st-in" data-i18n="spHint">Stella liest Aufgaben, Geschichten und Tipps vor.</p>
       <button type="button" class="row" data-act="parents" id="st-parents"><span class="tx"><b data-i18n="parentsOpen">Eltern-Bereich</b></span><svg class="chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></button>
     </div>
     <p class="st-foot" data-i18n="stParentsHint">Belohnungen, Tagesziel und Lernstand. Geschützt mit einer Eltern-PIN.</p>
@@ -598,7 +737,7 @@ const STR = {
   tabPlay:["Spielen","Play"], tabColl:["Sammlung","Collection"], tabChest:["Schatztruhe","Treasure"], navAria:["Bereiche","Sections"],
   starsAria:["{n} Sterne, zur Schatztruhe","{n} stars, open treasure chest"], home:["Rechenstern, zum Start","Rechenstern, go to start"],
   hello:["Hallo, {n}!","Hi, {n}!"], helloNo:["Hallo!","Hi there!"],
-  obTitle:["Wie heißt du?","What's your name?"], obSub:["Dann kann ich dich begrüßen. Dein Name bleibt nur auf diesem Gerät.","Then I can greet you. Your name stays on this device only."],
+  obTitle:["Wie heißt du?","What's your name?"], obSub:["Dann kann ich dich begrüßen.","Then I can greet you."],
   obPh:["Vorname","First name"], obGo:["Los geht’s","Let’s go"], obSkip:["Später","Later"],
   level:["Level {n}","Level {n}"], xpTo:["Noch {n} richtige Aufgaben bis Level {l}","{n} more correct answers to reach level {l}"],
   goal:["Tagesziel","Daily goal"], goalTxt:["{d} von {g} richtigen Aufgaben","{d} of {g} correct answers"], goalDone:["Geschafft! Du hast 10 Extra-Sterne bekommen.","Done! You got 10 bonus stars."],
@@ -657,7 +796,7 @@ const STR = {
   deleted:["„{r}“ gelöscht","“{r}” deleted"], undo:["Rückgängig","Undo"],
   pStats:["Lernstand","Progress"], thReihe:["Reihe","Table"], thDone:["Gerechnet","Answered"], thAcc:["Richtig","Correct"], thSolid:["Sicher","Solid"],
   pTricky:["Schwierigste Aufgaben","Trickiest problems"], trickyRow:["{n}-mal falsch","wrong {n} times"], noStats:["Noch keine Aufgaben gerechnet.","No problems answered yet."],
-  pPrivacy:["Alle Daten bleiben auf diesem Gerät. Nichts wird ins Internet geschickt. Auf einem anderen Gerät beginnt das Spiel von vorn.","All data stays on this device. Nothing is sent over the internet. On another device the game starts fresh."],
+  pPrivacy:["Ohne „Geräte verbinden“ bleiben alle Daten auf diesem Gerät. Mit Verbindung wird der Spielstand über eine gesicherte Verbindung im Familien-Speicher (Supabase) abgelegt, erreichbar nur mit dem Familien-Code.","Without “Connect devices”, all data stays on this device. When connected, progress is stored over a secure connection in the family storage (Supabase), reachable only with the family code."],
   pChangePin:["PIN ändern","Change PIN"], pLock:["Eltern-Bereich schließen","Close parents’ area"],
   pReset:["Fortschritt zurücksetzen","Reset progress"], pResetQ:["Wirklich alles zurücksetzen? Sterne, Abzeichen und Lernstand sind dann weg. Belohnungen und PIN bleiben.","Really reset everything? Stars, badges and progress will be gone. Rewards and PIN stay."],
   pResetYes:["Ja, zurücksetzen","Yes, reset"], pResetDone:["Fortschritt zurückgesetzt","Progress reset"],
@@ -679,7 +818,7 @@ const fmtDate = ts => new Date(ts).toLocaleDateString(LOC(), { day:"numeric", mo
 const KEY = "rechenstern-v1";
 const DEFAULT = () => ({ v:1, name:"", skipName:false, facts:{}, stars:0, xp:0, reihe:{}, badges:{},
   day:{ date:"", count:0, goalDone:false }, streak:{ days:0, last:"" }, bestStreak:0, blitzBest:0, rounds:0,
-  path:{}, tricks:{}, cases:{}, stories:0, goal:20, sound:true, pinH:"", pinFail:{ n:0, until:0 }, bonusDay:{}, knobelHad:false,
+  path:{}, tricks:{}, cases:{}, stories:0, log:{}, advent:{}, duels:[], speech:"tap", lastActive:"", duelName:"", duelPool:"all", duelHead:0, duelSeat:"side", advPreview:false, goal:20, sound:true, pinH:"", pinFail:{ n:0, until:0 }, bonusDay:{}, knobelHad:false,
   rewards:[{ id:"r1", key:"rw_r1", cost:60 }, { id:"r2", key:"rw_r2", cost:100 }, { id:"r3", key:"rw_r3", cost:300 }], redeemed:[] });
 let S = load();
 function load(){
@@ -719,7 +858,8 @@ async function checkPin(pin){
   return n >= 3 ? "locked" : "wrong";
 }
 const pinErr = r => r === "locked" ? t("pinLocked", { n: lockLeft() }) : t("pinWrong");
-function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+function saveLocal(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+function save(){ saveLocal(); if (typeof scheduleSync === "function") scheduleSync(); }
 
 const pad2 = n => String(n).padStart(2, "0");
 const dayStr = d => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
@@ -843,15 +983,20 @@ function burst(){
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const cv = $("#fx"), ctx = cv.getContext("2d"), dpr = window.devicePixelRatio || 1;
   cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.scale(dpr, dpr);
-  const cs = getComputedStyle(document.documentElement), cols = ["--gold", "--accent", "--ok", "--gold"].map(v => cs.getPropertyValue(v).trim());
+  const fx = SEASON_FX[season()], cs = getComputedStyle(document.documentElement), cols = fx.cols || ["--gold", "--accent", "--ok", "--gold"].map(v => cs.getPropertyValue(v).trim());
+  const grav = fx.shape === "snow" ? .07 : fx.shape === "leaf" ? .14 : fx.shape === "petal" ? .12 : .32;
   const ps = Array.from({ length: 90 }, () => ({ x: innerWidth / 2 + (Math.random() - .5) * 120, y: innerHeight * .38, vx: (Math.random() - .5) * 11, vy: -Math.random() * 11 - 4,
     s: 5 + Math.random() * 6, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[Math.floor(Math.random() * cols.length)] }));
   const t0 = performance.now();
   (function step(now){
-    const k = (now - t0) / 1600; ctx.clearRect(0, 0, innerWidth, innerHeight);
+    const k = (now - t0) / (fx.shape === "rect" ? 1600 : 2600); ctx.clearRect(0, 0, innerWidth, innerHeight);
     if (k >= 1) return;
-    for (const p of ps){ p.vy += .32; p.x += p.vx; p.y += p.vy; p.r += p.vr;
-      ctx.save(); ctx.globalAlpha = 1 - k; ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .66); ctx.restore(); }
+    for (const p of ps){ p.vy = Math.min(p.vy + grav, fx.shape === "rect" ? 99 : 3.2); p.x += p.vx * (fx.shape === "rect" ? 1 : .6) + (fx.shape === "rect" ? 0 : Math.sin(now / 300 + p.s) * .8); p.y += p.vy; p.r += p.vr;
+      ctx.save(); ctx.globalAlpha = 1 - k; ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c;
+      if (fx.shape === "leaf"){ ctx.beginPath(); ctx.ellipse(0, 0, p.s * .9, p.s * .45, 0, 0, Math.PI * 2); ctx.fill(); }
+      else if (fx.shape === "snow" || fx.shape === "petal"){ ctx.beginPath(); ctx.arc(0, 0, p.s * (fx.shape === "snow" ? .45 : .6), 0, Math.PI * 2); ctx.fill(); if (fx.shape === "snow"){ ctx.strokeStyle = "rgba(120,150,180,.5)"; ctx.lineWidth = 1; ctx.stroke(); } }
+      else ctx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .66);
+      ctx.restore(); }
     requestAnimationFrame(step);
   })(t0);
 }
@@ -886,6 +1031,7 @@ function render(){
   $$("[data-w]").forEach(e => e.style.width = e.dataset.w + "%");
   $$("[data-cols]").forEach(e => e.style.setProperty("--cols", e.dataset.cols));
   $$("[data-x]").forEach(e => e.style.setProperty("--x", e.dataset.x));
+  $$("[data-h]").forEach(e => e.style.height = e.dataset.h + "%");
 }
 
 function levelBlock(){
@@ -928,6 +1074,7 @@ function renderHome(){
         ${modeRow("mix", ICON.mix, t("mix"), t("mixSub"))}
         ${modeRow("blitz", ICON.blitz, t("blitz"), S.blitzBest ? t("blitzSub") + " · " + t("blitzRec", { n: S.blitzBest }) : t("blitzSub"))}
         ${modeRow("knobel", ICON.knobel, t("knobel"), kn ? t(kn === 1 ? "knobelSub1" : "knobelSub", { n: kn }) : t("knobelEmpty"), !kn)}
+        <button type="button" class="row" data-act="duelSetup"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5M10.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/></svg></span><span class="tx"><b>${esc(t("duel"))}</b><small>${esc(t("duelSub"))}</small></span>${CHEV}</button>
       </div></div>
     </div></div>`;
 }
@@ -989,7 +1136,7 @@ function renderPlay(){
       <span class="chip${P.streak >= 3 ? "" : " off"}">${FLAME}${esc(t("inarow", { n: P.streak }))}</span></div>
     ${blitz ? `<p class="sr" id="tleft"></p>` : ""}
     <div class="card qcard">
-      <p class="qlabel">${esc(blitz ? t("blitz") : P.mode === "reihe" ? t("reihe", { n: P.a }) : P.mode === "mix" ? t("mix") : t("knobel"))}</p>
+      <p class="qlabel">${esc(blitz ? t("blitz") : P.mode === "reihe" ? t("reihe", { n: P.a }) : P.mode === "mix" ? t("mix") : t("knobel"))}</p>${blitz ? "" : spk(t("spQ", { x, y }))}
       <div class="q" aria-live="polite"><span>${x}</span><span class="op">×</span><span>${y}</span><span class="op">=</span>
         <span class="ans${P.phase === "right" ? " right" : P.phase === "wrong" ? " wrong" : !P.input ? " empty" : ""}" id="ans">${esc(ans)}</span></div>
       ${mid}
@@ -1000,6 +1147,7 @@ function renderPlay(){
     <p class="kbd">${esc(t("kbd"))}</p>
   </div>`;
   if (blitz){ tickBlitz(); if (!P) return; }
+  if (P.phase === "ask" && !blitz) autoSpeak(`q${P.id}-${P.idx}`, t("spQ", { x, y }));
   if (P.phase === "wrong" && !blitz) $("#nextbtn")?.focus({ preventScroll: true });
 }
 function typeKey(k){
@@ -1032,14 +1180,15 @@ function record(q, ok){
   touchDay();
   const f = fact(q.a, q.b);
   if (ok){
-    f.c++; if (!P.tip) f.box = Math.min(5, f.box + 1);
+    const b0 = f.box; f.c++; if (!P.tip) f.box = Math.min(5, f.box + 1); f.t = Date.now();
+    logToday("c"); if (b0 < 3 && f.box >= 3) logToday("s");
     P.streak++; P.maxStreak = Math.max(P.maxStreak, P.streak); S.bestStreak = Math.max(S.bestStreak, P.streak);
     S.xp++;
     if (!P.solid){ S.stars++; P.earned++; }        // gemeisterte Reihe: keine Sterne mehr, damit sich Üben der schweren Reihen lohnt
     if (P.idx < P.base) P.score++;
     if (P.mode === "blitz") P.blitz++;
     S.day.count++;                                // Tagesziel zählt nur richtige Antworten
-  } else { f.w++; f.box = 0; P.streak = 0; S.knobelHad = true; }
+  } else { f.w++; f.box = 0; f.t = Date.now(); P.streak = 0; S.knobelHad = true; logToday("w"); }
   P.res[P.idx] = ok;
   if (!S.day.goalDone && S.day.count >= S.goal){ S.day.goalDone = true; S.stars += 10; P.earned += 10; P.goalJust = true; }
   P.fresh.push(...checkBadges({}));
@@ -1096,7 +1245,9 @@ function renderResult(){
   }
   const nextR = R.mode === "reihe" && reiheStars(R.a) >= 2 ? recoReihe() : null;
   const earned = R.earned === 1 ? t("earned1") : t("earned", { n: R.earned });
+  const newMaster = R.mode === "reihe" && reiheStars(R.a) === 3 && R.stars0 < 3;
   $("#v-result").innerHTML = `<div class="result"><div class="card">
+      <div class="res-stella">${stellaSvg(R.score >= Math.ceil((R.base === Infinity ? 10 : R.base) * 0.7) || R.mode === "blitz" ? "cheer" : "happy", "rs")}</div>
       ${stars}
       <h2>${esc(title)}</h2>
       <p class="muted m0">${esc(sub)}</p>
@@ -1112,6 +1263,7 @@ function renderResult(){
       ${nextR && nextR !== R.a ? `<button type="button" class="btn primary wide" data-act="start" data-mode="reihe" data-a="${nextR}">${esc(t("nextReihe", { n: nextR }))}</button>
         <button type="button" class="btn tinted wide" data-act="start" data-mode="reihe" data-a="${R.a}">${esc(t("again"))}</button>`
       : `<button type="button" class="btn primary wide" data-act="start" data-mode="${R.mode}" data-a="${R.a ?? ""}"${R.mode === "knobel" && !knobelList().length ? " disabled" : ""}>${esc(t("again"))}</button>`}
+      ${newMaster ? `<button type="button" class="btn tinted wide" data-act="cert" data-a="${R.a}">${esc(t("certShow"))}</button>` : ""}
       <button type="button" class="btn plain wide" data-act="tab" data-v="home">${esc(t("toHome"))}</button>
     </div></div>`;
 }
@@ -1132,7 +1284,8 @@ function renderColl(){
         <div class="keyrow"><span><i></i>${esc(t("kNew"))}</span><span><i class="p"></i>${esc(t("kPract"))}</span><span><i class="s"></i>${esc(t("kSolid"))}</span></div></div>
     </div>
     <div><p class="kicker">${esc(t("badges"))} · ${esc(t("badgesSub", { n: got, t: BADGES.length }))}</p>
-      <div class="badges">${BADGES.map(b => `<div class="badge${S.badges[b.id] ? "" : " locked"}">${medal(b)}<b>${esc(L2(b.n))}</b><small>${esc(S.badges[b.id] ? fmtDate(S.badges[b.id]) : L2(b.h))}</small></div>`).join("")}</div></div>
+      <div class="badges">${BADGES.map(b => `<div class="badge${S.badges[b.id] ? "" : " locked"}">${medal(b)}<b>${esc(L2(b.n))}</b><small>${esc(S.badges[b.id] ? fmtDate(S.badges[b.id]) : L2(b.h))}</small></div>`).join("")}</div>
+      <div class="certwrap">${certList()}</div></div>
   </div>`;
 }
 
@@ -1191,6 +1344,7 @@ function renderParents(){
     .map(([k, f]) => { const [a, b] = k.split("x").map(Number); return `<div class="row"><span class="tx"><b class="num">${b} × ${a} = ${a * b}</b><small>${esc(t("trickyRow", { n: f.w }))}</small></span></div>`; }).join("");
   const anyStats = Object.keys(S.facts).length > 0;
   el.innerHTML = `<div class="parents"><h2>${esc(t("pTitle"))}</h2>
+    ${weekReport()}
     <div><p class="kicker">${esc(t("pChild"))}</p><div class="list">
       <div class="field"><label for="p-name">${esc(t("pName"))}</label><input id="p-name" maxlength="24" autocomplete="off" value="${esc(S.name)}" placeholder="${esc(t("obPh"))}"></div>
       <div class="field"><span id="p-goal-l" class="muted small">${esc(t("pGoal"))}</span>
@@ -1207,6 +1361,7 @@ function renderParents(){
         : `<div class="field"><p class="muted m0">${esc(t("noStats"))}</p></div>`}
     </div></div>
     ${tricky ? `<div><p class="kicker">${esc(t("pTricky"))}</p><div class="list hist">${tricky}</div></div>` : ""}
+    ${parentsExtras()}
     <div class="list">
       <button type="button" class="row" data-act="changePin"><span class="tx"><b>${esc(t("pChangePin"))}</b></span>${CHEV}</button>
       <button type="button" class="row" data-act="lock"><span class="tx"><b>${esc(t("pLock"))}</b></span>${CHEV}</button>
@@ -1360,7 +1515,8 @@ function finishStation(a, st){
   reward(3); tone(SND.win); burst();
   return true;
 }
-function reward(n, quiet){
+function reward(n, quiet, noLog){
+  if (!noLog) logToday("l");
   S.stars += n; const fresh = checkBadges({}); save();
   if (!quiet) toast(t("stationDone").replace("3", String(n)));
   if (fresh.length) setTimeout(() => { toast(t("newBadge") + ": " + L2(fresh[0].n)); tone(SND.win); }, quiet ? 300 : 2700);
@@ -1409,8 +1565,9 @@ function renderLearn(){
     ["story", t("gStory"), t("gStoryS")], ["detect", t("gDetect"), t("gDetectS", { n: solved })],
   ].map(([id, ti, sub]) => `<button type="button" class="game" data-act="game" data-g="${id}"><span class="gic"><svg viewBox="0 0 24 24" aria-hidden="true">${GAMEICON[id]}</svg></span><b>${esc(ti)}</b><small>${esc(sub)}</small></button>`).join("");
   $("#v-lernen").innerHTML = `<div class="learn">
-    <div class="card surprise"><div class="spark" aria-hidden="true">${starSvg("")}</div><div class="tx"><h2>${esc(t("lHero"))}</h2><p class="muted m0">${esc(t("lHeroSub"))}</p></div>
+    <div class="card surprise">${stellaBubble(stellaGreeting() + " " + t("lHero") + " " + t("stTapHint"), "happy", "l")}
       <button type="button" class="btn primary" data-act="surprise">${esc(t("surprise"))}</button></div>
+    ${adventCard()}
     <section class="pathsec"><p class="kicker">${esc(t("pathTitle"))}</p>
       <div class="card pathcard"><p class="muted m0 small">${esc(t("pathSub"))}</p>
         <div class="rchips" role="group" aria-label="${esc(t("pathPick"))}">${chips}</div>
@@ -1435,11 +1592,11 @@ const actHead = (title, sub = "") => `<div class="pbar"><button type="button" cl
   <div class="acttitle"><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}</div></div>`;
 function renderAct(){
   if (!A){ show("lernen"); return; }
-  ({ schoko:renderChoco, frosch:renderFrog, tricks:renderTrickList, trick:renderTrick, story:renderStory, muster:renderMuster, spin:renderSpin })[A.kind]();
+  ({ schoko:renderChoco, frosch:renderFrog, tricks:renderTrickList, trick:renderTrick, story:renderStory, muster:renderMuster, spin:renderSpin, duelSetup:renderDuelSetup, duel:renderDuel, cert:renderCert, advent:renderAdvent })[A.kind]();
 }
 function doneBox(text, a){
   const nx = a ? nextStationAct(a) : null;
-  return `<div class="card donebox"><div class="bigstars">${[0, 1, 2].map(() => `<svg viewBox="0 0 24 24" class="on" aria-hidden="true">${STAR}</svg>`).join("")}</div><h2>${esc(text)}</h2>
+  return `<div class="card donebox"><div class="res-stella">${stellaSvg("cheer", "dn")}</div><h2>${esc(text)}</h2>
     <div class="acts">${nx ? `<button type="button" class="btn primary wide" data-act="station" data-st="${nx[0]}" data-a="${a}">${esc(t("nextStation"))}</button>` : ""}
     <button type="button" class="btn ${nx ? "plain" : "primary"} wide" data-act="actClose">${esc(t("toLearn"))}</button></div></div>`;
 }
@@ -1532,7 +1689,7 @@ function frQuestion(){
     <button type="button" class="btn tinted wide" data-act="frClap">${esc(t("frClap"))}</button>
     ${nextStationAct(A.a)[0] !== "frosch" ? `<button type="button" class="btn primary wide" data-act="station" data-st="${nextStationAct(A.a)[0]}" data-a="${A.a}">${esc(t("nextStation"))}</button>` : ""}
     <button type="button" class="btn plain wide" data-act="actClose">${esc(t("toLearn"))}</button></div>`;
-  return `<p class="frq">${esc(t("frQ", { a: A.a }))}</p><div class="choices">${A.opts.map(v => `<button type="button" class="choice num" data-act="frPick" data-v="${v}">${v}</button>`).join("")}</div>
+  return `<div class="storyrow center"><p class="frq">${esc(t("frQ", { a: A.a }))}</p>${spk(t("frQ", { a: A.a }))}</div><div class="choices">${A.opts.map(v => `<button type="button" class="choice num" data-act="frPick" data-v="${v}">${v}</button>`).join("")}</div>
     ${A.hint ? `<p class="err m0" role="alert">${esc(t("frHint", { a: A.a, p: A.pos * A.a }))}</p>` : ""}`;
 }
 function frPick(v, btn){
@@ -1570,7 +1727,7 @@ function renderTrick(){
   const tr = trickBy(A.id);
   let body;
   if (A.step === 0){
-    body = `<div class="card trickdemo"><p class="m0">${esc(L2(tr.d))}</p><div class="demo">${tr.demo(A.s)}</div>
+    body = `<div class="card trickdemo"><div class="storyrow"><p class="m0">${esc(L2(tr.d))}</p>${spk(L2(tr.d))}</div><div class="demo">${tr.demo(A.s)}</div>
       <div class="acts row2">${tr.opLabel ? `<button type="button" class="btn tinted" data-act="trOp">${esc(L2(tr.opLabel))}</button>` : tr.id === "finger" ? "" : `<button type="button" class="btn tinted" data-act="trOp">${esc(t("otherNum"))}</button>`}
       <button type="button" class="btn primary" data-act="trStart">${esc(t("trTry"))}</button></div></div>`;
   } else if (A.step > 3){
@@ -1601,8 +1758,9 @@ function renderStory(){
   const groups = Array.from({ length: n }, (_, i) => `<button type="button" class="grp${i < A.tapped || A.ok ? " on" : ""}" data-act="sgTap" data-i="${i}" aria-label="${i + 1}">
     <span class="gimg">${s.g()}</span><b class="num">${i < A.tapped || A.ok ? (i + 1) * s.p : s.p}</b></button>`).join("");
   const q = { opts: A.opts || (A.opts = shuffle([r, ...shuffle([...new Set([r + s.p, r - s.p, r + 1, r - 1, r + 10].filter(v => v > 0 && v !== r))]).slice(0, 2)])) };
+  autoSpeak(`st${A.i}-${s.id}`, L2(s.d).replace("{n}", n) + " " + t("sgQ"));
   $("#v-act").innerHTML = `<div class="act wide">${actHead(t("gStory"), t("sgN", { i: A.i + 1, n: A.list.length }))}
-    <div class="card storycard"><p class="storytx">${esc(L2(s.d).replace("{n}", n))}</p>
+    <div class="card storycard"><div class="storyrow"><p class="storytx">${esc(L2(s.d).replace("{n}", n))}</p>${spk(L2(s.d).replace("{n}", n) + " " + t("sgQ"))}</div>
       <div class="groups">${groups}</div>
       <p class="muted m0 small">${esc(A.ok ? t("sgRight", { n, p: s.p, r }) + (A.cap ? " " + t("sgCap") : "") : t("sgTip"))}</p></div>
     ${A.ok ? `<button type="button" class="btn primary wide" data-act="sgNext">${esc(t("next"))}</button>`
@@ -1705,6 +1863,591 @@ document.addEventListener("click", e => {
   }
 });
 
+/* ---------- Verlustfreie Zusammenführung zweier Spielstände (Daten-Dieter) ----------
+   merge3(base, local, remote): base = Stand beim letzten Abgleich (oder {} beim ersten Koppeln).
+   Zähler werden addiert (remote + eigene Änderung seit base), Erfolge vereinigt, Bestwerte maximiert.
+   Kein Fortschritt eines Geräts geht verloren. */
+function merge3(base, local, remote){
+  base = base || {}; local = local || {}; remote = remote || {};
+  const isObj = x => x && typeof x === "object" && !Array.isArray(x);
+  const num = x => (typeof x === "number" && isFinite(x)) ? x : 0;
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  const add = (b, l, r) => num(r) + num(l) - num(b);
+  const pickChanged = (b, l, r) => (same(l, b) ? (r === undefined ? l : r) : l);
+  // Vereinigung von Zeitstempel-Maps: früheste Zeit gewinnt (z. B. Abzeichen „seit“).
+  const union = (l, r) => { const o = { ...(isObj(r) ? r : {}) }; for (const [k, v] of Object.entries(isObj(l) ? l : {})) o[k] = o[k] == null ? v : (typeof v === "number" && typeof o[k] === "number" ? Math.min(v, o[k]) : o[k]); return o; };
+  const deepUnion = (l, r) => { const o = {}; for (const k of new Set([...Object.keys(isObj(l) ? l : {}), ...Object.keys(isObj(r) ? r : {})])) { const a = l?.[k], b = r?.[k]; o[k] = isObj(a) || isObj(b) ? union(a, b) : (a ?? b); } return o; };
+  const out = {}, first = Object.keys(base).length === 0;
+  const keys = new Set([...Object.keys(local), ...Object.keys(remote)]);
+  for (const k of keys){
+    const b = base[k], l = local[k], r = remote[k];
+    switch (k){
+      case "stars": out[k] = Math.max(0, add(b, l, r)); break;
+      case "xp": case "rounds": case "stories": out[k] = Math.max(0, add(b, l, r)); break;
+      case "bestStreak": case "blitzBest": out[k] = Math.max(num(l), num(r)); break;
+      case "knobelHad": out[k] = !!(l || r); break;
+      case "facts": {
+        const o = {};
+        for (const f of new Set([...Object.keys(l || {}), ...Object.keys(r || {})])){
+          const fb = (b || {})[f] || {}, fl = (l || {})[f] || {}, fr = (r || {})[f] || {};
+          const newer = num(fl.t) >= num(fr.t) ? fl : fr;
+          o[f] = { c: Math.max(0, add(fb.c, fl.c, fr.c)), w: Math.max(0, add(fb.w, fl.w, fr.w)), box: num(newer.box), t: Math.max(num(fl.t), num(fr.t)) };
+        }
+        out[k] = o; break;
+      }
+      case "reihe": {
+        const o = {};
+        for (const a of new Set([...Object.keys(l || {}), ...Object.keys(r || {})])) o[a] = { best: Math.max(num(l?.[a]?.best), num(r?.[a]?.best)) };
+        out[k] = o; break;
+      }
+      case "badges": case "tricks": case "cases": out[k] = union(l, r); break;
+      case "path": case "advent": out[k] = deepUnion(l, r); break;
+      case "bonusDay": { const o = { ...(r || {}) }; for (const [x, v] of Object.entries(l || {})) o[x] = !o[x] || v > o[x] ? v : o[x]; out[k] = o; break; }
+      case "day": {
+        const L = l || {}, Rr = r || {}, B = b || {};
+        if (L.date && L.date === Rr.date){
+          const bb = B.date === L.date ? B : {};
+          out[k] = { date: L.date, count: Math.max(0, add(bb.count, L.count, Rr.count)), goalDone: !!(L.goalDone || Rr.goalDone),
+            sg: Math.max(0, add(bb.sg, L.sg, Rr.sg)), du: Math.max(0, add(bb.du, L.du, Rr.du)) };
+        } else out[k] = (L.date || "") >= (Rr.date || "") ? L : Rr;
+        break;
+      }
+      case "streak": { const L = l || {}, Rr = r || {}; out[k] = L.last === Rr.last ? { last: L.last, days: Math.max(num(L.days), num(Rr.days)) } : ((L.last || "") > (Rr.last || "") ? L : Rr); break; }
+      case "lastActive": out[k] = (l || "") > (r || "") ? l : r; break;
+      case "log": {
+        const o = {};
+        for (const d of new Set([...Object.keys(l || {}), ...Object.keys(r || {})])){
+          const db = (b || {})[d] || {}, dl = (l || {})[d] || {}, dr = (r || {})[d] || {}, e = {};
+          for (const f of new Set([...Object.keys(dl), ...Object.keys(dr)])) e[f] = Math.max(0, add(db[f], dl[f], dr[f]));
+          o[d] = e;
+        }
+        out[k] = o; break;
+      }
+      case "redeemed": case "duels": {
+        const id = x => x.id || `${x.ts}|${x.name}`;
+        const seen = new Map(); for (const x of [...(r || []), ...(l || [])]) if (x && !seen.has(id(x))) seen.set(id(x), x);
+        out[k] = [...seen.values()].sort((a, c) => num(a.ts) - num(c.ts)).slice(-200); break;
+      }
+      case "rewards": {
+        const byId = a => new Map((a || []).filter(x => x && x.id).map(x => [x.id, x]));
+        const B = byId(b), L = byId(l), Rr = byId(r), o = [];
+        for (const [i, x] of Rr){
+          const inL = L.get(i), inB = B.get(i);
+          if (inB && !inL) continue;                       // lokal gelöscht
+          o.push(inL && inB && !same(inL, inB) ? inL : (inL && !inB ? inL : x));
+        }
+        for (const [i, x] of L) if (!Rr.has(i) && !B.has(i)) o.push(x);   // lokal neu
+        out[k] = o; break;
+      }
+      case "pinFail": out[k] = l; break;               // bleibt pro Gerät
+      default: out[k] = first ? (r !== undefined && r !== null && r !== "" ? r : l) : pickChanged(b, l, r);   // erstes Koppeln: Einstellungen der Familie gelten
+    }
+  }
+  return out;
+}
+
+/* ==========================================================================
+   Extras: Stella, Vorlesen, Duell, Wochenbericht, Urkunde, Jahreszeiten,
+   Adventsrätsel, Geräte-Sync (Supabase) und Lern-Erinnerungen (Push).
+   ========================================================================== */
+Object.assign(STR, {
+  // Stella
+  stHello:["Hallo, {n}! Ich bin Stella.","Hi {n}! I’m Stella."], stHelloNo:["Hallo! Ich bin Stella, dein Rechenstern.","Hi! I’m Stella, your maths star."],
+  stMorning:["Guten Morgen, {n}!","Good morning, {n}!"], stEvening:["Guten Abend, {n}!","Good evening, {n}!"],
+  stTapHint:["Tipp mich an für einen Tipp!","Tap me for a tip!"],
+  stCheer:["Juhu, geschafft!|Ich bin so stolz auf dich!|Stark gemacht!|Du strahlst heller als ich!","Hooray, you did it!|I’m so proud of you!|Great job!|You shine brighter than me!"],
+  stComfort:["Fehler sind zum Lernen da. Weiter so!","Mistakes help you learn. Keep going!"],
+  // Vorlesen
+  speak:["Vorlesen","Read aloud"], stSpeech:["Vorlesen","Read aloud"], spOff:["Aus","Off"], spTap:["Auf Knopfdruck","On tap"], spAuto:["Automatisch","Automatic"],
+  spHint:["Stella liest Aufgaben, Geschichten und Tipps vor.","Stella reads problems, stories and tips aloud."],
+  spQ:["Wie viel ist {x} mal {y}?","What is {x} times {y}?"],
+  // Duell
+  duel:["Duell","Duel"], duelSub:["Zu zweit am selben Gerät","Two players on one device"],
+  duelSetup:["Wer spielt gegen wen?","Who’s playing whom?"], duelP1:["Spieler 1","Player 1"], duelP2:["Spieler 2","Player 2"],
+  duelP2Ph:["z. B. Papa, Mama, Oma, Leo","e.g. Dad, Mum, Grandma, Leo"], duelNeed:["Bitte gib beide Namen ein.","Please enter both names."],
+  duelRows:["Aufgaben","Problems"], duelAll:["Alle Reihen","All tables"], duelEasy:["Leicht (1, 2, 5, 10)","Easy (1, 2, 5, 10)"], duelHard:["Schwer (6 bis 9)","Hard (6 to 9)"],
+  duelHead:["Vorsprung für {n}","Head start for {n}"], duelSeat:["Sitzplatz","Seating"], duelSide:["Nebeneinander","Side by side"], duelOpp:["Gegenüber","Facing each other"],
+  duelGoal:["Wer zuerst 10 Punkte hat, gewinnt.","First to 10 points wins."], duelGo:["Los geht’s!","Let’s go!"],
+  duelPts:["{n} Punkte","{n} points"], duelPause:["Kurze Pause …","Short pause …"], duelWas:["Richtig war {r}","The answer was {r}"],
+  duelWin:["{n} gewinnt!","{n} wins!"], duelScore:["{a} : {b}","{a} : {b}"], duelAgain:["Revanche","Rematch"], duelDone:["Fertig","Done"],
+  duelKeys:["Tasten: {a} 1–4, {b} 7–0","Keys: {a} 1–4, {b} 7–0"], duelStars:["+2 Sterne fürs Mitspielen","+2 stars for playing"],
+  // Wochenbericht
+  wkTitle:["Wochenbericht","Weekly report"], wkSum:["Diese Woche: {n} Aufgaben an {d} Tagen, {p} % richtig.","This week: {n} problems on {d} days, {p} % correct."],
+  wkNone:["Diese Woche wurde noch nicht geübt.","No practice yet this week."], wkSolid:["Neu sicher","Newly solid"], wkLearn:["Lernspiele","Learning games"],
+  wkDuels:["Duelle","Duels"], wkDays:["Lerntage","Days practised"], wkAcc:["Richtig","Correct"], wkAns:["Aufgaben","Problems"],
+  wkHard:["Am meisten Mühe: {l}.","Hardest: {l}."], wkChart:["Aufgaben pro Tag, richtig und falsch","Problems per day, correct and wrong"],
+  wkRight:["richtig","correct"], wkWrong:["falsch","wrong"],
+  // Urkunde
+  certs:["Urkunden","Certificates"], certsNone:["Meistere eine Reihe, dann bekommst du deine erste Urkunde.","Master a times table to get your first certificate."],
+  certFor:["Urkunde: {r}","Certificate: {r}"], certTitle:["Urkunde","Certificate"], certFor2:["für","for"], certText:["hat die {a}er-Reihe gemeistert!","has mastered the {a} times table!"],
+  certAll:["hat das ganze Einmaleins gemeistert!","has mastered all the times tables!"], certSign:["Stella, dein Rechenstern","Stella, your maths star"],
+  certPrint:["Drucken","Print"], certPrintNo:["Drucken geht in der installierten App.","Printing works in the installed app."], certName:["Name auf der Urkunde","Name on the certificate"],
+  certShow:["Urkunde ansehen","View certificate"], certAllName:["Ganzes Einmaleins","All times tables"],
+  // Advent
+  advTitle:["Adventsrätsel","Advent puzzles"], advSub:["Jeden Tag im Dezember ein Türchen mit einem Rätsel","A door with a puzzle every day in December"],
+  advLocked:["Dieses Türchen öffnet sich am {d}. Dezember.","This door opens on 1 December.".replace("1", "{d}")], advDoor:["Türchen {d}","Door {d}"],
+  advRight:["Richtig! Hinter dem Türchen wartet ein Stern.","Correct! A star is waiting behind the door."], advWrong:["Noch nicht. Lies das Rätsel noch einmal genau.","Not yet. Read the puzzle again carefully."],
+  advPreview:["Adventskalender schon jetzt zeigen (Vorschau)","Show the Advent calendar now (preview)"],
+  // Sync
+  syTitle:["Geräte verbinden","Connect devices"], syIntro:["Verbinde iPad, iPhone und Computer: Sterne, Lernstand und Belohnungen sind dann überall gleich. Fortschritt von mehreren Geräten wird zusammengezählt, nichts geht verloren.","Connect iPad, iPhone and computer: stars, progress and rewards stay the same everywhere. Progress from several devices is added up, nothing gets lost."],
+  syFramed:["Geräte verbinden und Erinnerungen gehen nur in der installierten App (die Adresse auf GitHub), nicht in dieser Vorschau.","Connecting devices and reminders only work in the installed app (the GitHub address), not in this preview."],
+  syNew:["Neue Familie anlegen","Create a new family"], syJoin:["Mit Familien-Code verbinden","Connect with family code"], syCodePh:["XXXX-XXXX-XXXX-XXXX-XXXX","XXXX-XXXX-XXXX-XXXX-XXXX"],
+  syCodeL:["Familien-Code","Family code"], syConnect:["Verbinden","Connect"], syCodeBad:["Der Code passt nicht. Bitte prüfe ihn.","That code doesn’t match. Please check it."],
+  syOn:["Verbunden","Connected"], syLast:["Zuletzt abgeglichen: {t}","Last synced: {t}"], syNever:["Noch nicht abgeglichen","Not synced yet"],
+  syNow:["Jetzt abgleichen","Sync now"], syShow:["Code anzeigen","Show code"], syHide:["Code verbergen","Hide code"], syCopy:["Kopieren","Copy"], syCopied:["Kopiert","Copied"],
+  syCodeHint:["Gib diesen Code auf dem anderen Gerät im Eltern-Bereich ein. Behandle ihn wie ein Passwort.","Enter this code in the parents’ area on the other device. Treat it like a password."],
+  syOff:["Verbindung trennen","Disconnect"], syOffQ:["Verbindung auf diesem Gerät trennen? Der Spielstand bleibt hier erhalten.","Disconnect this device? The progress stays on this device."],
+  syOffYes:["Ja, trennen","Yes, disconnect"], syErr:["Abgleich gerade nicht möglich. Dein Fortschritt ist sicher auf dem Gerät gespeichert und wird später abgeglichen.","Sync isn’t possible right now. Your progress is saved on this device and will sync later."],
+  syDone:["Abgeglichen","Synced"], syMerged:["Fortschritt von beiden Geräten zusammengeführt","Progress from both devices merged"],
+  syHist:["Ältere Stände","Earlier versions"], syHistSub:["Jeder Abgleich wird gespeichert. Hier kannst du einen früheren Stand zurückholen.","Every sync is saved. You can bring back an earlier version here."],
+  syRestore:["Zurückholen","Restore"], syRestoreQ:["Stand von {t} zurückholen? Der jetzige Stand bleibt als ältere Version erhalten.","Restore the version from {t}? The current version is kept as an earlier version."],
+  syRestored:["Früherer Stand zurückgeholt","Earlier version restored"], syHistNone:["Noch keine gespeicherten Stände.","No saved versions yet."],
+  syStars:["{n} Sterne","{n} stars"],
+  // Push
+  puTitle:["Lern-Erinnerung","Learning reminder"], puIntro:["Eine freundliche Nachricht von Stella, aber nur, wenn an dem Tag noch nicht gelernt wurde.","A friendly message from Stella, but only if there hasn’t been any learning that day."],
+  puNeedSync:["Dafür zuerst oben die Geräte verbinden.","Connect devices above first."], puNeedInstall:["Auf iPhone und iPad gehen Mitteilungen nur, wenn Rechenstern auf dem Home-Bildschirm installiert ist.","On iPhone and iPad, notifications only work when Rechenstern is installed on the home screen."],
+  puNoSupport:["Dieses Gerät oder dieser Browser kann keine Mitteilungen empfangen.","This device or browser can’t receive notifications."],
+  puTime:["Uhrzeit","Time"], puDays:["Tage","Days"], puOn:["Erinnerung einschalten","Turn on reminder"], puSave:["Speichern","Save"], puOff:["Ausschalten","Turn off"],
+  puActive:["Eingeschaltet für dieses Gerät","Turned on for this device"], puDenied:["Mitteilungen sind für Rechenstern blockiert. Erlaube sie in den Einstellungen des Geräts.","Notifications are blocked for Rechenstern. Allow them in the device settings."],
+  puTest:["Test-Nachricht schicken","Send a test message"], puTestSent:["Test-Nachricht ist unterwegs","Test message is on its way"],
+  puErr:["Das hat nicht geklappt. Bitte versuch es später noch einmal.","That didn’t work. Please try again later."],
+});
+const isFramed = (() => { try { return window.top !== window; } catch(e){ return true; } })();
+const SUPA = { url: "https://asfwbuptsfcrgmmgdgim.supabase.co", key: "sb_publishable_uXsPWezRtId6Eh3Dme7BcQ_mQzAx6Se", vapid: "BEQokCiaHISguPppaV3UW1Dqnfk7zrftzhHdQq7r8IYVi3wkOdNME_jdesheFgHJE36TghofzZQrDbWYz5ifc5g" };
+for (const k of ["log", "advent"]) if (!S[k] || typeof S[k] !== "object") S[k] = {};
+if (!Array.isArray(S.duels)) S.duels = [];
+if (!["off", "tap", "auto"].includes(S.speech)) S.speech = "tap";
+
+/* ---------- Tagesprotokoll (für den Wochenbericht) ---------- */
+function logToday(field, n = 1){
+  const d = today(); S.lastActive = d;
+  const L = S.log[d] || (S.log[d] = {}); L[field] = (L[field] || 0) + n;
+  const keys = Object.keys(S.log).sort(); while (keys.length > 70) delete S.log[keys.shift()];
+}
+
+/* ---------- Jahreszeit ---------- */
+const season = (d = new Date()) => { const m = d.getMonth() + 1; return m >= 3 && m <= 5 ? "spring" : m >= 6 && m <= 8 ? "summer" : m >= 9 && m <= 11 ? "autumn" : "winter"; };
+const SEASON_FX = {
+  autumn: { cols: ["#C8642A", "#A8462F", "#D9A13A", "#8A5A2B"], shape: "leaf" },
+  winter: { cols: ["#FFFFFF", "#DCE6EF", "#BFD0E0"], shape: "snow" },
+  spring: { cols: ["#F2A7C0", "#FFFFFF", "#E57A98", "#F7D2DF"], shape: "petal" },
+  summer: { cols: null, shape: "rect" },
+};
+
+/* ---------- Stella ---------- */
+function stellaSvg(mood = "happy", uid = "s"){
+  const ss = season();
+  const star = starPath(50, 54, 40, 20);
+  const eyes = mood === "cheer" ? '<path d="M37 50q4-6 8 0M55 50q4-6 8 0" class="se-l"/>'
+    : mood === "think" ? '<circle cx="42" cy="47" r="4.2" class="se"/><circle cx="60" cy="47" r="4.2" class="se"/><circle cx="43.4" cy="45.4" r="1.4" class="sw"/><circle cx="61.4" cy="45.4" r="1.4" class="sw"/>'
+    : '<ellipse cx="41" cy="50" rx="4" ry="5" class="se"/><ellipse cx="59" cy="50" rx="4" ry="5" class="se"/><circle cx="42.4" cy="48.2" r="1.5" class="sw"/><circle cx="60.4" cy="48.2" r="1.5" class="sw"/>';
+  const mouth = mood === "cheer" ? '<path d="M42 59q8 10 16 0z" class="sm-f"/>' : mood === "think" ? '<circle cx="51" cy="62" r="3" class="sm-f"/>' : '<path d="M43 60q7 7 14 0" class="sm"/>';
+  const acc = ss === "autumn" ? '<path d="M50 6c6 3 9 9 6 15-6 1-10-4-9-10z" class="acc-leaf"/><path d="M50 21l3-10" class="acc-stem"/>'
+    : ss === "winter" ? '<path d="M36 22q14-16 28 0z" class="acc-hat"/><rect x="34" y="20" width="32" height="6" rx="3" class="acc-band"/><circle cx="50" cy="9" r="4.5" class="acc-band"/>'
+    : ss === "spring" ? '<circle cx="74" cy="38" r="4" class="acc-pet"/><circle cx="80" cy="34" r="4" class="acc-pet"/><circle cx="80" cy="42" r="4" class="acc-pet"/><circle cx="86" cy="38" r="4" class="acc-pet"/><circle cx="80" cy="38" r="2.6" class="acc-mid"/>'
+    : '<rect x="33" y="44" width="15" height="9" rx="3.5" class="acc-glass"/><rect x="52" y="44" width="15" height="9" rx="3.5" class="acc-glass"/><path d="M48 47h4" class="acc-stem"/>';
+  return `<svg viewBox="0 0 100 100" class="stella-svg" aria-hidden="true"><defs><linearGradient id="sg${uid}" x1="0" y1="10" x2="0" y2="95" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F6D98E"/><stop offset="1" stop-color="#D9A13A"/></linearGradient></defs>
+    <path d="${star}" fill="url(#sg${uid})" stroke="url(#sg${uid})" stroke-width="9" stroke-linejoin="round"/>
+    <circle cx="33" cy="60" r="4.5" class="sc"/><circle cx="67" cy="60" r="4.5" class="sc"/>${eyes}${mouth}${acc}</svg>`;
+}
+const TIPS = [
+  ["Tausch-Trick: 3 × 8 ist genauso viel wie 8 × 3. Dann musst du nur die Hälfte lernen!","Swap trick: 3 × 8 is the same as 8 × 3. So you only need to learn half!"],
+  ["Mal 10 ist einfach: Schreib eine 0 dahinter. 6 × 10 = 60.","Times 10 is easy: add a 0. 6 × 10 = 60."],
+  ["Die 5er-Reihe endet immer auf 5 oder 0.","The 5 times table always ends in 5 or 0."],
+  ["Die 4er-Reihe ist die 2er-Reihe doppelt: 2 × 7 = 14, also 4 × 7 = 28.","The 4s are the 2s doubled: 2 × 7 = 14, so 4 × 7 = 28."],
+  ["Kennst du 5 × 7, dann kennst du auch 6 × 7: einfach eine 7 dazu.","If you know 5 × 7, you know 6 × 7 too: just add one more 7."],
+  ["Bei der 9er-Reihe helfen dir deine Finger. Probier den Finger-Trick aus!","Your fingers help with the 9s. Try the finger trick!"],
+  ["Ein paar Minuten jeden Tag bringen mehr als eine Stunde am Sonntag.","A few minutes every day beats an hour on Sunday."],
+  ["Fehler sind gut: Sie zeigen dir, was du gerade lernst.","Mistakes are good: they show you what you’re learning right now."],
+  ["Schwierige Aufgaben landen in der Knobel-Kiste. Dort kannst du sie gezielt üben.","Tricky problems go into the tricky box. You can practise them there."],
+  ["5 × 6 ist die Hälfte von 10 × 6. Die Hälfte von 60 ist 30.","5 × 6 is half of 10 × 6. Half of 60 is 30."],
+  ["Spiel mal ein Duell gegen Mama, Papa oder deine Freunde!","Try a duel against Mum, Dad or your friends!"],
+  ["7 × 8 = 56. Merk dir: 5, 6, 7, 8. Also 56 = 7 × 8!","7 × 8 = 56. Remember: 5, 6, 7, 8. So 56 = 7 × 8!"],
+];
+let tipIdx = Math.floor(Math.random() * TIPS.length);
+function stellaGreeting(){
+  const h = new Date().getHours(), n = S.name;
+  if (!n) return t("stHelloNo");
+  return t(h < 11 ? "stMorning" : h >= 18 ? "stEvening" : "stHello", { n });
+}
+function stellaBubble(text, mood = "happy", uid = "b"){
+  return `<div class="stella"><button type="button" class="stella-fig" data-act="stellaTap" aria-label="${esc(t("stTapHint"))}">${stellaSvg(mood, uid)}</button>
+    <div class="bubble" id="stella-say"><p class="m0">${esc(text)}</p>${spk(text)}</div></div>`;
+}
+const cheerText = () => { const l = t("stCheer").split("|"); return l[Math.floor(Math.random() * l.length)]; };
+
+/* ---------- Vorlesen ---------- */
+const canSpeak = "speechSynthesis" in window && typeof SpeechSynthesisUtterance !== "undefined";
+const SPK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+const spk = text => canSpeak && S.speech !== "off" ? `<button type="button" class="spk" data-act="speak" data-say="${esc(text)}" aria-label="${esc(t("speak"))}">${SPK}</button>` : "";
+function speakText(text){
+  if (!canSpeak || S.speech === "off" || !text) return;
+  try {
+    const clean = String(text).replace(/×/g, LANG === "en" ? " times " : " mal ").replace(/=/g, LANG === "en" ? " equals " : " ist ").replace(/·/g, ", ").replace(/\?\s*$/, "?");
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(clean);
+    u.lang = LANG === "en" ? "en-GB" : "de-DE"; u.rate = 0.92; u.pitch = 1.1;
+    const v = speechSynthesis.getVoices().find(x => x.lang && x.lang.toLowerCase().startsWith(LANG));
+    if (v) u.voice = v;
+    speechSynthesis.speak(u);
+  } catch(e){}
+}
+let lastAuto = "";
+function autoSpeak(key, text){ if (S.speech === "auto" && key !== lastAuto){ lastAuto = key; setTimeout(() => speakText(text), 250); } }
+
+/* ---------- Duell ---------- */
+const DUEL_POOL = { all:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], easy:[1, 2, 5, 10], hard:[6, 7, 8, 9] };
+function duelQ(pool){
+  const a = pick(pool), b = rnd(1, 10), r = a * b, opts = new Set([r]);
+  const cand = shuffle([r + a, r - a, r + b, r - b, r + 1, r - 1, r + 10, r - 10, r + 2]).filter(v => v > 0);
+  for (const v of cand){ if (opts.size >= 4) break; opts.add(v); }
+  while (opts.size < 4) opts.add(r + opts.size * 3);
+  return { x: b, y: a, r, opts: shuffle([...opts]) };
+}
+function openDuelSetup(){
+  A = { kind: "duelSetup", p1: S.name || "", p2: S.duelName || "", pool: S.duelPool || "all", head: S.duelHead ?? 0, seat: S.duelSeat || "side", err: "" };
+  show("act");
+}
+function renderDuelSetup(){
+  const seg = (name, val, items) => `<div class="seg" role="radiogroup">${items.map(([v, l]) => `<label><input type="radio" name="${name}" value="${v}"${String(val) === String(v) ? " checked" : ""}><span>${esc(l)}</span></label>`).join("")}</div>`;
+  $("#v-act").innerHTML = `<div class="act">${actHead(t("duel"), t("duelSub"))}
+    <form class="list duelform" id="duel-form">
+      <div class="field"><label for="d-p1">${esc(t("duelP1"))}</label><input id="d-p1" maxlength="20" autocomplete="off" value="${esc(A.p1)}" placeholder="${esc(t("obPh"))}"></div>
+      <div class="field"><label for="d-p2">${esc(t("duelP2"))}</label><input id="d-p2" maxlength="20" autocomplete="off" value="${esc(A.p2)}" placeholder="${esc(t("duelP2Ph"))}"></div>
+      <div class="field"><span class="muted small">${esc(t("duelRows"))}</span>${seg("d-pool", A.pool, [["all", t("duelAll")], ["easy", t("duelEasy")], ["hard", t("duelHard")]])}</div>
+      <div class="field"><span class="muted small" id="d-head-l">${esc(t("duelHead", { n: A.p1 || t("duelP1") }))}</span>${seg("d-head", A.head, [[0, "0"], [2, "+2"], [4, "+4"]])}</div>
+      <div class="field"><span class="muted small">${esc(t("duelSeat"))}</span>${seg("d-seat", A.seat, [["side", t("duelSide")], ["opp", t("duelOpp")]])}</div>
+      <div class="field"><p class="m0 muted small">${esc(t("duelGoal"))}</p>${A.err ? `<p class="err m0" role="alert">${esc(A.err)}</p>` : ""}
+        <button type="submit" class="btn primary wide">${esc(t("duelGo"))}</button></div>
+    </form></div>`;
+}
+function startDuel(cfg){
+  const pool = DUEL_POOL[cfg.pool] || DUEL_POOL.all;
+  A = { kind: "duel", cfg, pool, goal: 10, done: false, id: ++roundId,
+    pl: [{ name: cfg.p1, pts: cfg.head || 0, q: duelQ(pool), freeze: 0, last: null }, { name: cfg.p2, pts: 0, q: duelQ(pool), freeze: 0, last: null }] };
+  show("act");
+}
+function renderDuel(){
+  const opp = A.cfg.seat === "opp";
+  const panel = (p, i) => {
+    const frozen = p.freeze > Date.now();
+    return `<section class="dp${frozen ? " frozen" : ""}" data-p="${i}" aria-label="${esc(p.name)}">
+      <div class="dphead"><b>${esc(p.name)}</b><span class="dpts num">${esc(t("duelPts", { n: p.pts }))}</span></div>
+      <div class="dbar" role="img" aria-label="${p.pts}/${A.goal}"><i data-w="${Math.min(100, p.pts / A.goal * 100)}"></i></div>
+      <p class="dq num" aria-live="polite">${p.q.x} × ${p.q.y}</p>
+      <div class="dchoices">${p.q.opts.map((v, k) => `<button type="button" class="dchoice num" data-duel="${i}" data-v="${v}"${frozen || A.done ? " disabled" : ""}><small>${i === 0 ? k + 1 : (k + 7) % 10}</small>${v}</button>`).join("")}</div>
+      <p class="dstat" aria-live="polite">${frozen ? esc(t("duelPause") + " " + t("duelWas", { r: p.last })) : "&nbsp;"}</p>
+    </section>`;
+  };
+  const w = A.done ? A.pl[A.winner] : null;
+  $("#v-act").innerHTML = `<div class="duel${opp ? " opp" : ""}">${panel(A.pl[0], 0)}
+    <div class="dmid"><button type="button" class="x" data-act="actClose" aria-label="${esc(t("back"))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <span class="kbd">${esc(t("duelKeys", { a: A.pl[0].name, b: A.pl[1].name }))}</span></div>
+    ${panel(A.pl[1], 1)}
+    ${w ? `<div class="dwin card" role="dialog" aria-label="${esc(t("duelWin", { n: w.name }))}">${stellaSvg("cheer", "dw")}<h2>${esc(t("duelWin", { n: w.name }))}</h2>
+      <p class="m0 num">${esc(A.pl[0].name)} ${A.pl[0].pts} : ${A.pl[1].pts} ${esc(A.pl[1].name)}</p>${A.starMsg ? `<p class="m0 gold-ink">${esc(t("duelStars"))}</p>` : ""}
+      <div class="acts"><button type="button" class="btn primary wide" data-act="duelAgain">${esc(t("duelAgain"))}</button><button type="button" class="btn plain wide" data-act="actClose">${esc(t("duelDone"))}</button></div></div>` : ""}
+  </div>`;
+}
+function duelAnswer(i, v){
+  if (!A || A.kind !== "duel" || A.done) return;
+  const p = A.pl[i]; if (p.freeze > Date.now()) return;
+  if (v === p.q.r){
+    p.pts++; tone([[i ? 660 : 880, .12, 0]]); p.q = duelQ(A.pool);
+    if (p.pts >= A.goal){
+      A.done = true; A.winner = i; tone(SND.win); burst();
+      S.duels.push({ id: Date.now().toString(36) + i, p1: A.pl[0].name, p2: A.pl[1].name, s1: A.pl[0].pts, s2: A.pl[1].pts, w: i, ts: Date.now() });
+      S.duels = S.duels.slice(-30); touchDay(); S.day.du = (S.day.du || 0) + 1; logToday("du");
+      if (S.day.du <= 3){ A.starMsg = true; reward(2, true, true); } else save();
+    }
+  } else {
+    p.last = p.q.r; p.freeze = Date.now() + 1300; tone(SND.wrong);
+    const id = A.id; setTimeout(() => { if (A && A.id === id){ p.freeze = 0; p.q = duelQ(A.pool); render(); } }, 1300);
+  }
+  render();
+}
+
+/* ---------- Wochenbericht ---------- */
+function weekReport(){
+  const days = Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - 6 + i); return { key: dayStr(d), date: d, l: S.log[dayStr(d)] || {} }; });
+  const c = days.reduce((s, d) => s + (d.l.c || 0), 0), w = days.reduce((s, d) => s + (d.l.w || 0), 0);
+  const active = days.filter(d => (d.l.c || 0) + (d.l.w || 0) + (d.l.l || 0) + (d.l.du || 0) > 0).length;
+  const solid = days.reduce((s, d) => s + (d.l.s || 0), 0), learn = days.reduce((s, d) => s + (d.l.l || 0), 0), du = days.reduce((s, d) => s + (d.l.du || 0), 0);
+  const max = Math.max(10, ...days.map(d => (d.l.c || 0) + (d.l.w || 0)));
+  const fmtD = new Intl.DateTimeFormat(LOC(), { weekday: "short" });
+  const bars = days.map(d => { const cc = d.l.c || 0, ww = d.l.w || 0;
+    return `<div class="wkcol" title="${esc(fmtD.format(d.date))}: ${cc} ${esc(t("wkRight"))}, ${ww} ${esc(t("wkWrong"))}"><div class="wkstack"><i class="wr" data-h="${ww / max * 100}"></i><i class="wc" data-h="${cc / max * 100}"></i></div><small>${esc(fmtD.format(d.date))}</small></div>`; }).join("");
+  const hard = Object.entries(S.facts).filter(([, f]) => f.w > 0 && f.box < 3).sort((x, y) => y[1].w - x[1].w).slice(0, 3).map(([k]) => { const [a, b] = k.split("x"); return `${b} × ${a}`; });
+  const sum = c + w ? t("wkSum", { n: fmt(c + w), d: active, p: Math.round(c / (c + w) * 100) }) : t("wkNone");
+  return `<div><p class="kicker">${esc(t("wkTitle"))}</p><div class="card wk">
+    <p class="m0"><b>${esc(sum)}</b>${hard.length ? " " + esc(t("wkHard", { l: hard.join(", ") })) : ""}</p>
+    <div class="wkchart" role="img" aria-label="${esc(t("wkChart") + ": " + sum)}">${bars}</div>
+    <div class="keyrow"><span><i class="wcl"></i>${esc(t("wkRight"))}</span><span><i class="wrl"></i>${esc(t("wkWrong"))}</span></div>
+    <div class="wknums">${[[t("wkAns"), fmt(c + w)], [t("wkAcc"), c + w ? Math.round(c / (c + w) * 100) + " %" : "–"], [t("wkDays"), active + "/7"], [t("wkSolid"), solid], [t("wkLearn"), learn], [t("wkDuels"), du]]
+      .map(([l, v]) => `<div><b class="num">${esc(String(v))}</b><small>${esc(l)}</small></div>`).join("")}</div></div></div>`;
+}
+
+/* ---------- Urkunde ---------- */
+function certList(){
+  const done = ORDER.slice().sort((x, y) => x - y).filter(mastered);
+  const all = done.length === 10;
+  return `<div><p class="kicker">${esc(t("certs"))}</p><div class="list">${done.length ? [...(all ? [["all", t("certAllName")]] : []), ...done.map(a => [a, t("reihe", { n: a })])]
+    .map(([a, l]) => `<button type="button" class="row" data-act="cert" data-a="${a}"><span class="ic gold">${starSvg("")}</span><span class="tx"><b>${esc(t("certFor", { r: l }))}</b></span>${CHEV}</button>`).join("")
+    : `<div class="field"><p class="m0 muted">${esc(t("certsNone"))}</p></div>`}</div></div>`;
+}
+function renderCert(){
+  const a = A.a, name = A.name ?? S.name;
+  const when = new Date().toLocaleDateString(LOC(), { day: "numeric", month: "long", year: "numeric" });
+  $("#v-act").innerHTML = `<div class="act wide">${actHead(t("certTitle"))}
+    ${!S.name ? `<div class="field cert-name noprint"><label for="cert-n">${esc(t("certName"))}</label><input id="cert-n" maxlength="24" value="${esc(name || "")}"></div>` : ""}
+    <div class="cert" id="cert"><div class="cert-in">
+      <div class="cert-stella">${stellaSvg("cheer", "ct")}</div>
+      <p class="cert-k">Rechenstern</p><h2 class="cert-t">${esc(t("certTitle"))}</h2>
+      <p class="cert-f">${esc(t("certFor2"))}</p><p class="cert-n">${esc(name || "…")}</p>
+      <p class="cert-x">${esc(a === "all" ? t("certAll") : t("certText", { a }))}</p>
+      <div class="bigstars">${[0, 1, 2].map(() => `<svg viewBox="0 0 24 24" class="on" aria-hidden="true">${STAR}</svg>`).join("")}</div>
+      <div class="cert-foot"><span>${esc(when)}</span><span>${esc(t("certSign"))}</span></div>
+    </div></div>
+    <div class="acts noprint">${isFramed ? `<p class="muted m0 small">${esc(t("certPrintNo"))}</p>` : `<button type="button" class="btn primary wide" data-act="certPrint">${esc(t("certPrint"))}</button>`}</div></div>`;
+}
+
+/* ---------- Adventsrätsel ---------- */
+const ADVENT = [
+  ["Auf einem Blech liegen 4 Reihen mit je 5 Plätzchen. Wie viele Plätzchen sind das?","A tray has 4 rows of 5 cookies. How many cookies is that?", 20],
+  ["Ein Adventskranz hat 4 Kerzen. Wie viele Kerzen haben 3 Adventskränze?","An Advent wreath has 4 candles. How many candles do 3 wreaths have?", 12],
+  ["Ich bin in der 2er-, der 5er- und der 10er-Reihe und kleiner als 15. Wer bin ich?","I’m in the 2, 5 and 10 times tables and smaller than 15. Who am I?", 10],
+  ["Der Wichtel füllt 6 Socken mit je 3 Nüssen. Wie viele Nüsse braucht er?","The elf fills 6 socks with 3 nuts each. How many nuts does he need?", 18],
+  ["Ein Schneemann hat 3 Kugeln. Wie viele Kugeln brauchst du für 7 Schneemänner?","A snowman has 3 balls. How many balls do you need for 7 snowmen?", 21],
+  ["Heute ist Nikolaus! 6 Kinder bekommen je 6 Schokotaler. Wie viele Taler sind das?","It’s St Nicholas Day! 6 children get 6 chocolate coins each. How many coins is that?", 36],
+  ["Ein Rentier hat 4 Beine. Wie viele Beine haben 8 Rentiere?","A reindeer has 4 legs. How many legs do 8 reindeer have?", 32],
+  ["Ich bin in der 3er- und in der 4er-Reihe und kleiner als 20. Wer bin ich?","I’m in the 3 and the 4 times tables and smaller than 20. Who am I?", 12],
+  ["Oma backt 9 Bleche mit je 9 Lebkuchen. Wie viele Lebkuchen sind das?","Grandma bakes 9 trays with 9 gingerbreads each. How many gingerbreads is that?", 81],
+  ["Am Baum hängen 7 Reihen mit je 6 Kugeln. Wie viele Kugeln hängen am Baum?","The tree has 7 rows of 6 baubles. How many baubles are on the tree?", 42],
+  ["Ich bin die Hälfte von 10 × 8. Wer bin ich?","I’m half of 10 × 8. Who am I?", 40],
+  ["Bis Weihnachten sind es noch 2 Wochen. Wie viele Tage sind 2 Wochen?","Christmas is 2 weeks away. How many days are 2 weeks?", 14],
+  ["Ein Schlitten hat 2 Kufen. Wie viele Kufen haben 8 Schlitten?","A sledge has 2 runners. How many runners do 8 sledges have?", 16],
+  ["Wie viel ist 7 × 8? Tipp: 5 × 8 = 40, dann noch zweimal 8 dazu.","What is 7 × 8? Tip: 5 × 8 = 40, then add 8 twice.", 56],
+  ["In einer Packung sind 10 Wunderkerzen. Wie viele sind in 6 Packungen?","A pack has 10 sparklers. How many are in 6 packs?", 60],
+  ["Ich bin eine Quadratzahl zwischen 40 und 60. Wer bin ich?","I’m a square number between 40 and 60. Who am I?", 49],
+  ["5 Engel haben je 2 Flügel. Wie viele Flügel sind das?","5 angels have 2 wings each. How many wings is that?", 10],
+  ["Ein Stern hat 5 Zacken. Wie viele Zacken haben 8 Sterne?","A star has 5 points. How many points do 8 stars have?", 40],
+  ["Der Wichtel packt 4 Säcke mit je 8 Geschenken. Wie viele Geschenke sind das?","The elf packs 4 sacks with 8 presents each. How many presents is that?", 32],
+  ["Ich bin 3 × 9, aber auch 9 × 3. Wer bin ich?","I’m 3 × 9, but also 9 × 3. Who am I?", 27],
+  ["Auf dem Markt stehen 6 Buden mit je 7 Lichterketten. Wie viele Lichterketten sind das?","The market has 6 stalls with 7 fairy lights each. How many fairy lights is that?", 42],
+  ["10 Kinder bauen Schneeengel. Jedes Kind hat 10 Finger. Wie viele Finger sind das?","10 children make snow angels. Each child has 10 fingers. How many fingers is that?", 100],
+  ["Ich bin in der 6er- und in der 9er-Reihe und kleiner als 30. Wer bin ich?","I’m in the 6 and the 9 times tables and smaller than 30. Who am I?", 18],
+  ["Heiligabend! Der Schlitten hat 8 Rentiere, jedes trägt 3 Glöckchen. Wie viele Glöckchen klingeln?","Christmas Eve! The sleigh has 8 reindeer, each wearing 3 bells. How many bells are ringing?", 24],
+];
+const advYear = () => String(new Date().getFullYear());
+const advOpenDay = () => { const d = new Date(); return d.getMonth() === 11 ? d.getDate() : (S.advPreview ? 24 : 0); };
+const advShown = () => new Date().getMonth() === 11 || !!S.advPreview;
+const advSolved = d => !!(S.advent[advYear()] || {})[d];
+const ADV_ORDER = [7, 15, 2, 21, 11, 4, 18, 9, 24, 13, 1, 20, 6, 16, 10, 23, 3, 14, 19, 8, 22, 12, 5, 17];
+function adventCard(){
+  if (!advShown()) return "";
+  const open = advOpenDay();
+  return `<section class="advsec"><p class="kicker">${esc(t("advTitle"))}</p><div class="card adv"><p class="m0 muted small">${esc(t("advSub"))}</p>
+    <div class="doors">${ADV_ORDER.map(d => { const ok = advSolved(d), can = d <= open;
+      return `<button type="button" class="door${ok ? " solved" : ""}${can ? "" : " locked"}" data-act="advDoor" data-d="${d}" aria-label="${esc(t("advDoor", { d }))}">${ok ? starSvg("") : `<b class="num">${d}</b>`}</button>`; }).join("")}</div></div></section>`;
+}
+function renderAdvent(){
+  const [de, en, r] = ADVENT[A.d - 1], q = LANG === "en" ? en : de;
+  if (!A.opts){ const s = new Set([r]); for (const v of shuffle([r + 2, r - 2, r + 4, r - 4, r + 6, r + 10, r - 10, r + 1])) if (v > 0 && s.size < 3) s.add(v); A.opts = shuffle([...s]); }
+  const solved = advSolved(A.d);
+  $("#v-act").innerHTML = `<div class="act">${actHead(t("advDoor", { d: A.d }), t("advTitle"))}
+    ${stellaBubble(solved ? t("advRight") : q, solved ? "cheer" : "think", "adv")}
+    ${solved ? `<button type="button" class="btn primary wide" data-act="actClose">${esc(t("toLearn"))}</button>`
+      : `<div class="choices">${A.opts.map(v => `<button type="button" class="choice num" data-act="advPick" data-v="${v}">${v}</button>`).join("")}</div>${A.err ? `<p class="err m0" role="alert">${esc(t("advWrong"))}</p>` : ""}`}</div>`;
+  if (!solved) autoSpeak("adv" + A.d, q);
+}
+
+/* ---------- Geräte-Sync (Supabase) ---------- */
+const SYNC_KEY = "rechenstern-sync", REMIND_KEY = "rechenstern-remind";
+const ls = { get(k){ try { return JSON.parse(localStorage.getItem(k) || "null"); } catch(e){ return null; } }, set(k, v){ try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch(e){} } };
+let SY = ls.get(SYNC_KEY), syBusy = false, syTimer = 0, syState = { msg: "", err: false, show: false, joinErr: "", hist: null, offQ: false, restoreQ: null };
+const syncable = () => !isFramed && typeof fetch === "function";
+async function rpc(fn, args){
+  const r = await fetch(`${SUPA.url}/rest/v1/rpc/${fn}`, { method: "POST", headers: { apikey: SUPA.key, "Content-Type": "application/json" }, body: JSON.stringify(args) });
+  const txt = await r.text(); let j = null; try { j = txt ? JSON.parse(txt) : null; } catch(e){}
+  if (!r.ok) throw new Error((j && (j.message || j.hint)) || ("HTTP " + r.status));
+  return j;
+}
+const stripState = s => { const o = JSON.parse(JSON.stringify(s)); delete o.pinFail; delete o.advPreview; return o; };
+function deviceName(){ const u = navigator.userAgent; const k = /iPad/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1) ? "iPad" : /iPhone/.test(u) ? "iPhone" : /Android/.test(u) ? "Android" : /Mac/.test(u) ? "Mac" : /Windows/.test(u) ? "Windows" : "Gerät"; return k + "-" + Math.random().toString(36).slice(2, 6); }
+function backupLocal(){
+  try { const list = ls.get("rechenstern-backups") || []; list.push({ ts: Date.now(), state: stripState(S) }); ls.set("rechenstern-backups", list.slice(-3)); } catch(e){}
+}
+function applyState(st){ const keep = { pinFail: S.pinFail, advPreview: S.advPreview }; S = Object.assign(DEFAULT(), st, keep); saveLocal(); render(); }
+function newCode(){ const A32 = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", b = new Uint8Array(25); crypto.getRandomValues(b); let s = ""; for (let i = 0; i < 25; i++) s += A32[b[i] % 32]; return s.match(/.{5}/g).join("-"); }
+const normCode = c => String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, "").replace(/(.{5})(?=.)/g, "$1-");
+async function syncNow(manual){
+  if (!SY || !syncable() || syBusy) return;
+  syBusy = true;
+  try {
+    for (let attempt = 0; attempt < 4; attempt++){
+      const remote = await rpc("rechenstern_pull", { p_code: SY.code });
+      let local = stripState(S), merged = false;
+      if (remote.version !== SY.version && remote.state){
+        backupLocal();
+        local = merge3(SY.base || {}, local, remote.state); applyState(local); merged = true;
+      } else if (remote.version === SY.version && JSON.stringify(local) === JSON.stringify(SY.base)){
+        SY.last = Date.now(); ls.set(SYNC_KEY, SY); syState.msg = manual ? "syDone" : syState.msg; syState.err = false; break;
+      }
+      const res = await rpc("rechenstern_push", { p_code: SY.code, p_base: remote.version, p_state: local, p_device: SY.device });
+      if (res && res.ok){ SY.version = res.version; SY.base = local; SY.last = Date.now(); ls.set(SYNC_KEY, SY); syState.msg = merged ? "syMerged" : (manual ? "syDone" : ""); syState.err = false; break; }
+    }
+  } catch(e){ syState.err = true; syState.msg = "syErr"; }
+  syBusy = false;
+  if (V === "eltern") render();
+}
+function scheduleSync(){ if (!SY || !syncable()) return; clearTimeout(syTimer); syTimer = setTimeout(() => syncNow(false), 3000); }
+async function syncCreate(){
+  const code = newCode();
+  await rpc("rechenstern_create", { p_code: code });
+  SY = { code, version: 0, base: {}, device: deviceName(), last: 0 }; ls.set(SYNC_KEY, SY);
+  await syncNow(true); syState.show = true;
+}
+async function syncJoin(raw){
+  const code = normCode(raw);
+  try { await rpc("rechenstern_pull", { p_code: code }); } catch(e){ syState.joinErr = "syCodeBad"; render(); return; }
+  backupLocal();
+  SY = { code, version: -1, base: {}, device: deviceName(), last: 0 }; ls.set(SYNC_KEY, SY);   // base leer: beide Stände werden zusammengezählt
+  syState.joinErr = ""; await syncNow(true);
+}
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncNow(false); });
+window.addEventListener("online", () => syncNow(false));
+
+/* ---------- Lern-Erinnerungen (Push) ---------- */
+let RM = ls.get(REMIND_KEY) || { on: false, time: "16:00", days: [1, 2, 3, 4, 5, 6, 7] }, puState = { msg: "", err: false };
+const pushSupported = () => !isFramed && "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+const isStandalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+const b64u = s => { const p = "=".repeat((4 - s.length % 4) % 4), b = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(b, c => c.charCodeAt(0)); };
+async function pushEnable(){
+  const perm = await Notification.requestPermission();
+  if (perm !== "granted"){ puState = { msg: "puDenied", err: true }; render(); return; }
+  const reg = await navigator.serviceWorker.register("sw.js"); await navigator.serviceWorker.ready;
+  const sub = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(SUPA.vapid) });
+  const j = sub.toJSON();
+  await rpc("rechenstern_push_register", { p_code: SY.code, p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth, p_time: RM.time,
+    p_weekdays: RM.days, p_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Berlin", p_lang: LANG });
+  RM.on = true; RM.endpoint = j.endpoint; ls.set(REMIND_KEY, RM); puState = { msg: "puActive", err: false }; render();
+}
+async function pushDisable(){
+  try { const reg = await navigator.serviceWorker.getRegistration(); const sub = reg && await reg.pushManager.getSubscription();
+    if (sub){ await rpc("rechenstern_push_unregister", { p_code: SY.code, p_endpoint: sub.endpoint }); await sub.unsubscribe(); } } catch(e){}
+  RM.on = false; ls.set(REMIND_KEY, RM); puState = { msg: "", err: false }; render();
+}
+async function pushTest(){
+  const r = await fetch(`${SUPA.url}/functions/v1/rechenstern-reminders`, { method: "POST", headers: { apikey: SUPA.key, "Content-Type": "application/json" }, body: JSON.stringify({ code: SY.code, test: true, lang: LANG }) });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  puState = { msg: "puTestSent", err: false }; render();
+}
+
+/* ---------- Eltern-Bereich: Abschnitte ---------- */
+function parentsExtras(){
+  const fmtT = ts => new Date(ts).toLocaleString(LOC(), { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+  let sync;
+  if (!syncable()) sync = `<div class="field"><p class="m0 muted">${esc(t("syFramed"))}</p></div>`;
+  else if (!SY) sync = `<div class="field"><p class="m0">${esc(t("syIntro"))}</p></div>
+    <div class="field"><button type="button" class="btn primary" data-act="syNew">${esc(t("syNew"))}</button></div>
+    <form class="field" id="sy-join"><label for="sy-code">${esc(t("syJoin"))}</label><input id="sy-code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="${esc(t("syCodePh"))}" class="num">
+      ${syState.joinErr ? `<p class="err m0" role="alert">${esc(t(syState.joinErr))}</p>` : ""}<div><button type="submit" class="btn tinted">${esc(t("syConnect"))}</button></div></form>`;
+  else sync = `<div class="field"><p class="m0"><b class="ok-ink">● ${esc(t("syOn"))}</b> · ${esc(SY.last ? t("syLast", { t: fmtT(SY.last) }) : t("syNever"))}</p>
+      ${syState.msg ? `<p class="m0 ${syState.err ? "err" : "muted small"}">${esc(t(syState.msg))}</p>` : ""}</div>
+    <div class="field"><div class="ob"><div class="acts"><button type="button" class="btn tinted" data-act="syNow">${esc(t("syNow"))}</button><button type="button" class="btn plain" data-act="syShow">${esc(syState.show ? t("syHide") : t("syShow"))}</button></div></div>
+      ${syState.show ? `<p class="m0 small muted">${esc(t("syCodeHint"))}</p><p class="sycode num" id="sy-code-v">${esc(SY.code)}</p><div><button type="button" class="btn plain" data-act="syCopy">${esc(t("syCopy"))}</button></div>` : ""}</div>
+    <div class="field"><b>${esc(t("syHist"))}</b><p class="m0 small muted">${esc(t("syHistSub"))}</p>
+      ${syState.hist == null ? `<div><button type="button" class="btn plain" data-act="syHist">${esc(t("syHist"))}</button></div>`
+        : syState.hist.length ? `<div class="hist">${syState.hist.slice(0, 10).map(h => `<div class="row"><span class="tx"><b>${esc(fmtT(h.saved_at))}</b><small>${esc((h.device || "").split("-")[0])} · ${esc(t("syStars", { n: h.stars ?? 0 }))}</small></span>
+          ${syState.restoreQ === h.version ? `<button type="button" class="btn danger" data-act="syRestoreYes" data-v="${h.version}">${esc(t("syRestore"))}</button>` : `<button type="button" class="btn plain" data-act="syRestore" data-v="${h.version}">${esc(t("syRestore"))}</button>`}</div>`).join("")}</div>
+          ${syState.restoreQ ? `<p class="m0 small">${esc(t("syRestoreQ", { t: fmtT(syState.hist.find(h => h.version === syState.restoreQ)?.saved_at || Date.now()) }))}</p>` : ""}`
+        : `<p class="m0 muted small">${esc(t("syHistNone"))}</p>`}</div>
+    <div class="field">${syState.offQ ? `<p class="m0">${esc(t("syOffQ"))}</p><div class="ob"><div class="acts"><button type="button" class="btn danger" data-act="syOffYes">${esc(t("syOffYes"))}</button><button type="button" class="btn plain" data-act="syOffNo">${esc(t("cancel"))}</button></div></div>`
+      : `<div><button type="button" class="btn plain bad-link" data-act="syOff">${esc(t("syOff"))}</button></div>`}</div>`;
+  let push;
+  if (!syncable()) push = `<div class="field"><p class="m0 muted">${esc(t("syFramed"))}</p></div>`;
+  else if (!SY) push = `<div class="field"><p class="m0 muted">${esc(t("puNeedSync"))}</p></div>`;
+  else if (!pushSupported()) push = `<div class="field"><p class="m0 muted">${esc(isIOS() && !isStandalone() ? t("puNeedInstall") : t("puNoSupport"))}</p></div>`;
+  else {
+    const fmtW = new Intl.DateTimeFormat(LOC(), { weekday: "short" });
+    const dayName = n => fmtW.format(new Date(2026, 9, 18 + n));   // 19.10.2026 war ein Montag
+    push = `<div class="field"><p class="m0">${esc(t("puIntro"))}</p>${isIOS() && !isStandalone() ? `<p class="m0 small muted">${esc(t("puNeedInstall"))}</p>` : ""}</div>
+      <div class="field"><label for="pu-time">${esc(t("puTime"))}</label><input id="pu-time" type="time" value="${esc(RM.time)}" class="num"></div>
+      <div class="field"><span class="muted small">${esc(t("puDays"))}</span><div class="daychips">${[1, 2, 3, 4, 5, 6, 7].map(n => `<label class="daychip"><input type="checkbox" name="pu-day" value="${n}"${RM.days.includes(n) ? " checked" : ""}><span>${esc(dayName(n))}</span></label>`).join("")}</div></div>
+      <div class="field">${puState.msg ? `<p class="m0 ${puState.err ? "err" : "ok-ink"}">${esc(t(puState.msg))}</p>` : RM.on ? `<p class="m0 ok-ink">${esc(t("puActive"))}</p>` : ""}
+        <div class="ob"><div class="acts"><button type="button" class="btn primary" data-act="puOn">${esc(RM.on ? t("puSave") : t("puOn"))}</button>
+        ${RM.on ? `<button type="button" class="btn tinted" data-act="puTest">${esc(t("puTest"))}</button><button type="button" class="btn plain" data-act="puOff">${esc(t("puOff"))}</button>` : ""}</div></div></div>`;
+  }
+  return `<div><p class="kicker">${esc(t("syTitle"))}</p><div class="list">${sync}</div></div>
+    <div><p class="kicker">${esc(t("puTitle"))}</p><div class="list">${push}</div></div>
+    <div><p class="kicker">${esc(t("advTitle"))}</p><div class="list"><label class="field checkrow"><input type="checkbox" id="adv-prev"${S.advPreview ? " checked" : ""}><span>${esc(t("advPreview"))}</span></label></div></div>`;
+}
+
+/* ---------- Bedienung Extras ---------- */
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
+  try {
+    switch (b.dataset.act){
+      case "speak": speakText(b.dataset.say); break;
+      case "stellaTap": { tipIdx = (tipIdx + 1) % TIPS.length; const tx = L2(TIPS[tipIdx]); const el = b.parentElement.querySelector(".bubble");
+        if (el){ el.innerHTML = `<p class="m0">${esc(tx)}</p>${spk(tx)}`; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); }
+        b.classList.remove("wiggle"); void b.offsetWidth; b.classList.add("wiggle"); tone([[880, .08, 0], [1320, .1, .07]]); if (S.speech === "auto") speakText(tx); break; }
+      case "duelSetup": openDuelSetup(); break;
+      case "duelAgain": startDuel(A.cfg); break;
+      case "cert": A = { kind: "cert", a: b.dataset.a === "all" ? "all" : +b.dataset.a }; show("act"); break;
+      case "certPrint": window.print(); break;
+      case "advDoor": { const d = +b.dataset.d; if (d > advOpenDay()){ toast(t("advLocked", { d })); break; } A = { kind: "advent", d }; show("act"); break; }
+      case "advPick": if (+b.dataset.v === ADVENT[A.d - 1][2]){ const y = advYear(); S.advent[y] = { ...(S.advent[y] || {}), [A.d]: Date.now() }; reward(2); tone(SND.win); burst(); }
+        else { A.err = true; tone(SND.wrong); } render(); break;
+      case "syNew": await syncCreate(); render(); break;
+      case "syNow": await syncNow(true); break;
+      case "syShow": syState.show = !syState.show; render(); break;
+      case "syCopy": try { await navigator.clipboard.writeText(SY.code); toast(t("syCopied")); } catch(err){ const r = document.createRange(); r.selectNodeContents($("#sy-code-v")); getSelection().removeAllRanges(); getSelection().addRange(r); } break;
+      case "syHist": syState.hist = await rpc("rechenstern_versions", { p_code: SY.code }) || []; render(); break;
+      case "syRestore": syState.restoreQ = +b.dataset.v; render(); break;
+      case "syRestoreYes": { const st = await rpc("rechenstern_version_get", { p_code: SY.code, p_version: +b.dataset.v });
+        if (st){ backupLocal(); applyState(st); SY.base = stripState(S); SY.version = -1; ls.set(SYNC_KEY, SY);
+          // gezielt überschreiben: aktuellen Serverstand holen und den zurückgeholten Stand darüber speichern
+          const remote = await rpc("rechenstern_pull", { p_code: SY.code }); const res = await rpc("rechenstern_push", { p_code: SY.code, p_base: remote.version, p_state: stripState(S), p_device: SY.device });
+          if (res.ok){ SY.version = res.version; SY.base = stripState(S); SY.last = Date.now(); ls.set(SYNC_KEY, SY); }
+          syState.restoreQ = null; syState.hist = null; toast(t("syRestored")); render(); } break; }
+      case "syOff": syState.offQ = true; render(); break;
+      case "syOffNo": syState.offQ = false; render(); break;
+      case "syOffYes": if (RM.on) await pushDisable(); SY = null; ls.set(SYNC_KEY, null); syState = { msg: "", err: false, show: false, joinErr: "", hist: null, offQ: false, restoreQ: null }; render(); break;
+      case "puOn": RM.time = $("#pu-time").value || "16:00"; RM.days = $$('input[name="pu-day"]:checked').map(i => +i.value); if (!RM.days.length) RM.days = [1, 2, 3, 4, 5, 6, 7]; await pushEnable(); break;
+      case "puOff": await pushDisable(); break;
+      case "puTest": await pushTest(); break;
+    }
+  } catch(err){ if (b.dataset.act.startsWith("pu")){ puState = { msg: "puErr", err: true }; } else { syState.err = true; syState.msg = "syErr"; } render(); }
+});
+document.addEventListener("pointerdown", e => {
+  const b = e.target.closest(".dchoice"); if (!b || b.disabled) return;
+  e.preventDefault(); duelAnswer(+b.dataset.duel, +b.dataset.v);
+});
+document.addEventListener("keydown", e => {
+  if (!A || A.kind !== "duel" || A.done || e.target.closest("input")) return;
+  const k1 = { "1": 0, "2": 1, "3": 2, "4": 3 }[e.key], k2 = { "7": 0, "8": 1, "9": 2, "0": 3 }[e.key];
+  if (k1 != null) duelAnswer(0, A.pl[0].q.opts[k1]); else if (k2 != null) duelAnswer(1, A.pl[1].q.opts[k2]);
+});
+document.addEventListener("submit", async e => {
+  const f = e.target;
+  if (f.id === "duel-form"){
+    e.preventDefault();
+    const p1 = $("#d-p1").value.trim(), p2 = $("#d-p2").value.trim();
+    const cfg = { p1, p2, pool: f.querySelector('input[name="d-pool"]:checked')?.value || "all", head: +(f.querySelector('input[name="d-head"]:checked')?.value || 0), seat: f.querySelector('input[name="d-seat"]:checked')?.value || "side" };
+    if (!p1 || !p2){ A = { ...A, ...cfg, err: t("duelNeed") }; render(); return; }
+    S.duelName = p2; S.duelPool = cfg.pool; S.duelHead = cfg.head; S.duelSeat = cfg.seat; if (!S.name) S.name = p1; save();
+    startDuel(cfg);
+  } else if (f.id === "sy-join"){ e.preventDefault(); try { await syncJoin($("#sy-code").value); } catch(err){ syState.err = true; syState.msg = "syErr"; } render(); }
+});
+document.addEventListener("change", e => {
+  const el = e.target;
+  if (el.id === "adv-prev"){ S.advPreview = el.checked; save(); }
+  else if (el.id === "cert-n" && A && A.kind === "cert"){ A.name = el.value.trim(); render(); }
+  else if (el.name === "st-speech"){ S.speech = el.value; save(); render(); }
+});
+
 /* ---------- Bedienung ---------- */
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-act]"); if (!b || b.disabled || b.getAttribute("aria-disabled") === "true") return;
@@ -1801,7 +2544,7 @@ function applyTheme(v){
 }
 (function(){
   const dlg = $("#settings");
-  const sync = () => { $(`#st-theme-${storedTheme()}`).checked = true; $(`#st-lang-${LANG}`).checked = true; $(`#st-sound-${S.sound ? "on" : "off"}`).checked = true; };
+  const sync = () => { $(`#st-theme-${storedTheme()}`).checked = true; $(`#st-lang-${LANG}`).checked = true; $(`#st-sound-${S.sound ? "on" : "off"}`).checked = true; const sp = $(`#st-speech-${S.speech}`); if (sp) sp.checked = true; $("#st-speech-g").hidden = !canSpeak; };
   $("#open-settings").addEventListener("click", () => { sync(); try { dlg.showModal(); } catch(e){ dlg.setAttribute("open", ""); } });
   $("#st-done").addEventListener("click", () => dlg.close());
   dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
@@ -1821,5 +2564,6 @@ function applyTheme(v){
   applyTheme(storedTheme());
   applyLang();
   show("lernen");
+  setTimeout(() => syncNow(false), 800);
 })();
 </script>

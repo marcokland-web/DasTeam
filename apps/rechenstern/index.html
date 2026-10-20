@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://asfwbuptsfcrgmmgdgim.supabase.co; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <title>Rechenstern</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
@@ -82,6 +82,12 @@
         <label><input type="radio" name="st-sound" id="st-sound-on" value="on"><span data-i18n="soundOn">Töne an</span></label>
         <label><input type="radio" name="st-sound" id="st-sound-off" value="off"><span data-i18n="soundOff">Töne aus</span></label>
       </div>
+      <div class="seg" role="radiogroup" aria-label="Vorlesen" id="st-speech-g">
+        <label><input type="radio" name="st-speech" id="st-speech-off" value="off"><span data-i18n="spOff">Aus</span></label>
+        <label><input type="radio" name="st-speech" id="st-speech-tap" value="tap"><span data-i18n="spTap">Auf Knopfdruck</span></label>
+        <label><input type="radio" name="st-speech" id="st-speech-auto" value="auto"><span data-i18n="spAuto">Automatisch</span></label>
+      </div>
+      <p class="st-foot st-in" data-i18n="spHint">Stella liest Aufgaben, Geschichten und Tipps vor.</p>
       <button type="button" class="row" data-act="parents" id="st-parents"><span class="tx"><b data-i18n="parentsOpen">Eltern-Bereich</b></span><svg class="chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></button>
     </div>
     <p class="st-foot" data-i18n="stParentsHint">Belohnungen, Tagesziel und Lernstand. Geschützt mit einer Eltern-PIN.</p>

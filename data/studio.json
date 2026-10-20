@@ -786,6 +786,48 @@
       "datum": "2026-10-19T23:16:00+02:00",
       "text": "lädt die Teamleitungen ab jetzt jeden Montagmorgen zur Teamleiter-Runde ein.",
       "typ": "Leitung"
+    },
+    {
+      "id": "c023",
+      "agent": "chef",
+      "datum": "2026-10-19T23:06:00+02:00",
+      "text": "genehmigt Lernregister, Designsystem, Familien-Wortliste und Fehler-Nachbetrachtung.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c024",
+      "agent": "qualitaets-quentin",
+      "datum": "2026-10-19T23:07:00+02:00",
+      "text": "startet die erste große Teamprüfung der Budget-App B.A.S.E.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c025",
+      "agent": "qualitaets-quentin",
+      "datum": "2026-10-20T05:40:00+02:00",
+      "text": "legt den Prüfbericht zu B.A.S.E vor: 4 kritische und 13 hohe Befunde aus acht Fachprüfungen; Freigabe vorerst verweigert.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c026",
+      "agent": "chef",
+      "datum": "2026-10-20T12:55:00+02:00",
+      "text": "wählt die Designsprache für alle Apps: Familienfarben Bordeaux und Gold mit Apple-Klarheit.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c027",
+      "agent": "logo-luisa",
+      "datum": "2026-10-20T13:20:00+02:00",
+      "text": "zeichnet die App-Icon-Familie für B.A.S.E, Gewohnheiten, Zählerstände, Studio-Team und neue Apps.",
+      "typ": "Logo"
+    },
+    {
+      "id": "c028",
+      "agent": "gestaltungs-greta",
+      "datum": "2026-10-20T13:25:00+02:00",
+      "text": "legt das gemeinsame Designsystem des Studios mit Farben, Schrift, Bausteinen und Familien-Wortliste an.",
+      "typ": "Umgesetzt"
     }
   ],
   "ideen": [
@@ -812,7 +854,7 @@
       "beschreibung": "Doku-Dörte führt ein Register mit Fehler, wer ihn bemerkt hat, Ursache, neuer Regel und zuständiger Person. Jede neue Regel wandert direkt in die Freigabe-Prüfung, und die Seite zeigt, wie viele Fehler Marco selbst finden musste.",
       "datum": "2026-10-19T23:01:00+02:00",
       "nutzen": "Ein Fehler passiert nur einmal, und Marco sieht, ob das Team selbstständig besser wird.",
-      "status": "Wartet auf Marco",
+      "status": "Genehmigt",
       "titel": "Lernregister: aus jedem Fehler eine Prüfregel",
       "von": "wissens-wilma"
     },
@@ -834,7 +876,7 @@
       "beschreibung": "Design-Doris baut eine zentrale Datei mit geprüften Farben für Hell und Dunkel, Schriften ohne Google, Abständen und Touch-Größen ab 44 px, die jede neue App von Anfang an nutzt. Dazu kommt eine Übersichtsseite mit allen Bausteinen.",
       "datum": "2026-10-19T23:02:00+02:00",
       "nutzen": "Budget, Habit Tracker und Zählerstände sehen aus wie aus einer Familie, und typische Fehler entstehen gar nicht erst.",
-      "status": "Wartet auf Marco",
+      "status": "In Umsetzung",
       "titel": "Gemeinsames Designsystem für alle Familien-Apps",
       "von": "gestaltungs-greta"
     },
@@ -845,7 +887,7 @@
       "beschreibung": "Text-Tina pflegt eine kurze Wortliste (z. B. „Kategorie“ statt englischer Fachbegriffe, Du-Ansprache, Euro- und Datumsformate) und fertige Bausteine für Leerzustände, Fehler, Löschen und Sync-Hinweise.",
       "datum": "2026-10-19T23:02:30+02:00",
       "nutzen": "Die Familie versteht alle Apps gleich, besonders den YNAB-Nachbau.",
-      "status": "Wartet auf Marco",
+      "status": "Genehmigt",
       "titel": "Familien-Wortliste und Textbausteine",
       "von": "gestaltungs-greta"
     },
@@ -867,7 +909,7 @@
       "beschreibung": "Für jeden Fehler, den Marco zuerst findet, schreibt Rant-Randy eine kurze Nachbetrachtung: Warum hat unsere Prüfung ihn nicht gefunden? Daraus entsteht ein neuer automatischer Prüfpunkt.",
       "datum": "2026-10-19T23:04:00+02:00",
       "nutzen": "Derselbe Fehlertyp kommt nicht wieder, und Marco muss nicht mehr selbst testen.",
-      "status": "Wartet auf Marco",
+      "status": "Genehmigt",
       "titel": "Fehler-Nachbetrachtung mit neuem Prüfpunkt",
       "von": "qualitaets-quentin"
     }

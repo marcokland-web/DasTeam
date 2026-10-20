@@ -17,7 +17,7 @@ Online: https://marcokland-web.github.io/DasTeam/
 
 ## Logo „Runde“
 
-Ein Punkt pro Abteilung, in der Farbe der Abteilung, im Kreis um die Leitung in der Mitte. Die Seite zeichnet Logo und Favicon aus den Daten: Kommt eine Abteilung dazu, bekommt das Logo automatisch einen Punkt mehr.
+Goldene Punkte auf Bordeaux: ein Punkt pro Abteilung, im Kreis um die Leitung in der Mitte, im Familienstil des Designsystems. Die Seite zeichnet Logo und Favicon aus den Daten: Kommt eine Abteilung dazu, bekommt das Logo automatisch einen Punkt mehr.
 
 ## Team-Standards
 

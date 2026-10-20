@@ -15,8 +15,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#EFF1EC" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#131715" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141012" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -37,62 +37,194 @@
       <div><dt>Zuletzt geändert</dt><dd id="f-last">–</dd></div>
     </dl>
     <div class="banner" id="banner" role="status" hidden></div>
+    <div class="toggle-all"><button type="button" id="open-all" class="link-btn">Alle aufklappen</button><button type="button" id="close-all" class="link-btn">Alle zuklappen</button></div>
   </header>
 
-  <section aria-labelledby="org-h">
-    <div class="section-head">
-      <h2 id="org-h">Organigramm</h2>
-      <span class="hint">Gepflegt von Organigramm-Olga</span>
+  <details class="sec" id="organigramm" open>
+    <summary><span class="sum-title">Organigramm</span><span class="sum-hint">Gepflegt von Organigramm-Olga</span></summary>
+    <div class="sec-body">
+      <div class="chart" id="chart">
+        <div class="notice"><strong>Das Team wird geladen …</strong><span>Einen Moment bitte.</span></div>
+      </div>
     </div>
-    <div class="chart" id="chart">
-      <div class="notice"><strong>Das Team wird geladen …</strong><span>Einen Moment bitte.</span></div>
+  </details>
+
+  <details class="sec" id="arbeiten">
+    <summary><span class="sum-title">So arbeiten wir</span><span class="sum-hint">Ideen, Personal, Teamleiter-Runde</span></summary>
+    <div class="sec-body">
+      <div class="flows">
+        <article class="flow">
+          <h3>Neue Ideen</h3>
+          <ol>
+            <li>Die Teamleitung entwickelt mit ihrem Team Ideen, wie die Abteilung besser wird.</li>
+            <li>Die Teamleiter-Runde stimmt sie über Abteilungsgrenzen ab.</li>
+            <li>Marco entscheidet.</li>
+            <li>Das Team setzt um und hält fest, was es gelernt hat.</li>
+          </ol>
+        </article>
+        <article class="flow">
+          <h3>Personal</h3>
+          <ol>
+            <li>Die Teamleitung meldet Bedarf bei HR-Heidi.</li>
+            <li>HR-Heidi schreibt das Rollenprofil und holt die Stellengenehmigung bei Marco ein.</li>
+            <li>Nach der Genehmigung stellt HR-Heidi ein und stellt die neue Person vor.</li>
+          </ol>
+        </article>
+        <article class="flow">
+          <h3>Teamleiter-Runde</h3>
+          <ol>
+            <li>Die vier Teamleitungen treffen sich jeden Montagmorgen.</li>
+            <li>Sie berichten, was besser geworden ist, und verbessern die Zusammenarbeit.</li>
+            <li>Neue Ideen und Ergebnisse landen hier auf der Seite und in der Chronik.</li>
+          </ol>
+        </article>
+      </div>
+      <h3 class="sub-h">Team-Standards</h3>
+      <ol class="standards">
+        <li><b>Desktop, iPad und iPhone prüfen.</b> Fertig ist nur, was auf allen drei optimal aussieht: kein seitliches Scrollen, kein Zoomen.</li>
+        <li><b>Das ganze Team einbeziehen.</b> Prüfungen machen die zuständigen Fachleute.</li>
+        <li><b>Das Logo wird mitentwickelt</b> und sofort eingebaut.</li>
+        <li><b>Jede App ist installierbar</b> und zeigt auf iPhone und Desktop das richtige Logo.</li>
+        <li><b>Vor jeder Auslieferung läuft die Freigabe-Prüfung.</b></li>
+      </ol>
     </div>
-  </section>
+  </details>
 
-  <section aria-labelledby="flow-h">
-    <div class="section-head"><h2 id="flow-h">So arbeiten wir</h2><span class="hint">Ziel: Teams, die selbstständig besser werden</span></div>
-    <div class="flows">
-      <article class="flow">
-        <h3>Neue Ideen</h3>
-        <ol>
-          <li>Die Teamleitung entwickelt mit ihrem Team Ideen, wie die Abteilung besser wird.</li>
-          <li>Die Teamleiter-Runde stimmt sie über Abteilungsgrenzen ab.</li>
-          <li>Marco entscheidet.</li>
-          <li>Das Team setzt um und hält fest, was es gelernt hat.</li>
-        </ol>
-      </article>
-      <article class="flow">
-        <h3>Personal</h3>
-        <ol>
-          <li>Die Teamleitung meldet Bedarf bei HR-Heidi.</li>
-          <li>HR-Heidi schreibt das Rollenprofil und holt die Stellengenehmigung bei Marco ein.</li>
-          <li>Nach der Genehmigung stellt HR-Heidi ein und stellt die neue Person vor.</li>
-        </ol>
-      </article>
-      <article class="flow">
-        <h3>Teamleiter-Runde</h3>
-        <ol>
-          <li>Die vier Teamleitungen treffen sich jede Woche.</li>
-          <li>Sie berichten, was besser geworden ist, und verbessern die Zusammenarbeit.</li>
-          <li>Neue Ideen und Ergebnisse landen hier auf der Seite und in der Chronik.</li>
-        </ol>
-      </article>
+  <details class="sec" id="ideen">
+    <summary><span class="sum-title">Ideen der Teams</span><span class="sum-hint" id="ideen-hint">Eingebracht von den Teamleitungen · Marco entscheidet</span></summary>
+    <div class="sec-body">
+      <div class="filters" id="idea-filters" role="group" aria-label="Ideen nach Abteilung filtern"></div>
+      <div class="ideas" id="ideas"><p class="hint">Noch keine Ideen eingebracht.</p></div>
     </div>
-  </section>
+  </details>
 
-  <section aria-labelledby="ideen-h">
-    <div class="section-head"><h2 id="ideen-h">Ideen der Teams</h2><span class="hint">Eingebracht von den Teamleitungen · Marco entscheidet</span></div>
-    <div class="filters" id="idea-filters" role="group" aria-label="Ideen nach Abteilung filtern"></div>
-    <div class="ideas" id="ideas"><p class="hint">Noch keine Ideen eingebracht.</p></div>
-  </section>
+  <details class="sec chronik" id="chronik-sec">
+    <summary><span class="sum-title">Chronik</span><span class="sum-hint">Neuzugänge, Beförderungen, neue Lektionen</span></summary>
+    <div class="sec-body">
+      <div class="filters" id="filters" role="group" aria-label="Chronik filtern"></div>
+      <ol id="chronik"><li><span></span><span class="hint">Noch keine Einträge.</span></li></ol>
+    </div>
+  </details>
 
-  <section class="chronik" aria-labelledby="chr-h">
-    <div class="section-head"><h2 id="chr-h">Chronik</h2><span class="hint">Neuzugänge, Beförderungen, neue Lektionen</span></div>
-    <div class="filters" id="filters" role="group" aria-label="Chronik filtern"></div>
-    <ol id="chronik"><li><span></span><span class="hint">Noch keine Einträge.</span></li></ol>
-  </section>
+  <details class="sec" id="marke">
+    <summary><span class="sum-title">Marke und Design</span><span class="sum-hint">Brand-Portal: so sehen alle Apps aus</span></summary>
+    <div class="sec-body brand-portal">
+      <p class="lede">Alle Apps des Studios folgen einer Designsprache: <b>Apple-Klarheit in Familienfarben.</b> Bordeaux und Gold kommen aus dem Familienwappen, die klare Form, die Systemschrift und die Bedienung kommen von Apple. Verantwortlich ist Gestaltungs-Greta, die Icons zeichnet Logo-Luisa.</p>
 
-  <footer>Diese Seite ist immer aktuell: Wenn HR-Heidi ein neues Teammitglied einstellt oder jemand aus deinem Feedback eine neue Lektion lernt, erscheint das hier von selbst. Das Logo wächst mit: Jede Abteilung ist ein Punkt in der Runde.</footer>
+      <details class="sub" open>
+        <summary>App-Icons</summary>
+        <div class="sub-body">
+          <div class="icon-row">
+            <figure><img src="brand/base-rund.svg" alt="" width="64" height="64"><figcaption>B.A.S.E</figcaption></figure>
+            <figure><img src="brand/gewohnheiten-rund.svg" alt="" width="64" height="64"><figcaption>Gewohnheiten</figcaption></figure>
+            <figure><img src="brand/zaehlerstaende-rund.svg" alt="" width="64" height="64"><figcaption>Zählerstände</figcaption></figure>
+            <figure><img src="brand/studio-team-rund.svg" alt="" width="64" height="64"><figcaption>Studio-Team</figcaption></figure>
+            <figure><img src="brand/vorlage-rund.svg" alt="" width="64" height="64"><figcaption>Neue App</figcaption></figure>
+          </div>
+          <ul class="rules">
+            <li>Bordeaux-Verlauf als Fläche, darauf <b>ein</b> goldenes Linien-Symbol. Keine Schrift, keine Schatten; einzige Ausnahme ist das „B“ von B.A.S.E.</li>
+            <li>Alle Apps teilen dieselben Farben und unterscheiden sich nur durch ihr Symbol.</li>
+            <li>Pflicht-Set je App: iPhone-Icon 180 px, Desktop 192 und 512 px, Android-Maske 512 px, Favicon 32 px.</li>
+            <li>Das Logo dieser Seite wächst mit: Jede Abteilung ist ein goldener Punkt in der Runde.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Farben</summary>
+        <div class="sub-body">
+          <div class="swatches">
+            <div class="sw"><span class="chip c-brand"></span><b>Bordeaux</b><small>Alles Tippbare: Hauptknopf, aktiver Tab, Links, Auswahl</small></div>
+            <div class="sw"><span class="chip c-gold"></span><b>Gold</b><small>Nur Schmuck: Symbole, Ringe, erreichte Ziele. Nie Text auf hellem Grund</small></div>
+            <div class="sw"><span class="chip c-cream"></span><b>Creme</b><small>Seitenhintergrund hell</small></div>
+            <div class="sw"><span class="chip c-night"></span><b>Nachtschwarz</b><small>Seitenhintergrund dunkel, mit Bordeaux-Stich</small></div>
+            <div class="sw"><span class="chip c-green"></span><b>Grün</b><small>Gedeckt, Einnahme, erledigt</small></div>
+            <div class="sw"><span class="chip c-ochre"></span><b>Ocker</b><small>Fehlt noch, auffällig</small></div>
+            <div class="sw"><span class="chip c-red"></span><b>Rot</b><small>Überzogen, Löschen, Fehler</small></div>
+          </div>
+          <ul class="rules">
+            <li>Alle Textfarben erreichen in Hell und Dunkel mindestens 4,5:1.</li>
+            <li>Grün, Ocker und Rot nie als einziges Merkmal: immer mit Vorzeichen oder Text.</li>
+            <li>Hell, Dunkel und Automatisch sind in jeder App umschaltbar.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Schrift und Zahlen</summary>
+        <div class="sub-body">
+          <div class="type-demo">
+            <span class="td-big">1.284,50&#8239;€</span>
+            <span class="td-title">Plan Oktober</span>
+            <span class="td-body">Wocheneinkauf bei Rewe · Girokonto · Heute</span>
+          </div>
+          <ul class="rules">
+            <li>Systemschrift (SF Pro auf Apple-Geräten), nichts wird von Google geladen.</li>
+            <li>Große Beträge dünn und gerundet, Ziffern immer gleich breit, Beträge rechtsbündig.</li>
+            <li>Format „1.234,56 €“, Minus als „−“, Datum „20. Oktober 2026“ oder „20.10.2026“.</li>
+            <li>iPhone und iPad in Apple-Größen (Text 17 px), Desktop kompakt (14 px).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Bedienung je Gerät</summary>
+        <div class="sub-body">
+          <div class="table-wrap">
+            <table class="devices">
+              <thead><tr><th></th><th>iPhone</th><th>iPad</th><th>Desktop</th></tr></thead>
+              <tbody>
+                <tr><th>Navigation</th><td data-label="iPhone">Tab-Leiste unten, höchstens 5 Tabs</td><td data-label="iPad">Seitenleiste oder Pille oben</td><td data-label="Desktop">Seitenleiste links</td></tr>
+                <tr><th>Titel</th><td data-label="iPhone">Groß, schrumpft beim Scrollen</td><td data-label="iPad">Groß</td><td data-label="Desktop">Mittel</td></tr>
+                <tr><th>Eingabe</th><td data-label="iPhone">Sheet von unten mit Zahlenblock</td><td data-label="iPad">Sheet oder Popover</td><td data-label="Desktop">Dialog oder direkt in der Tabelle</td></tr>
+                <tr><th>Dichte</th><td data-label="iPhone">Apple-Größen</td><td data-label="iPad">Apple-Größen, zweispaltig</td><td data-label="Desktop">Kompakt</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <ul class="rules">
+            <li>Jede tippbare Fläche mindestens 44 px, auch wenn das Symbol kleiner ist.</li>
+            <li>Nichts unter der Tab-Leiste oder schwebenden Knöpfen verstecken.</li>
+            <li>Löschen immer mit Rückfrage und rotem Knopf, oder mit „Rückgängig“.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Familien-Wortliste</summary>
+        <div class="sub-body">
+          <div class="table-wrap">
+            <table class="words">
+              <thead><tr><th>Verwenden</th><th>Nicht verwenden</th></tr></thead>
+              <tbody>
+                <tr><td>Plan</td><td>Budget, Haushaltsplan</td></tr>
+                <tr><td>Zuweisen</td><td>Budgetieren, Einplanen</td></tr>
+                <tr><td>Noch zu verteilen</td><td>Zuweisbar, Ready to Assign</td></tr>
+                <tr><td>Konto / Konten</td><td>Account, Bargeld</td></tr>
+                <tr><td>Kontostand</td><td>Saldo</td></tr>
+                <tr><td>Buchung</td><td>Transaktion, Umsatz</td></tr>
+                <tr><td>Ausgabe / Einnahme</td><td>Outflow, Inflow, Zufluss</td></tr>
+                <tr><td>Empfänger</td><td>Zahlungsempfänger, Payee</td></tr>
+                <tr><td>Ohne Kategorie</td><td>Unkategorisiert</td></tr>
+                <tr><td>Gebucht ✓</td><td>Abgeglichen, Cleared</td></tr>
+                <tr><td>Kontostand korrigieren</td><td>Kontoabgleich</td></tr>
+                <tr><td>Aufteilen</td><td>Split</td></tr>
+                <tr><td>Ziel · Fehlt noch · Gedeckt</td><td>Target · Unterfinanziert · Finanziert</td></tr>
+                <tr><td>Überzogen</td><td>Overspent</td></tr>
+                <tr><td>Serie</td><td>Streak</td></tr>
+                <tr><td>Zählerstand ablesen · Verbrauch</td><td>Reading · Delta</td></tr>
+                <tr><td>Analyse</td><td>Reflect, Berichte</td></tr>
+                <tr><td>du</td><td>Sie</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <p class="hint">Alle Werte, Bausteine und Icon-Dateien stehen im Designsystem des Studios.</p>
+    </div>
+  </details>
+
+  <footer>Diese Seite ist immer aktuell: Wenn HR-Heidi ein neues Teammitglied einstellt oder jemand aus deinem Feedback eine neue Lektion lernt, erscheint das hier von selbst. Das Logo wächst mit: Jede Abteilung ist ein goldener Punkt in der Runde.</footer>
 </div>
 
 <dialog id="sb" aria-labelledby="sb-name"></dialog>

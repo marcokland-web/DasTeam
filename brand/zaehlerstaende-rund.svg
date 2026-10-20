@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg-zaehlerstaende" x1="0" y1="0" x2="0" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8C2545"/>
+      <stop offset="1" stop-color="#5A1028"/>
+    </linearGradient>
+    <linearGradient id="gold-zaehlerstaende" x1="0" y1="212" x2="0" y2="812" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F0D08A"/>
+      <stop offset="1" stop-color="#C8963E"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1024" height="1024" rx="230" ry="230" fill="url(#bg-zaehlerstaende)"/>
+  <path d="M276 548 A236 236 0 0 1 748 548" fill="none" stroke="url(#gold-zaehlerstaende)" stroke-linecap="round" stroke-linejoin="round" stroke-width="64"/>
+  <line x1="276" y1="548" x2="352" y2="548" fill="none" stroke="url(#gold-zaehlerstaende)" stroke-linecap="round" stroke-linejoin="round" stroke-width="64"/>
+  <line x1="345.1" y1="381.1" x2="398.9" y2="434.9" fill="none" stroke="url(#gold-zaehlerstaende)" stroke-linecap="round" stroke-linejoin="round" stroke-width="64"/>
+  <line x1="512" y1="312" x2="512" y2="388" fill="none" stroke="url(#gold-zaehlerstaende)" stroke-linecap="round" stroke-linejoin="round" stroke-width="64"/>
+  <line x1="678.9" y1="381.1" x2="625.1" y2="434.9" fill="none" stroke="url(#gold-zaehlerstaende)" stroke-linecap="round" stroke-linejoin="round" stroke-width="64"/>
+  <line x1="748" y1="548" x2="672" y2="548" fill="none" stroke="url(#gold-zaehlerstaende)" stroke-linecap="round" stroke-linejoin="round" stroke-width="64"/>
+  <line x1="512" y1="548" x2="574.5" y2="447.9" fill="none" stroke="url(#gold-zaehlerstaende)" stroke-linecap="round" stroke-linejoin="round" stroke-width="64"/>
+  <circle cx="512" cy="548" r="44" fill="url(#gold-zaehlerstaende)"/>
+  <rect x="368" y="640" width="288" height="104" rx="26" ry="26" fill="url(#gold-zaehlerstaende)"/>
+  <rect x="396" y="664" width="64" height="56" rx="10" ry="10" fill="#6A1631"/>
+  <rect x="480" y="664" width="64" height="56" rx="10" ry="10" fill="#6A1631"/>
+  <rect x="564" y="664" width="64" height="56" rx="10" ry="10" fill="#6A1631"/>
+
+</svg>

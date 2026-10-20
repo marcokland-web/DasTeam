@@ -1,6 +1,5 @@
-// Erlaubte Abteilungsfarben (CSS-Tokens). Favicon braucht feste Werte, da es keine CSS-Variablen sieht.
+// Erlaubte Abteilungsfarben (CSS-Tokens).
 const HUES = new Set(["moss","coral","plum","sky","ochre"]);
-const ICON_HUES = {moss:"#7FC09F",coral:"#EE8D74",plum:"#C29AD3",sky:"#82B6DD",ochre:"#E0B455"};
 const SVGNS = "http://www.w3.org/2000/svg";
 const state = {team:[], depts:[], chronik:[], ideen:[], got:{}, error:false};
 const $ = s => document.querySelector(s);
@@ -53,23 +52,28 @@ function derive(){
 const hueOf = a => { const d = model.deptById.get(a.abteilung); return (d && d.farbe) || a.farbe || ""; };
 
 /* ---------- Logo „Runde“: ein Punkt je Abteilung, Leitung in der Mitte ---------- */
+// Logo „Runde“ im Familienstil: Bordeaux-Fläche, goldener Ring, Mittelpunkt und ein Punkt je Abteilung.
+// Maße aus Logo-Luisas Vorlage (1024er Raster) auf 64 umgerechnet.
 function ringPoints(n){
-  const R = 20, r = n<=6 ? 5.5 : Math.max(2.5, R*Math.sin(Math.PI/n)-1.2);
-  return Array.from({length:n},(_,i)=>{ const a = -Math.PI/2 + i*2*Math.PI/n; return {x:+(32+R*Math.cos(a)).toFixed(2), y:+(32+R*Math.sin(a)).toFixed(2), r}; });
+  const R = 12.25, r = n<=4 ? 3.75 : Math.max(1.6, R*Math.sin(Math.PI/n)-0.7);
+  return Array.from({length:n},(_,i)=>{ const a = -Math.PI/2 + i*2*Math.PI/n; return {x:+(32+R*Math.cos(a)).toFixed(2), y:+(32+R*Math.sin(a)).toFixed(2), r:+r.toFixed(2)}; });
+}
+function logoSvg(n, uid){
+  const dots = ringPoints(n).map(p=>`<circle cx="${p.x}" cy="${p.y}" r="${p.r}" fill="url(#g-${uid})"/>`).join("");
+  return `<svg xmlns="${SVGNS}" viewBox="0 0 64 64"><defs>`+
+    `<linearGradient id="b-${uid}" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8C2545"/><stop offset="1" stop-color="#5A1028"/></linearGradient>`+
+    `<linearGradient id="g-${uid}" x1="0" y1="13" x2="0" y2="51" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F0D08A"/><stop offset="1" stop-color="#C8963E"/></linearGradient>`+
+    `</defs><rect width="64" height="64" rx="14.4" fill="url(#b-${uid})"/>`+
+    `<circle cx="32" cy="32" r="12.25" fill="none" stroke="url(#g-${uid})" stroke-width="1.5"/>`+
+    `<circle cx="32" cy="32" r="4.75" fill="url(#g-${uid})"/>${dots}</svg>`;
 }
 function logoEl(depts){
-  const svg = document.createElementNS(SVGNS,"svg");
-  svg.setAttribute("viewBox","0 0 64 64");
-  const c = (attrs, prop, val) => { const e = document.createElementNS(SVGNS,"circle"); for (const k in attrs) e.setAttribute(k,attrs[k]); e.style.setProperty(prop,val); svg.append(e); };
-  c({cx:32,cy:32,r:20,fill:"none","stroke-width":1.5},"stroke","var(--line)");
-  c({cx:32,cy:32,r:8},"fill","var(--fg)");
-  ringPoints(depts.length).forEach((p,i)=>{ const k = depts[i].farbe; c({cx:p.x,cy:p.y,r:p.r},"fill",`var(--${HUES.has(k)?k:"accent"})`); });
-  return svg;
+  const tpl = document.createElement("template");
+  tpl.innerHTML = logoSvg(depts.length, "logo");
+  return tpl.content.firstChild;
 }
 function faviconHref(depts){
-  const dots = ringPoints(depts.length).map((p,i)=>`<circle cx="${p.x}" cy="${p.y}" r="${(p.r+0.5).toFixed(2)}" fill="${ICON_HUES[depts[i].farbe]||"#86C4AC"}"/>`).join("");
-  const svg = `<svg xmlns="${SVGNS}" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1C2420"/><circle cx="32" cy="32" r="8.5" fill="#F2F4F0"/>${dots}</svg>`;
-  return "data:image/svg+xml," + encodeURIComponent(svg);
+  return "data:image/svg+xml," + encodeURIComponent(logoSvg(depts.length, "fav"));
 }
 let logoKey = null;
 function renderBrand(){
@@ -301,6 +305,22 @@ function setData(part, docs){
   state[part] = docs; state.got[part] = true;
   invalidate(part==="chronik" ? "chronik" : part==="ideen" ? "ideen" : "org");
 }
+
+
+/* ---------- Aufklappbare Bereiche: Zustand pro Gerät merken ---------- */
+(function(){
+  const secs = [...document.querySelectorAll("details.sec")];
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem("offen") || "null"); } catch(e){}
+  if (Array.isArray(saved)) secs.forEach(d=>{ d.open = saved.includes(d.id); });
+  const store = () => { try { localStorage.setItem("offen", JSON.stringify(secs.filter(d=>d.open).map(d=>d.id))); } catch(e){} };
+  secs.forEach(d=>d.addEventListener("toggle", ()=>{ store(); if (d.id==="organigramm" && d.open) fitChart(); }));
+  $("#open-all").addEventListener("click", ()=>{ secs.forEach(d=>d.open=true); store(); });
+  $("#close-all").addEventListener("click", ()=>{ secs.forEach(d=>d.open=false); store(); });
+  // Sprung per #anker öffnet den Bereich
+  const go = () => { const d = location.hash && document.getElementById(location.hash.slice(1)); if (d && d.tagName==="DETAILS") { d.open = true; d.scrollIntoView({block:"start"}); } };
+  window.addEventListener("hashchange", go); go();
+})();
 
 /* ---------- Daten: claude.ai-Datenbank, sonst data/studio.json ---------- */
 async function connect(){

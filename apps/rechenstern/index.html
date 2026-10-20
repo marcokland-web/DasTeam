@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>Rechenstern</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" id="favicon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Rechenstern">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141012" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Rechenstern: das Einmaleins-Spiel des Familien-App-Studios">
+<script src="early.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <button type="button" class="brandbtn" data-act="tab" data-v="home" id="brandbtn"><span class="mark" id="mark" aria-hidden="true"></span><span class="wm"><b>Rechenstern</b><small data-i18n="tagline">Das Einmaleins-Spiel</small></span></button>
+    <nav class="toptabs" id="toptabs" aria-label="Bereiche">
+      <button type="button" data-act="tab" data-v="home" data-i18n="tabPlay">Spielen</button>
+      <button type="button" data-act="tab" data-v="sammlung" data-i18n="tabColl">Sammlung</button>
+      <button type="button" data-act="tab" data-v="truhe" data-i18n="tabChest">Schatztruhe</button>
+    </nav>
+    <button type="button" class="starpill" data-act="tab" data-v="truhe" id="starpill"><svg viewBox="0 0 24 24" class="st-ico" aria-hidden="true"><path d="M12 2.6l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 16.8l-5.8 3.3 1.4-6.4-4.9-4.4 6.5-.7z"/></svg><span class="num" id="hdr-stars">0</span></button>
+    <button type="button" class="gear" id="open-settings" aria-haspopup="dialog" aria-label="Einstellungen"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2 5.5 5.5"/><circle cx="12" cy="12" r="6.6"/></svg></button>
+  </header>
+  <main>
+    <section id="v-home" class="view"></section>
+    <section id="v-play" class="view" hidden></section>
+    <section id="v-result" class="view" hidden></section>
+    <section id="v-sammlung" class="view" hidden></section>
+    <section id="v-truhe" class="view" hidden></section>
+    <section id="v-eltern" class="view" hidden></section>
+  </main>
+</div>
+
+<nav class="tabbar" id="tabbar" aria-label="Bereiche">
+  <button type="button" data-act="tab" data-v="home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M9 9l6 6M15 9l-6 6"/></svg><span data-i18n="tabPlay">Spielen</span></button>
+  <button type="button" data-act="tab" data-v="sammlung"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="14.5" r="5.5"/><path d="M8.2 3.5l2.3 5.6M15.8 3.5l-2.3 5.6"/><path d="M12 12.3l.8 1.6 1.7.2-1.3 1.2.4 1.7-1.6-.9-1.6.9.4-1.7-1.3-1.2 1.7-.2z"/></svg><span data-i18n="tabColl">Sammlung</span></button>
+  <button type="button" data-act="tab" data-v="truhe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11h17v8.5h-17zM3.5 11V9.5a8.5 5.5 0 0 1 17 0V11M12 13v3"/></svg><span data-i18n="tabChest">Schatztruhe</span></button>
+</nav>
+
+<div class="toast" id="toast" role="status" hidden></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<dialog id="settings" class="settings" aria-labelledby="st-title">
+  <div class="st">
+    <div class="st-grab" aria-hidden="true"></div>
+    <div class="st-bar"><span></span><b id="st-title" data-i18n="stTitle">Einstellungen</b><button type="button" class="st-done" id="st-done" data-i18n="stDone">Fertig</button></div>
+    <p class="st-head" id="st-h-theme" data-i18n="stAppearance">Darstellung</p>
+    <div class="st-group">
+      <div class="seg" role="radiogroup" aria-labelledby="st-h-theme">
+        <label><input type="radio" name="st-theme" id="st-theme-auto" value="auto"><span data-i18n="stAuto">Automatisch</span></label>
+        <label><input type="radio" name="st-theme" id="st-theme-light" value="light"><span data-i18n="stLight">Hell</span></label>
+        <label><input type="radio" name="st-theme" id="st-theme-dark" value="dark"><span data-i18n="stDark">Dunkel</span></label>
+      </div>
+    </div>
+    <p class="st-foot" data-i18n="stAutoHint">„Automatisch“ folgt der Einstellung deines Geräts.</p>
+    <p class="st-head" id="st-h-lang" data-i18n="stLang">Sprache</p>
+    <div class="st-group">
+      <div class="seg" role="radiogroup" aria-labelledby="st-h-lang">
+        <label><input type="radio" name="st-lang" id="st-lang-de" value="de"><span>Deutsch</span></label>
+        <label><input type="radio" name="st-lang" id="st-lang-en" value="en"><span>English</span></label>
+      </div>
+    </div>
+    <p class="st-head" id="st-h-sound" data-i18n="stGame">Spiel</p>
+    <div class="st-group">
+      <div class="seg" role="radiogroup" aria-labelledby="st-h-sound">
+        <label><input type="radio" name="st-sound" id="st-sound-on" value="on"><span data-i18n="soundOn">Töne an</span></label>
+        <label><input type="radio" name="st-sound" id="st-sound-off" value="off"><span data-i18n="soundOff">Töne aus</span></label>
+      </div>
+      <button type="button" class="row" data-act="parents" id="st-parents"><span class="tx"><b data-i18n="parentsOpen">Eltern-Bereich</b></span><svg class="chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></button>
+    </div>
+    <p class="st-foot" data-i18n="stParentsHint">Belohnungen, Tagesziel und Lernstand. Geschützt mit einer Eltern-PIN.</p>
+    <p class="st-head" data-i18n="stAbout">Über</p>
+    <div class="st-group st-about"><span id="st-icon" aria-hidden="true"></span><span class="st-t"><b>Rechenstern</b><small data-i18n="aboutSub">Das Einmaleins-Spiel · Version 2026.10.20</small><small data-i18n="aboutPart">Teil des Familien-App-Studios</small></span></div>
+  </div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

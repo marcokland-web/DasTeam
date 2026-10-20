@@ -38,6 +38,14 @@ Diese Regeln hat Marco festgelegt. Sie gelten für jede Seite und jede App des S
 
 Kommt eine Abteilung dazu, werden die Icons beim nächsten Erzeugen der Seite neu gezeichnet. Auf bereits installierten Apps aktualisieren iPhone und Desktop das Icon erst, wenn man die App einmal entfernt und neu hinzufügt.
 
+## Apps des Studios
+
+| App | Ordner | Adresse |
+|---|---|---|
+| Rechenstern (Einmaleins-Spiel) | `apps/rechenstern/` | https://marcokland-web.github.io/DasTeam/apps/rechenstern/ |
+
+Rechenstern speichert den Spielstand nur im Browser des Geräts. Quelle der App ist eine einzelne HTML-Datei; die installierbare Fassung (eigene CSS- und JS-Dateien, Manifest, Icon-Set) wird daraus gebaut.
+
 ## Studio-Kit für Claude Code
 
 Damit alle Apps auf dem Mac nach denselben Regeln gebaut werden und das Team überall mitarbeitet, liegt hier das Studio-Kit (`studio/`):

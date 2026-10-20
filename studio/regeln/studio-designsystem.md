@@ -54,6 +54,15 @@
 - **Verhalten:** Änderungen gelten sofort, ohne Speichern-Knopf; gemerkt pro Gerät in `localStorage` unter `studio-theme` (`auto|light|dark`) und `studio-lang` (`de|en`). Thema vor dem ersten Zeichnen setzen (kleines Skript im `<head>`), `meta theme-color` mitändern.
 - **Sprache:** Texte über ein Wörterbuch bzw. `T(de, en)`; Datum und Zahlen mit `Intl` (`de-DE` bzw. `en-GB`); Eingaben in beiden Formaten akzeptieren.
 
+## Apps für Kinder
+
+Gleiche Familienfarben und derselbe Aufbau, aber größer und verspielter (erstmals in Rechenstern, `apps/rechenstern/`):
+
+- Zahlen und Aufgaben in der gerundeten Systemschrift (`ui-rounded`), groß und fett; Tasten mindestens 60 px hoch.
+- Gold für Sterne und Belohnungen, Grün für „richtig“, Rot nur mit freundlichem Text („Knapp daneben.“), nie mit Strafe.
+- Lob für Mühe, kein Zeitdruck außer in freiwilligen Spielen, keine Schuldgefühle bei Pausen, keine Käufe, keine Werbung.
+- Echte Belohnungen nur über einen Eltern-Bereich mit PIN; alle Daten bleiben auf dem Gerät.
+
 ## App-Icons
 
 - Bordeaux-Verlauf `#8C2545` → `#5A1028`, darauf **ein** goldenes Linien-Symbol, Verlauf `#F0D08A` → `#C8963E`. Keine Schrift (Ausnahme: das „B“ von B.A.S.E).

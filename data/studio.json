@@ -107,14 +107,19 @@
           "stufe": 3
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-20",
+          "text": "Gespeicherten Spielstand beim Laden Feld für Feld prüfen, damit ein kaputter Eintrag die App nicht lahmlegt."
+        }
+      ],
       "motto": "Ein sauberes Schema spart hundert Bugfixes.",
       "name": "Daten-Dieter",
       "nr": "P-014",
       "persoenlichkeit": "Ruhig und gründlich. Denkt bei jeder Tabelle an die Daten von übermorgen und an Cent-Beträge ohne Rundungsfehler.",
       "rolle": "Datenbank-Architekt",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "deploy-dennis",
@@ -144,6 +149,10 @@
         {
           "datum": "2026-10-19",
           "text": "Jede Web-App ist installierbar: auf dem iPhone über „Zum Home-Bildschirm“ und auf dem Desktop als App, jeweils mit richtigem Namen und Logo."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Die Content-Security-Policy braucht connect-src 'self', sonst kann die Freigabe-Prüfung das Manifest nicht laden."
         }
       ],
       "motto": "Wenn es nur auf meinem Rechner läuft, läuft es nicht.",
@@ -152,7 +161,7 @@
       "persoenlichkeit": "Pragmatisch und ein bisschen ungeduldig. Automatisiert alles, was er zweimal machen musste.",
       "rolle": "Auslieferung und Betrieb",
       "seit": "2026-10-19",
-      "version": "1.1"
+      "version": "1.2"
     },
     {
       "id": "design-doris",
@@ -186,6 +195,10 @@
         {
           "datum": "2026-10-20",
           "text": "Jede App hat das Einstellungsmenü im Studio-Look (Zahnrad oben rechts, Sheet am iPhone, Dialog am Desktop). Hell und Dunkel werden über den Schalter geprüft, nicht nur über die Systemeinstellung."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Dunkel-Farben nur über Tokens setzen, nicht über eigene Dunkel-Selektoren: sonst überschreiben sie Sonderfälle (OK-Taste war im Dunkeln unsichtbar)."
         }
       ],
       "motto": "Das haben wir doch im Styleguide anders festgelegt, Schatz.",
@@ -194,7 +207,7 @@
       "persoenlichkeit": "Sieht jeden falschen Abstand. Korrigiert freundlich, lässt aber nichts durchgehen.",
       "rolle": "Prüferin für Aussehen und Bedienung",
       "seit": "2026-10-19",
-      "version": "1.2"
+      "version": "1.3"
     },
     {
       "id": "doku-doerte",
@@ -504,14 +517,19 @@
           "stufe": 4
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-20",
+          "text": "Bei Kinder-Apps immer fragen: Kann das Kind es austricksen? PIN selbst setzen, Sterne mit leichten Aufgaben sammeln, Tagesziel durch Raten erreichen."
+        }
+      ],
       "motto": "Das geht besser. Und zwar so.",
       "name": "Rant-Randy",
       "nr": "P-005",
       "persoenlichkeit": "Knallhart in der Sache, endet aber immer mit einem konkreten Verbesserungsvorschlag und merkt sich auch, was gut war.",
       "rolle": "Code-Prüfer",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "sicherheits-siggi",
@@ -537,14 +555,19 @@
           "stufe": 4
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-20",
+          "text": "Eltern-PIN nie im Klartext speichern, nach drei Fehlversuchen sperren, und die erste Einrichtung nur mit einer Eltern-Aufgabe erlauben, die ein Kind nicht lösen kann."
+        }
+      ],
       "motto": "Familien-Finanzen gehören der Familie. Sonst niemandem.",
       "name": "Sicherheits-Siggi",
       "nr": "P-016",
       "persoenlichkeit": "Misstrauisch aus Prinzip, erklärt Risiken aber ohne Panik und immer mit Lösung.",
       "rolle": "Sicherheit und Datenschutz",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "technik-toni",
@@ -645,14 +668,19 @@
         }
       ],
       "fuehrt": true,
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-20",
+          "text": "Belohnungen so bauen, dass sich die schweren Aufgaben lohnen: keine Sterne mehr für Gemeistertes, Tagesziel zählt nur richtige Antworten, Bonus einmal pro Tag."
+        }
+      ],
       "motto": "Was wir einmal lernen, prüfen wir für immer.",
       "name": "Wissens-Wilma",
       "nr": "P-020",
       "persoenlichkeit": "Strukturiert und vorausschauend. Macht aus jeder Erfahrung eine Regel, die das Team auch wirklich anwendet, damit Marco Fehler nicht selbst finden muss.",
       "rolle": "Teamleiterin Planung & Wissen",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     }
   ],
   "chronik": [
@@ -907,6 +935,55 @@
       "datum": "2026-10-20T17:00:00+02:00",
       "text": "trägt neue Lektionen bei Design-Doris, Text-Tina, Bug-Bodo, Gestaltungs-Greta und sich selbst ein: Einstellungsmenü mit Thema und Sprache.",
       "typ": "Lektion"
+    },
+    {
+      "id": "c037",
+      "agent": "chef",
+      "datum": "2026-10-20T20:22:00+02:00",
+      "text": "beauftragt das Team mit einer Einmaleins-App für seinen Sohn, mit Spielelementen und Belohnungen.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c038",
+      "agent": "wissens-wilma",
+      "datum": "2026-10-20T20:40:00+02:00",
+      "text": "entwirft das Lernkonzept: Reihen in Schul-Reihenfolge, drei Sterne pro Reihe, Knobel-Kiste für falsche Aufgaben, freiwillige Blitzrunde.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c039",
+      "agent": "logo-luisa",
+      "datum": "2026-10-20T20:50:00+02:00",
+      "text": "gestaltet das Logo „Rechenstern“: goldener Linienstern mit Mal-Zeichen.",
+      "typ": "Logo"
+    },
+    {
+      "id": "c040",
+      "agent": "bug-bodo",
+      "datum": "2026-10-20T21:20:00+02:00",
+      "text": "spielt Rechenstern auf iPhone, iPad und Desktop in beiden Themen und Sprachen durch: alles bestanden.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c041",
+      "agent": "rant-randy",
+      "datum": "2026-10-20T21:30:00+02:00",
+      "text": "findet 14 Schwachstellen, darunter: Das Kind konnte die Eltern-PIN selbst festlegen. Alle behoben.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c042",
+      "agent": "deploy-dennis",
+      "datum": "2026-10-20T21:45:00+02:00",
+      "text": "liefert Rechenstern installierbar aus. Die Freigabe-Prüfung ist bestanden.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c043",
+      "agent": "hr-heidi",
+      "datum": "2026-10-20T21:50:00+02:00",
+      "text": "trägt Lektionen bei Wissens-Wilma, Sicherheits-Siggi, Deploy-Dennis, Design-Doris, Daten-Dieter und Rant-Randy ein.",
+      "typ": "Lektion"
     }
   ],
   "ideen": [
@@ -991,6 +1068,17 @@
       "status": "Genehmigt",
       "titel": "Fehler-Nachbetrachtung mit neuem Prüfpunkt",
       "von": "qualitaets-quentin"
+    },
+    {
+      "id": "i008",
+      "abteilung": "planung",
+      "art": "Neues Angebot",
+      "beschreibung": "Für Kinder-Apps eine eigene Lernpädagogin: Lern-Lotte prüft Lernkonzepte, Schwierigkeitsstufen und Belohnungen darauf, ob sie wirklich beim Lernen helfen und fair zum Kind sind.",
+      "datum": "2026-10-20T21:55:00+02:00",
+      "nutzen": "Rechenstern und künftige Lern-Apps werden didaktisch geprüft, nicht nur technisch.",
+      "status": "Wartet auf Marco",
+      "titel": "Neue Stelle: Lern-Lotte (Lernpädagogin)",
+      "von": "hr-heidi"
     }
   ]
 }

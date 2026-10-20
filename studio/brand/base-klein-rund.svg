@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg-base-klein" x1="0" y1="0" x2="0" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8C2545"/>
+      <stop offset="1" stop-color="#5A1028"/>
+    </linearGradient>
+    <linearGradient id="gold-base-klein" x1="0" y1="212" x2="0" y2="812" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F0D08A"/>
+      <stop offset="1" stop-color="#C8963E"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1024" height="1024" rx="230" ry="230" fill="url(#bg-base-klein)"/>
+  <path d="M420 296 V728 M420 296 H524 A102 102 0 0 1 524 500 H420 M420 500 H540 A114 114 0 0 1 540 728 H420" fill="none" stroke="url(#gold-base-klein)" stroke-linecap="round" stroke-linejoin="round" stroke-width="96"/>
+  <line x1="304" y1="500" x2="420" y2="500" fill="none" stroke="url(#gold-base-klein)" stroke-linecap="round" stroke-linejoin="round" stroke-width="96"/>
+
+</svg>

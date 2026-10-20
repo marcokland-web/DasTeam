@@ -1,0 +1,8 @@
+{
+  "name": "studio-tools",
+  "private": true,
+  "description": "Werkzeuge des Familien-App-Studios (Freigabe-Prüfung)",
+  "dependencies": {
+    "playwright": "1.48.2"
+  }
+}

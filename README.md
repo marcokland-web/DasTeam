@@ -36,6 +36,33 @@ Diese Regeln hat Marco festgelegt. Sie gelten für jede Seite und jede App des S
 
 Kommt eine Abteilung dazu, werden die Icons beim nächsten Erzeugen der Seite neu gezeichnet. Auf bereits installierten Apps aktualisieren iPhone und Desktop das Icon erst, wenn man die App einmal entfernt und neu hinzufügt.
 
+## Studio-Kit für Claude Code
+
+Damit alle Apps auf dem Mac nach denselben Regeln gebaut werden und das Team überall mitarbeitet, liegt hier das Studio-Kit (`studio/`):
+
+- `studio/regeln/`: Studio-Standards und Designsystem; werden zu Regeln in `~/.claude/rules/` und gelten in jedem Projekt
+- `studio/agents/`: alle Teammitglieder als Claude-Code-Agenten, mit ihren Lektionen aus der Team-Seite (werden bei jedem Hochladen neu erzeugt)
+- `studio/skills/`: die Befehle `/studio-umstellung`, `/studio-freigabe`, `/studio-lektion`
+- `studio/brand/`: die Quell-SVGs aller App-Icons
+- `studio/pruefberichte/`: Prüfberichte der Apps
+- `studio/lektionen-eingang.md`: neue Lektionen vom Mac, die in die Team-Seite übernommen werden
+
+**Einmal einrichten** (Terminal auf dem Mac):
+
+```
+cd ~/Apps
+git clone https://github.com/marcokland-web/DasTeam.git
+bash ~/Apps/DasTeam/studio/installieren.sh
+```
+
+**Aktualisieren**, wenn das Team dazugelernt hat:
+
+```
+git -C ~/Apps/DasTeam pull && bash ~/Apps/DasTeam/studio/installieren.sh
+```
+
+**Eine App umstellen:** Claude Code im Ordner der App starten und `/studio-umstellung` eingeben.
+
 ## Organisation
 
 - **Marco** ist Chef. Alle Teamleitungen berichten direkt an ihn.

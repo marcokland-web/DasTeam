@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg-gewohnheiten-klein" x1="0" y1="0" x2="0" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8C2545"/>
+      <stop offset="1" stop-color="#5A1028"/>
+    </linearGradient>
+    <linearGradient id="gold-gewohnheiten-klein" x1="0" y1="212" x2="0" y2="812" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F0D08A"/>
+      <stop offset="1" stop-color="#C8963E"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1024" height="1024" rx="230" ry="230" fill="url(#bg-gewohnheiten-klein)"/>
+  <path d="M512 298 A214 214 0 1 1 308.5 445.9" fill="none" stroke="url(#gold-gewohnheiten-klein)" stroke-linecap="round" stroke-linejoin="round" stroke-width="84"/>
+  <polyline points="423.7,519.4 489.9,585.6 611.4,453.1" fill="none" stroke="url(#gold-gewohnheiten-klein)" stroke-linecap="round" stroke-linejoin="round" stroke-width="84"/>
+
+</svg>

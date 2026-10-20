@@ -1,0 +1,56 @@
+# Designsystem des Familien-App-Studios (Kurzfassung für den Code)
+
+**Apple-Klarheit in Familienfarben.** Bordeaux und Gold kommen aus dem Familienwappen, Form, Systemschrift und Bedienung von Apple. Alle Apps teilen dieselben Farben und unterscheiden sich nur durch ihr Symbol.
+
+## Farben (CSS-Variablen, Hell / Dunkel)
+
+```css
+:root{
+  --bg:#FAF7F2; --surface:#FFFFFF; --fill:#F1EBE3; --separator:#E5DDD3;
+  --ink:#1D1A1C; --ink-2:#675E62;
+  --brand:#7A1E3A; --brand-strong:#5A1028; --brand-tint:#F3E3E8; --on-brand:#FFFFFF;
+  --gold:#C8963E; --gold-ink:#8A6420;
+  --success:#276F38; --danger:#B3261E; --warning:#9A5B00; --info:#2A6390;
+}
+/* Dunkel (prefers-color-scheme: dark bzw. Umschalter) */
+  --bg:#141012; --surface:#1E191B; --fill:#2A2326; --separator:#3A3134;
+  --ink:#F4EEEA; --ink-2:#ADA3A6;
+  --brand:#E57A98; --brand-strong:#F29BB3; --brand-tint:#3A1C26; --on-brand:#141012;
+  --gold:#E3B866; --gold-ink:#E3B866;
+  --success:#6CC97A; --danger:#FF8A80; --warning:#F2B44C; --info:#8CC0EA;
+```
+
+- `--brand` heißt „hier kann man tippen“: Hauptknopf, aktiver Tab, Links, Auswahl, Fokusring. Höchstens ein gefüllter Hauptknopf pro Ansicht.
+- `--gold` nur als Schmuck (Symbole, Fortschrittsringe, erreichte Ziele), nie als Text auf hellem Grund; Gold-Text heißt `--gold-ink`.
+- Grün/Ocker/Rot nie als einziges Merkmal: immer mit Vorzeichen oder Text.
+- Hell / Dunkel / Automatisch in jeder App umschaltbar, Standard Automatisch.
+- `<meta name="theme-color">` je Thema mit `media` auf `--bg`; Manifest: `theme_color` `#5A1028`, `background_color` `#FAF7F2`.
+
+## Schrift
+
+- Systemschrift: `-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif`. Keine geladenen Schriften.
+- Beträge: `ui-rounded, "SF Pro Rounded", -apple-system, …`, `font-variant-numeric: tabular-nums`, rechtsbündig. Großer Betrag 44 px Gewicht 300; in Listen 17 px Gewicht 500.
+- iPhone/iPad: Apple-Größen (Titel groß 34/41 fett, Text 17/22, Zweitzeile 15/20, Fußnote 13/18). Desktop kompakt: Text 14/20, klein 12/16.
+
+## Formen, Abstände, Bedienung
+
+- Abstände 4/8/12/16/20/24/32 px; Seitenrand 16 px (iPhone), 20 px (iPad/Desktop).
+- Radius: 8 px Eingaben/Plaketten, 10 px Knöpfe, 14 px Karten und gruppierte Listen, 20 px Sheets oben, 999 px Pillen.
+- Jede tippbare Fläche mindestens 44 × 44 px.
+- iPhone: Tab-Leiste unten (max. 5), großer Titel, Eingabe als Bottom-Sheet mit Zahlenblock. iPad: Seitenleiste oder Pille oben, zweispaltig. Desktop: Seitenleiste links, kompakt.
+- Gruppierte Listen im iOS-Stil („inset grouped“), Trennlinien ab Textanfang.
+- Kopfleisten beim Scrollen deckend oder unscharf, nie durchsichtig über Text.
+
+## App-Icons
+
+- Bordeaux-Verlauf `#8C2545` → `#5A1028`, darauf **ein** goldenes Linien-Symbol, Verlauf `#F0D08A` → `#C8963E`. Keine Schrift (Ausnahme: das „B“ von B.A.S.E).
+- Quell-SVGs (1024 px) liegen in DasTeam `studio/brand/`: `base`, `gewohnheiten`, `zaehlerstaende`, `studio-team`, `vorlage`; je vollflächig (iPhone, maskable), `-rund` (Desktop, Favicon) und teils `-klein` (16–32 px).
+- Daraus erzeugt jede App ihr Pflicht-Set (siehe Standard 4). Ein neues Symbol entwirft logo-luisa, ausgehend von `vorlage.svg`.
+
+## Zahlen und Texte
+
+- Beträge „1.234,56 €“ (schmales Leerzeichen vor €), negativ mit „−“; Datum „20. Oktober 2026“ bzw. „20.10.2026“, relativ „Heute“, „Gestern“; Zählerstände mit Einheit „12.345,6 kWh“.
+
+### Familien-Wortliste (verwenden → nicht verwenden)
+
+Plan → Budget · Zuweisen → Budgetieren · Noch zu verteilen → Zuweisbar, Ready to Assign · Konto/Konten → Account, Bargeld · Kontostand → Saldo · Buchung → Transaktion, Umsatz · Ausgabe/Einnahme → Outflow/Inflow, Zufluss · Empfänger → Zahlungsempfänger, Payee · Notiz → Memo · Ohne Kategorie → Unkategorisiert · Gebucht ✓ → Abgeglichen, Cleared · Kontostand korrigieren → Kontoabgleich · Überweisung → Umbuchung, Transfer · Aufteilen → Split · Ziel → Target · Fehlt noch/Gedeckt → Unterfinanziert/Finanziert · Überzogen → Overspent · Pausieren → Snoozen · Serie → Streak · Zählerstand ablesen → Reading · Verbrauch → Delta · Analyse → Reflect, Berichte · Synchronisieren → Sync (im Fließtext) · Rückgängig/Wiederholen → Undo/Redo · du → Sie

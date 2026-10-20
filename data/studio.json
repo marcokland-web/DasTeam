@@ -115,6 +115,10 @@
         {
           "datum": "2026-10-20",
           "text": "Gespeicherten Spielstand beim Laden Feld für Feld prüfen, damit ein kaputter Eintrag die App nicht lahmlegt."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Geräte-Abgleich: Stände zusammenführen statt überschreiben, die Basis sofort auf den Serverstand setzen (sonst zählt ein abgebrochener Upload doppelt) und die Zusammenführung mit Tests absichern."
         }
       ],
       "motto": "Ein sauberes Schema spart hundert Bugfixes.",
@@ -123,7 +127,7 @@
       "persoenlichkeit": "Ruhig und gründlich. Denkt bei jeder Tabelle an die Daten von übermorgen und an Cent-Beträge ohne Rundungsfehler.",
       "rolle": "Datenbank-Architekt",
       "seit": "2026-10-19",
-      "version": "1.1"
+      "version": "1.2"
     },
     {
       "id": "deploy-dennis",
@@ -157,6 +161,10 @@
         {
           "datum": "2026-10-20",
           "text": "Die Content-Security-Policy braucht connect-src 'self', sonst kann die Freigabe-Prüfung das Manifest nicht laden."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "In gemeinsam genutzten Supabase-Projekten nur neue Objekte anlegen, Migrationen klein halten und vor dem Anlegen nachsehen, was schon läuft."
         }
       ],
       "motto": "Wenn es nur auf meinem Rechner läuft, läuft es nicht.",
@@ -165,7 +173,7 @@
       "persoenlichkeit": "Pragmatisch und ein bisschen ungeduldig. Automatisiert alles, was er zweimal machen musste.",
       "rolle": "Auslieferung und Betrieb",
       "seit": "2026-10-19",
-      "version": "1.2"
+      "version": "1.3"
     },
     {
       "id": "design-doris",
@@ -413,6 +421,10 @@
         {
           "datum": "2026-10-19",
           "text": "Zu jedem Logo gehört das komplette App-Icon-Set: iPhone-Home-Bildschirm (180 px), Desktop-App (192 und 512 px), Android-Maske und Favicon. Ein Logo nur auf der Seite reicht nicht."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Spielfiguren bekommen ein eigenes, unverwechselbares Aussehen in Familienfarben; Stella trägt je nach Jahreszeit Blatt, Mütze, Blüte oder Sonnenbrille."
         }
       ],
       "motto": "Jede App braucht ein Gesicht. Auch der Zählerstand-Tracker.",
@@ -421,7 +433,7 @@
       "persoenlichkeit": "Verspielt und ideenreich, liefert aber immer drei saubere Varianten statt dreißig halbfertiger.",
       "rolle": "Logo- und Icon-Designerin",
       "seit": "2026-10-19",
-      "version": "1.2"
+      "version": "1.3"
     },
     {
       "id": "chef",
@@ -606,6 +618,10 @@
         {
           "datum": "2026-10-20",
           "text": "Eltern-PIN nie im Klartext speichern, nach drei Fehlversuchen sperren, und die erste Einrichtung nur mit einer Eltern-Aufgabe erlauben, die ein Kind nicht lösen kann."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Öffentlich aufrufbare Funktionen brauchen Grenzen (Anzahl, Größe, erlaubte Ziele, Takt), sonst kann ein Fremder die gemeinsame Datenbank füllen. Ein Kind meldet sich nie mit dem Konto der Eltern an."
         }
       ],
       "motto": "Familien-Finanzen gehören der Familie. Sonst niemandem.",
@@ -614,7 +630,7 @@
       "persoenlichkeit": "Misstrauisch aus Prinzip, erklärt Risiken aber ohne Panik und immer mit Lösung.",
       "rolle": "Sicherheit und Datenschutz",
       "seit": "2026-10-19",
-      "version": "1.1"
+      "version": "1.2"
     },
     {
       "id": "technik-toni",
@@ -1072,6 +1088,55 @@
       "agent": "bug-bodo",
       "datum": "2026-10-20T22:55:00+02:00",
       "text": "testet alle Lernspiele auf iPhone, iPad und Desktop in beiden Themen: bestanden. Die Freigabe-Prüfung ist bestanden.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c050",
+      "agent": "chef",
+      "datum": "2026-10-20T22:01:00+02:00",
+      "text": "gibt alle sechs Gestaltungsideen frei und wünscht Geräte-Sync über Supabase ohne Datenverlust und Lern-Erinnerungen.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c051",
+      "agent": "logo-luisa",
+      "datum": "2026-10-20T22:20:00+02:00",
+      "text": "entwirft Stella, den Rechenstern zum Anfassen, mit Zubehör für jede Jahreszeit.",
+      "typ": "Logo"
+    },
+    {
+      "id": "c052",
+      "agent": "daten-dieter",
+      "datum": "2026-10-20T22:30:00+02:00",
+      "text": "baut den Geräte-Abgleich: Fortschritt wird zusammengezählt statt überschrieben, mit Verlauf zum Zurückholen.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c053",
+      "agent": "deploy-dennis",
+      "datum": "2026-10-20T22:35:00+02:00",
+      "text": "legt im Supabase-Projekt Zähler einen abgetrennten Bereich für Rechenstern an, ohne Bestehendes anzufassen, dazu Erinnerungen per Push.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c054",
+      "agent": "plan-paula",
+      "datum": "2026-10-20T22:40:00+02:00",
+      "text": "ergänzt Duell mit frei wählbarem Gegner, Wochenbericht, Urkunden, Vorlesen, Jahreszeiten und Adventsrätsel.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c055",
+      "agent": "sicherheits-siggi",
+      "datum": "2026-10-20T22:50:00+02:00",
+      "text": "findet mit Rant-Randy 14 Punkte, darunter zwei Wege zur Doppelzählung beim Abgleich und fehlende Grenzen auf dem Server. Alles behoben.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c056",
+      "agent": "bug-bodo",
+      "datum": "2026-10-20T23:00:00+02:00",
+      "text": "testet Abgleich zwischen zwei Geräten, Abbruch, Wiederverbinden, Duell und alle neuen Teile auf iPhone, iPad und Desktop.",
       "typ": "Prüfung"
     }
   ],

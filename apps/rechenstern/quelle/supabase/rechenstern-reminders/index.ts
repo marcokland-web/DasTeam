@@ -90,7 +90,7 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     if (!body?.code || !body?.test) return json({ error: "bad_request" }, 400);
     const { data, error } = await db.rpc("rechenstern_abos", { p_code: String(body.code) });
-    if (error) return json({ error: "not_found" }, 404);
+    if (error) return error.message.includes("too_many") ? json({ error: "too_many" }, 429) : json({ error: "not_found" }, 404);
     if (!data?.length) return json({ sent: 0, errors: ["Kein Gerät für Erinnerungen eingeschaltet."] });
     return json(await send(data as Abo[], true));
   } catch (e) {

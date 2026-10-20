@@ -32,3 +32,21 @@ assert.deepStrictEqual(merge3(base, base, base).stars, 50);
 const n = merge3(base, { ...base, day: { date: "2026-10-21", count: 3 } }, base);
 assert.strictEqual(n.day.date, "2026-10-21");
 console.log("merge3: alle Tests bestanden");
+// Zurücksetzen auf einem Gerät setzt sich durch
+{
+  const b = { stars: 40, badges: { first: 1 }, facts: { "2x2": { c: 5, w: 0, box: 4, t: 10 } }, name: "Ben" };
+  const l = { stars: 0, badges: {}, facts: {}, name: "Ben", resetAt: 500 };
+  const r = { stars: 45, badges: { first: 1, goal: 2 }, facts: { "2x2": { c: 6, w: 0, box: 5, t: 20 } }, name: "Ben" };
+  const m = merge3(b, l, r);
+  assert.strictEqual(m.stars, 0); assert.deepStrictEqual(m.badges, {}); assert.deepStrictEqual(m.facts, {}); assert.strictEqual(m.name, "Ben"); assert.strictEqual(m.resetAt, 500);
+  const m2 = merge3(b, r, l); assert.strictEqual(m2.stars, 0, "auch von der anderen Seite");
+  const after = merge3({ ...l }, { ...l, stars: 3 }, { ...l });
+  assert.strictEqual(after.stars, 3, "nach dem Zurücksetzen normal weiter");
+}
+// Doppelzählung nach abgebrochenem Upload: Basis = Serverstand
+{
+  const base = { stars: 100 }, A = { stars: 110 }, R = { stars: 120 };
+  const merged = merge3(base, A, R); assert.strictEqual(merged.stars, 130);
+  const again = merge3(R, merged, R); assert.strictEqual(again.stars, 130, "zweiter Versuch zählt nicht doppelt");
+}
+console.log("merge3: Zusatztests bestanden");

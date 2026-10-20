@@ -4,6 +4,15 @@
    Kein Fortschritt eines Geräts geht verloren. */
 function merge3(base, local, remote){
   base = base || {}; local = local || {}; remote = remote || {};
+  // „Fortschritt zurücksetzen“ auf einem Gerät: diese Seite gewinnt für alle Fortschrittsfelder.
+  const KEEP = new Set(["goal", "sound", "pinH", "rewards", "name", "skipName", "speech", "duelName", "duelPool", "duelHead", "duelSeat", "resetAt", "v"]);
+  const lr = +local.resetAt || 0, rr = +remote.resetAt || 0, br = +base.resetAt || 0;
+  if ((lr > br && lr >= rr) || (rr > br && rr > lr)){
+    const win = lr >= rr ? local : remote, prog = {};
+    for (const k of new Set([...Object.keys(local), ...Object.keys(remote)])) if (!KEEP.has(k)) prog[k] = win[k];
+    if (win === local) remote = { ...remote, ...prog }; else local = { ...local, ...prog };
+    base = { ...base, ...prog };
+  }
   const isObj = x => x && typeof x === "object" && !Array.isArray(x);
   const num = x => (typeof x === "number" && isFinite(x)) ? x : 0;
   const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -17,7 +26,8 @@ function merge3(base, local, remote){
   for (const k of keys){
     const b = base[k], l = local[k], r = remote[k];
     switch (k){
-      case "stars": out[k] = Math.max(0, add(b, l, r)); break;
+      case "stars": out[k] = add(b, l, r); break;   // darf kurz negativ werden, wenn zwei Geräte gleichzeitig einlösen
+      case "resetAt": out[k] = Math.max(num(l), num(r)) || undefined; break;
       case "xp": case "rounds": case "stories": out[k] = Math.max(0, add(b, l, r)); break;
       case "bestStreak": case "blitzBest": out[k] = Math.max(num(l), num(r)); break;
       case "knobelHad": out[k] = !!(l || r); break;

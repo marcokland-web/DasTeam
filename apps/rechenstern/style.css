@@ -565,10 +565,10 @@ body.playing .app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .cert-name{background:var(--surface);border-radius:var(--r-l)}
 @media print{
   @page{size:A4 landscape;margin:10mm}
-  body *{visibility:hidden!important}
-  .cert,.cert *{visibility:visible!important}
-  .cert{position:fixed;inset:0;box-shadow:none;border-radius:0;aspect-ratio:auto;padding:0}
-  .noprint{display:none!important}
+  body{background:#FFFFFF;padding:0}
+  body > *:not(.app),.app > *:not(main),main > section:not(#v-act),#v-act .act > *:not(.cert),.noprint{display:none!important}
+  .app,.act{padding:0;max-width:none;margin:0;display:block}
+  .cert{position:static;box-shadow:none;border-radius:0;max-width:none;width:100%;height:180mm;aspect-ratio:auto;padding:0;break-inside:avoid}
 }
 
 /* Advent */

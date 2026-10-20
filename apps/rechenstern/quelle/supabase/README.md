@@ -1,6 +1,6 @@
 # Rechenstern in Supabase (Projekt „Zähler“)
 
-Eingespielt am 20.10.2026 in zwei Migrationen: `rechenstern_1_tabellen` und `rechenstern_2_funktionen`. Es wurden nur neue Objekte angelegt. Zählerstände, Haushalte und Gewohnheiten sind unverändert.
+Eingespielt am 20.10.2026 in drei Migrationen: `rechenstern_1_tabellen`, `rechenstern_2_funktionen` und `rechenstern_3_grenzen` (Grenzen gegen Missbrauch: höchstens 20 Familien, Stand bis 300 KB, höchstens 10 Geräte je Familie, nur echte Push-Dienste, Test-Nachricht höchstens einmal pro Minute). Es wurden nur neue Objekte angelegt. Zählerstände, Haushalte und Gewohnheiten sind unverändert.
 
 ## Aufbau
 

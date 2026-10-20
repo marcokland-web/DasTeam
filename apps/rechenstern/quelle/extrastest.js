@@ -64,7 +64,9 @@ const over = async (page, tag) => { const r = await page.evaluate(() => [documen
     await round(B, 5); const starsB = await B.evaluate(() => S.stars);
     await parents(B, "5555"); await B.fill("#sy-code", "falsch-12345"); await B.click("#sy-join button[type=submit]"); await sleep(300);
     ok((await B.textContent("#v-eltern")).includes("passt nicht"), "Sync: falscher Code abgelehnt");
-    await B.fill("#sy-code", code.toLowerCase().replace(/-/g, " ")); await B.click("#sy-join button[type=submit]"); await sleep(900);
+    await B.fill("#sy-code", code.toLowerCase().replace(/-/g, " ")); await B.click("#sy-join button[type=submit]"); await sleep(400);
+    ok(await B.isVisible('[data-act="syJoinMerge"]'), "Sync: Rückfrage Zusammenzählen/Übernehmen");
+    await B.click('[data-act="syJoinMerge"]'); await sleep(900);
     const mB = await B.evaluate(() => ({ stars: S.stars, f2: !!S.facts["2x3"], f5: !!S.facts["5x3"], name: S.name, rounds: S.rounds }));
     ok(mB.stars === starsA + starsB, `Sync: Sterne zusammengezählt ${mB.stars} = ${starsA} + ${starsB}`);
     ok(mB.f2 && mB.f5, "Sync: Lernstand beider Geräte vereint"); ok(mB.name === "Ben", "Sync: Name übernommen");
@@ -76,6 +78,19 @@ const over = async (page, tag) => { const r = await page.evaluate(() => [documen
     await A.evaluate(() => syncNow(true)); await sleep(500); await B.evaluate(() => syncNow(true)); await sleep(500); await A.evaluate(() => syncNow(true)); await sleep(500);
     const s1 = await A.evaluate(() => S.stars), s2 = await B.evaluate(() => S.stars);
     ok(s1 === mB.stars + 12 && s2 === s1, `Sync: gleichzeitige Änderungen beide erhalten ${s1}/${s2}/${mB.stars + 12}`);
+    // Trennen und mit demselben Code wieder verbinden: nichts doppelt
+    const before = await A.evaluate(() => S.stars);
+    await A.evaluate(() => show("eltern")); await A.click('[data-act="syOff"]'); await A.click('[data-act="syOffYes"]'); await sleep(200);
+    await A.fill("#sy-code", code); await A.click("#sy-join button[type=submit]"); await sleep(900);
+    ok(await A.evaluate(() => S.stars) === before, `Sync: Wiederverbinden zählt nicht doppelt ${before}`);
+    // Abgebrochener Upload: danach nichts doppelt
+    await B.evaluate(() => { S.stars += 3; saveLocal(); }); await B.evaluate(() => syncNow(true)); await sleep(500);
+    await A.evaluate(() => { S.stars += 2; saveLocal(); });
+    await A.route("**/rest/v1/rpc/rechenstern_push", r => r.abort());
+    await A.evaluate(() => syncNow(true)); await sleep(500);
+    await A.unroute("**/rest/v1/rpc/rechenstern_push"); await mock(A);
+    await A.evaluate(() => syncNow(true)); await sleep(600); await B.evaluate(() => syncNow(true)); await sleep(500);
+    ok(await A.evaluate(() => S.stars) === before + 5 && await B.evaluate(() => S.stars) === before + 5, `Sync: nach Abbruch nichts doppelt ${await A.evaluate(() => S.stars)}/${before + 5}`);
     // Verlauf und Zurückholen
     await A.evaluate(() => show("eltern")); await A.click('[data-act="syHist"]'); await sleep(300);
     ok((await A.$$(".hist [data-act='syRestore']")).length >= 2, "Sync: Verlauf sichtbar");
@@ -97,7 +112,7 @@ const over = async (page, tag) => { const r = await page.evaluate(() => [documen
     await over(page, tag + " lernen"); await shot("x2-lernen");
     // Advent Türchen 1
     await page.click('.door[data-d="1"]'); await page.click('[data-act="advPick"][data-v="20"]'); await sleep(150);
-    ok(await page.evaluate(() => advSolved(1)), tag + ": Türchen 1 gelöst"); if (scheme === "light") await shot("x3-advent");
+    ok(await page.evaluate(() => advSolved(1) || (A && A.previewSolved)), tag + ": Türchen 1 gelöst (Vorschau ohne Speichern)"); ok(await page.evaluate(() => !advSolved(1)), tag + ": Vorschau speichert nichts"); if (scheme === "light") await shot("x3-advent");
     await page.click('[data-act="actClose"]');
     // Duell
     await page.evaluate(() => show("home")); await page.click('[data-act="duelSetup"]');

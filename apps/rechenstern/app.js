@@ -96,10 +96,12 @@ const DEFAULT = () => ({ v:1, name:"", skipName:false, facts:{}, stars:0, xp:0, 
   rewards:[{ id:"r1", key:"rw_r1", cost:60 }, { id:"r2", key:"rw_r2", cost:100 }, { id:"r3", key:"rw_r3", cost:300 }], redeemed:[] });
 let S = load();
 function load(){
+  try { const raw = localStorage.getItem(KEY); if (!raw) return DEFAULT(); return sanitize(JSON.parse(raw)); } catch(e){ return DEFAULT(); }
+}
+function sanitize(d){
   const D = DEFAULT();
   try {
-    const raw = localStorage.getItem(KEY); if (!raw) return D;
-    const d = JSON.parse(raw); if (!d || d.v !== 1) return D;
+    if (!d || d.v !== 1) return D;
     const isObj = x => x && typeof x === "object" && !Array.isArray(x);
     for (const k of Object.keys(D)){            // jedes Feld einzeln prüfen (Daten-Dieter)
       const v = d[k], dv = D[k];
@@ -112,7 +114,9 @@ function load(){
     if (isObj(d.bonusDay)) D.bonusDay = d.bonusDay;
     D.rewards = D.rewards.filter(r => isObj(r) && r.id && +r.cost > 0);
     D.redeemed = D.redeemed.filter(isObj);
-    for (const [k, f] of Object.entries(D.facts)) if (!isObj(f)) delete D.facts[k]; else { f.c = +f.c || 0; f.w = +f.w || 0; f.box = Math.max(0, Math.min(5, +f.box || 0)); }
+    for (const [k, f] of Object.entries(D.facts)) if (!isObj(f) || !/^\d{1,2}x\d{1,2}$/.test(k)) delete D.facts[k]; else { f.c = +f.c || 0; f.w = +f.w || 0; f.box = Math.max(0, Math.min(5, +f.box || 0)); f.t = +f.t || 0; }
+    D.rewards = D.rewards.map(r => ({ ...r, id: String(r.id).slice(0, 40), cost: Math.min(9999, Math.max(1, Math.round(+r.cost))) }));
+    if (typeof d.resetAt === "number") D.resetAt = d.resetAt;
     return D;
   } catch(e){ return DEFAULT(); }
 }
@@ -626,7 +630,7 @@ function renderParents(){
     </div></div>
     <div><p class="kicker">${esc(t("pRewards"))}</p><div class="list" id="rw-list">
       ${S.rewards.map(r => `<div class="rwedit"><input id="rw-n-${esc(r.id)}" data-rid="${esc(r.id)}" data-f="name" value="${esc(rwName(r))}" maxlength="40" aria-label="${esc(t("rwName"))}">
-        <input id="rw-c-${esc(r.id)}" data-rid="${esc(r.id)}" data-f="cost" value="${r.cost}" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-label="${esc(t("rwCost"))}" class="num">
+        <input id="rw-c-${esc(r.id)}" data-rid="${esc(r.id)}" data-f="cost" value="${esc(r.cost)}" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-label="${esc(t("rwCost"))}" class="num">
         <button type="button" class="del" data-act="delReward" data-id="${esc(r.id)}" aria-label="${esc(t("del") + ": " + rwName(r))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></svg></button></div>`).join("")}
       <div class="segw"><button type="button" class="btn plain" data-act="addReward">+ ${esc(t("add"))}</button></div>
     </div><p class="note">${esc(t("pRewardsSub"))}</p></div>
@@ -853,6 +857,7 @@ function renderLearn(){
 
 /* ---------- Aktivitäten: gemeinsamer Rahmen ---------- */
 function openAct(kind, opts = {}){
+  lastAuto = "";
   if (kind === "ueben"){ startRound("reihe", opts.a); return; }
   A = { kind, ...opts };
   if (kind === "schoko"){ A.rows = 0; A.cols = 0; A.rot = false; A.msg = null; A.ok = false; A.tasks = opts.a ? shuffle([2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 3).map(x => ({ x, y: opts.a })) : []; A.ti = 0; A.done = false; }
@@ -1143,6 +1148,15 @@ document.addEventListener("click", e => {
    Kein Fortschritt eines Geräts geht verloren. */
 function merge3(base, local, remote){
   base = base || {}; local = local || {}; remote = remote || {};
+  // „Fortschritt zurücksetzen“ auf einem Gerät: diese Seite gewinnt für alle Fortschrittsfelder.
+  const KEEP = new Set(["goal", "sound", "pinH", "rewards", "name", "skipName", "speech", "duelName", "duelPool", "duelHead", "duelSeat", "resetAt", "v"]);
+  const lr = +local.resetAt || 0, rr = +remote.resetAt || 0, br = +base.resetAt || 0;
+  if ((lr > br && lr >= rr) || (rr > br && rr > lr)){
+    const win = lr >= rr ? local : remote, prog = {};
+    for (const k of new Set([...Object.keys(local), ...Object.keys(remote)])) if (!KEEP.has(k)) prog[k] = win[k];
+    if (win === local) remote = { ...remote, ...prog }; else local = { ...local, ...prog };
+    base = { ...base, ...prog };
+  }
   const isObj = x => x && typeof x === "object" && !Array.isArray(x);
   const num = x => (typeof x === "number" && isFinite(x)) ? x : 0;
   const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -1156,7 +1170,8 @@ function merge3(base, local, remote){
   for (const k of keys){
     const b = base[k], l = local[k], r = remote[k];
     switch (k){
-      case "stars": out[k] = Math.max(0, add(b, l, r)); break;
+      case "stars": out[k] = add(b, l, r); break;   // darf kurz negativ werden, wenn zwei Geräte gleichzeitig einlösen
+      case "resetAt": out[k] = Math.max(num(l), num(r)) || undefined; break;
       case "xp": case "rounds": case "stories": out[k] = Math.max(0, add(b, l, r)); break;
       case "bestStreak": case "blitzBest": out[k] = Math.max(num(l), num(r)); break;
       case "knobelHad": out[k] = !!(l || r); break;
@@ -1273,9 +1288,11 @@ Object.assign(STR, {
   syOff:["Verbindung trennen","Disconnect"], syOffQ:["Verbindung auf diesem Gerät trennen? Der Spielstand bleibt hier erhalten.","Disconnect this device? The progress stays on this device."],
   syOffYes:["Ja, trennen","Yes, disconnect"], syErr:["Abgleich gerade nicht möglich. Dein Fortschritt ist sicher auf dem Gerät gespeichert und wird später abgeglichen.","Sync isn’t possible right now. Your progress is saved on this device and will sync later."],
   syDone:["Abgeglichen","Synced"], syMerged:["Fortschritt von beiden Geräten zusammengeführt","Progress from both devices merged"],
-  syHist:["Ältere Stände","Earlier versions"], syHistSub:["Jeder Abgleich wird gespeichert. Hier kannst du einen früheren Stand zurückholen.","Every sync is saved. You can bring back an earlier version here."],
-  syRestore:["Zurückholen","Restore"], syRestoreQ:["Stand von {t} zurückholen? Der jetzige Stand bleibt als ältere Version erhalten.","Restore the version from {t}? The current version is kept as an earlier version."],
-  syRestored:["Früherer Stand zurückgeholt","Earlier version restored"], syHistNone:["Noch keine gespeicherten Stände.","No saved versions yet."],
+  syHist:["Ältere Stände","Earlier versions"], syHistSub:["Frühere Stände werden regelmäßig gesichert, höchstens alle 10 Minuten. Hier kannst du einen davon zurückholen.","Earlier versions are saved regularly, at most every 10 minutes. You can bring one of them back here."],
+  syRestore:["Zurückholen","Restore"], syRestoreQ:["Stand von {t} zurückholen? Der jetzige Stand wird vorher auf diesem Gerät gesichert.","Restore the version from {t}? The current progress is backed up on this device first."],
+  syRestored:["Früherer Stand zurückgeholt","Earlier version restored"], syAskT:["Auf beiden Geräten gibt es schon Fortschritt.","Both devices already have progress."], syAsk:["Zusammenzählen: Sterne und Lernstand beider Geräte werden addiert. Übernehmen: Dieses Gerät bekommt den Familienstand, der Stand hier wird vorher gesichert.","Add up: stars and progress of both devices are combined. Take over: this device gets the family progress, the progress here is backed up first."],
+  syMergeBtn:["Zusammenzählen","Add up"], syTakeBtn:["Familienstand übernehmen","Take family progress"], syLocal:["Auf diesem Gerät gesichert","Backed up on this device"],
+  syHistNone:["Noch keine gespeicherten Stände.","No saved versions yet."],
   syStars:["{n} Sterne","{n} stars"],
   // Push
   puTitle:["Lern-Erinnerung","Learning reminder"], puIntro:["Eine freundliche Nachricht von Stella, aber nur, wenn an dem Tag noch nicht gelernt wurde.","A friendly message from Stella, but only if there hasn’t been any learning that day."],
@@ -1303,7 +1320,7 @@ function logToday(field, n = 1){
 const season = (d = new Date()) => { const m = d.getMonth() + 1; return m >= 3 && m <= 5 ? "spring" : m >= 6 && m <= 8 ? "summer" : m >= 9 && m <= 11 ? "autumn" : "winter"; };
 const SEASON_FX = {
   autumn: { cols: ["#C8642A", "#A8462F", "#D9A13A", "#8A5A2B"], shape: "leaf" },
-  winter: { cols: ["#FFFFFF", "#DCE6EF", "#BFD0E0"], shape: "snow" },
+  winter: { cols: ["#FFFFFF", "#9DB8D3", "#BFD0E0", "#7FA2C4"], shape: "snow" },
   spring: { cols: ["#F2A7C0", "#FFFFFF", "#E57A98", "#F7D2DF"], shape: "petal" },
   summer: { cols: null, shape: "rect" },
 };
@@ -1527,7 +1544,7 @@ function adventCard(){
 function renderAdvent(){
   const [de, en, r] = ADVENT[A.d - 1], q = LANG === "en" ? en : de;
   if (!A.opts){ const s = new Set([r]); for (const v of shuffle([r + 2, r - 2, r + 4, r - 4, r + 6, r + 10, r - 10, r + 1])) if (v > 0 && s.size < 3) s.add(v); A.opts = shuffle([...s]); }
-  const solved = advSolved(A.d);
+  const solved = advSolved(A.d) || A.previewSolved;
   $("#v-act").innerHTML = `<div class="act">${actHead(t("advDoor", { d: A.d }), t("advTitle"))}
     ${stellaBubble(solved ? t("advRight") : q, solved ? "cheer" : "think", "adv")}
     ${solved ? `<button type="button" class="btn primary wide" data-act="actClose">${esc(t("toLearn"))}</button>`
@@ -1540,8 +1557,8 @@ const SYNC_KEY = "rechenstern-sync", REMIND_KEY = "rechenstern-remind";
 const ls = { get(k){ try { return JSON.parse(localStorage.getItem(k) || "null"); } catch(e){ return null; } }, set(k, v){ try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch(e){} } };
 let SY = ls.get(SYNC_KEY), syBusy = false, syTimer = 0, syState = { msg: "", err: false, show: false, joinErr: "", hist: null, offQ: false, restoreQ: null };
 const syncable = () => !isFramed && typeof fetch === "function";
-async function rpc(fn, args){
-  const r = await fetch(`${SUPA.url}/rest/v1/rpc/${fn}`, { method: "POST", headers: { apikey: SUPA.key, "Content-Type": "application/json" }, body: JSON.stringify(args) });
+async function rpc(fn, args, keepalive){
+  const r = await fetch(`${SUPA.url}/rest/v1/rpc/${fn}`, { method: "POST", keepalive: !!keepalive, headers: { apikey: SUPA.key, "Content-Type": "application/json" }, body: JSON.stringify(args) });
   const txt = await r.text(); let j = null; try { j = txt ? JSON.parse(txt) : null; } catch(e){}
   if (!r.ok) throw new Error((j && (j.message || j.hint)) || ("HTTP " + r.status));
   return j;
@@ -1549,30 +1566,40 @@ async function rpc(fn, args){
 const stripState = s => { const o = JSON.parse(JSON.stringify(s)); delete o.pinFail; delete o.advPreview; return o; };
 function deviceName(){ const u = navigator.userAgent; const k = /iPad/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1) ? "iPad" : /iPhone/.test(u) ? "iPhone" : /Android/.test(u) ? "Android" : /Mac/.test(u) ? "Mac" : /Windows/.test(u) ? "Windows" : "Gerät"; return k + "-" + Math.random().toString(36).slice(2, 6); }
 function backupLocal(){
-  try { const list = ls.get("rechenstern-backups") || []; list.push({ ts: Date.now(), state: stripState(S) }); ls.set("rechenstern-backups", list.slice(-3)); } catch(e){}
+  try { const list = ls.get("rechenstern-backups") || []; list.push({ ts: Date.now(), state: stripState(S) }); ls.set("rechenstern-backups", list.slice(-10)); } catch(e){}
 }
-function applyState(st){ const keep = { pinFail: S.pinFail, advPreview: S.advPreview }; S = Object.assign(DEFAULT(), st, keep); saveLocal(); render(); }
+function applyState(st){ const keep = { pinFail: S.pinFail, advPreview: S.advPreview }; S = Object.assign(sanitize({ ...st, v: 1 }), keep); saveLocal(); render(); }
 function newCode(){ const A32 = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", b = new Uint8Array(25); crypto.getRandomValues(b); let s = ""; for (let i = 0; i < 25; i++) s += A32[b[i] % 32]; return s.match(/.{5}/g).join("-"); }
 const normCode = c => String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, "").replace(/(.{5})(?=.)/g, "$1-");
-async function syncNow(manual){
-  if (!SY || !syncable() || syBusy) return;
-  syBusy = true;
+let syPending = false;
+async function syncNow(manual, keepalive){
+  if (!SY || !syncable()) return;
+  if (syBusy){ syPending = true; return; }
+  syBusy = true; syPending = false;
   try {
     for (let attempt = 0; attempt < 4; attempt++){
-      const remote = await rpc("rechenstern_pull", { p_code: SY.code });
+      const remote = await rpc("rechenstern_pull", { p_code: SY.code }, keepalive);
       let local = stripState(S), merged = false;
-      if (remote.version !== SY.version && remote.state){
-        backupLocal();
-        local = merge3(SY.base || {}, local, remote.state); applyState(local); merged = true;
-      } else if (remote.version === SY.version && JSON.stringify(local) === JSON.stringify(SY.base)){
+      if (remote.version !== SY.version){
+        if (remote.state){
+          backupLocal();
+          local = merge3(SY.base || {}, local, remote.state);
+          merged = true;
+          // Basis sofort auf den Serverstand setzen: bricht der Upload ab, wird beim nächsten Mal nichts doppelt gezählt.
+          SY.base = remote.state; SY.version = remote.version; ls.set(SYNC_KEY, SY);
+          applyState(local); local = stripState(S);
+          if (JSON.stringify(local) === JSON.stringify(remote.state)){ SY.base = local; SY.last = Date.now(); ls.set(SYNC_KEY, SY); syState.msg = manual ? "syDone" : ""; syState.err = false; break; }
+        } else { SY.version = remote.version; ls.set(SYNC_KEY, SY); }
+      } else if (JSON.stringify(local) === JSON.stringify(SY.base)){
         SY.last = Date.now(); ls.set(SYNC_KEY, SY); syState.msg = manual ? "syDone" : syState.msg; syState.err = false; break;
       }
-      const res = await rpc("rechenstern_push", { p_code: SY.code, p_base: remote.version, p_state: local, p_device: SY.device });
+      const res = await rpc("rechenstern_push", { p_code: SY.code, p_base: remote.version, p_state: local, p_device: SY.device }, keepalive);
       if (res && res.ok){ SY.version = res.version; SY.base = local; SY.last = Date.now(); ls.set(SYNC_KEY, SY); syState.msg = merged ? "syMerged" : (manual ? "syDone" : ""); syState.err = false; break; }
     }
   } catch(e){ syState.err = true; syState.msg = "syErr"; }
   syBusy = false;
   if (V === "eltern") render();
+  if (syPending) setTimeout(() => syncNow(false), 500);
 }
 function scheduleSync(){ if (!SY || !syncable()) return; clearTimeout(syTimer); syTimer = setTimeout(() => syncNow(false), 3000); }
 async function syncCreate(){
@@ -1581,14 +1608,26 @@ async function syncCreate(){
   SY = { code, version: 0, base: {}, device: deviceName(), last: 0 }; ls.set(SYNC_KEY, SY);
   await syncNow(true); syState.show = true;
 }
-async function syncJoin(raw){
+async function syncJoin(raw, how){
   const code = normCode(raw);
-  try { await rpc("rechenstern_pull", { p_code: code }); } catch(e){ syState.joinErr = "syCodeBad"; render(); return; }
+  let remote;
+  try { remote = await rpc("rechenstern_pull", { p_code: code }); } catch(e){ syState.joinErr = "syCodeBad"; render(); return; }
+  syState.joinErr = "";
+  const old = ls.get(SYNC_KEY + "-alt");
+  if (old && old.code === code){                     // dasselbe Gerät wieder verbinden: alte Basis weiterverwenden, nichts doppelt
+    SY = { ...old, last: 0 }; ls.set(SYNC_KEY, SY); ls.set(SYNC_KEY + "-alt", null); syState.joinAsk = null; await syncNow(true); return;
+  }
+  const hasProgress = S.xp > 0 || S.stars > 0 || Object.keys(S.facts).length > 0;
+  if (remote.state && hasProgress && !how){ syState.joinAsk = code; render(); return; }
   backupLocal();
-  SY = { code, version: -1, base: {}, device: deviceName(), last: 0 }; ls.set(SYNC_KEY, SY);   // base leer: beide Stände werden zusammengezählt
-  syState.joinErr = ""; await syncNow(true);
+  if (how === "take" && remote.state){             // Familienstand übernehmen, eigenen Stand nur sichern
+    SY = { code, version: remote.version, base: remote.state, device: deviceName(), last: Date.now() }; ls.set(SYNC_KEY, SY);
+    applyState(remote.state); SY.base = stripState(S); ls.set(SYNC_KEY, SY); syState.joinAsk = null; syState.msg = "syDone"; render(); return;
+  }
+  SY = { code, version: -1, base: {}, device: deviceName(), last: 0 }; ls.set(SYNC_KEY, SY);   // zusammenzählen: base leer
+  syState.joinAsk = null; await syncNow(true);
 }
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncNow(false); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncNow(false); else if (SY){ clearTimeout(syTimer); syncNow(false, true); } });
 window.addEventListener("online", () => syncNow(false));
 
 /* ---------- Lern-Erinnerungen (Push) ---------- */
@@ -1625,6 +1664,8 @@ function parentsExtras(){
   if (!syncable()) sync = `<div class="field"><p class="m0 muted">${esc(t("syFramed"))}</p></div>`;
   else if (!SY) sync = `<div class="field"><p class="m0">${esc(t("syIntro"))}</p></div>
     <div class="field"><button type="button" class="btn primary" data-act="syNew">${esc(t("syNew"))}</button></div>
+    ${syState.joinAsk ? `<div class="field"><p class="m0"><b>${esc(t("syAskT"))}</b></p><p class="m0 small muted">${esc(t("syAsk"))}</p>
+      <div class="ob"><div class="acts"><button type="button" class="btn primary" data-act="syJoinMerge">${esc(t("syMergeBtn"))}</button><button type="button" class="btn tinted" data-act="syJoinTake">${esc(t("syTakeBtn"))}</button></div></div></div>` : ""}
     <form class="field" id="sy-join"><label for="sy-code">${esc(t("syJoin"))}</label><input id="sy-code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="${esc(t("syCodePh"))}" class="num">
       ${syState.joinErr ? `<p class="err m0" role="alert">${esc(t(syState.joinErr))}</p>` : ""}<div><button type="submit" class="btn tinted">${esc(t("syConnect"))}</button></div></form>`;
   else sync = `<div class="field"><p class="m0"><b class="ok-ink">● ${esc(t("syOn"))}</b> · ${esc(SY.last ? t("syLast", { t: fmtT(SY.last) }) : t("syNever"))}</p>
@@ -1635,8 +1676,10 @@ function parentsExtras(){
       ${syState.hist == null ? `<div><button type="button" class="btn plain" data-act="syHist">${esc(t("syHist"))}</button></div>`
         : syState.hist.length ? `<div class="hist">${syState.hist.slice(0, 10).map(h => `<div class="row"><span class="tx"><b>${esc(fmtT(h.saved_at))}</b><small>${esc((h.device || "").split("-")[0])} · ${esc(t("syStars", { n: h.stars ?? 0 }))}</small></span>
           ${syState.restoreQ === h.version ? `<button type="button" class="btn danger" data-act="syRestoreYes" data-v="${h.version}">${esc(t("syRestore"))}</button>` : `<button type="button" class="btn plain" data-act="syRestore" data-v="${h.version}">${esc(t("syRestore"))}</button>`}</div>`).join("")}</div>
-          ${syState.restoreQ ? `<p class="m0 small">${esc(t("syRestoreQ", { t: fmtT(syState.hist.find(h => h.version === syState.restoreQ)?.saved_at || Date.now()) }))}</p>` : ""}`
-        : `<p class="m0 muted small">${esc(t("syHistNone"))}</p>`}</div>
+          ${syState.restoreQ ? `<p class="m0 small">${esc(t("syRestoreQ", { t: fmtT(syState.restoreQ < 0 ? ((ls.get("rechenstern-backups") || [])[-syState.restoreQ - 1]?.ts || Date.now()) : (syState.hist.find(h => h.version === syState.restoreQ)?.saved_at || Date.now())) }))}</p>` : ""}`
+        : `<p class="m0 muted small">${esc(t("syHistNone"))}</p>`}
+      ${syState.hist != null && (ls.get("rechenstern-backups") || []).length ? `<p class="m0 small"><b>${esc(t("syLocal"))}</b></p><div class="hist">${(ls.get("rechenstern-backups") || []).map((h, i) => ({ h, i })).reverse().map(({ h, i }) => `<div class="row"><span class="tx"><b>${esc(fmtT(h.ts))}</b><small>${esc(t("syStars", { n: h.state.stars ?? 0 }))}</small></span>
+        ${syState.restoreQ === -(i + 1) ? `<button type="button" class="btn danger" data-act="syRestoreYes" data-v="${-(i + 1)}">${esc(t("syRestore"))}</button>` : `<button type="button" class="btn plain" data-act="syRestore" data-v="${-(i + 1)}">${esc(t("syRestore"))}</button>`}</div>`).join("")}</div>` : ""}</div>
     <div class="field">${syState.offQ ? `<p class="m0">${esc(t("syOffQ"))}</p><div class="ob"><div class="acts"><button type="button" class="btn danger" data-act="syOffYes">${esc(t("syOffYes"))}</button><button type="button" class="btn plain" data-act="syOffNo">${esc(t("cancel"))}</button></div></div>`
       : `<div><button type="button" class="btn plain bad-link" data-act="syOff">${esc(t("syOff"))}</button></div>`}</div>`;
   let push;
@@ -1671,24 +1714,36 @@ document.addEventListener("click", async e => {
       case "duelAgain": startDuel(A.cfg); break;
       case "cert": A = { kind: "cert", a: b.dataset.a === "all" ? "all" : +b.dataset.a }; show("act"); break;
       case "certPrint": window.print(); break;
-      case "advDoor": { const d = +b.dataset.d; if (d > advOpenDay()){ toast(t("advLocked", { d })); break; } A = { kind: "advent", d }; show("act"); break; }
-      case "advPick": if (+b.dataset.v === ADVENT[A.d - 1][2]){ const y = advYear(); S.advent[y] = { ...(S.advent[y] || {}), [A.d]: Date.now() }; reward(2); tone(SND.win); burst(); }
+      case "advDoor": { const d = +b.dataset.d; if (d > advOpenDay()){ toast(t("advLocked", { d })); break; } lastAuto = ""; A = { kind: "advent", d }; show("act"); break; }
+      case "advPick": if (+b.dataset.v === ADVENT[A.d - 1][2]){
+          if (new Date().getMonth() === 11){ const y = advYear(); S.advent[y] = { ...(S.advent[y] || {}), [A.d]: Date.now() }; reward(2); } else A.previewSolved = true;
+          tone(SND.win); burst(); }
         else { A.err = true; tone(SND.wrong); } render(); break;
       case "syNew": await syncCreate(); render(); break;
+      case "syJoinMerge": await syncJoin(syState.joinAsk, "merge"); render(); break;
+      case "syJoinTake": await syncJoin(syState.joinAsk, "take"); render(); break;
       case "syNow": await syncNow(true); break;
       case "syShow": syState.show = !syState.show; render(); break;
       case "syCopy": try { await navigator.clipboard.writeText(SY.code); toast(t("syCopied")); } catch(err){ const r = document.createRange(); r.selectNodeContents($("#sy-code-v")); getSelection().removeAllRanges(); getSelection().addRange(r); } break;
       case "syHist": syState.hist = await rpc("rechenstern_versions", { p_code: SY.code }) || []; render(); break;
       case "syRestore": syState.restoreQ = +b.dataset.v; render(); break;
-      case "syRestoreYes": { const st = await rpc("rechenstern_version_get", { p_code: SY.code, p_version: +b.dataset.v });
-        if (st){ backupLocal(); applyState(st); SY.base = stripState(S); SY.version = -1; ls.set(SYNC_KEY, SY);
-          // gezielt überschreiben: aktuellen Serverstand holen und den zurückgeholten Stand darüber speichern
-          const remote = await rpc("rechenstern_pull", { p_code: SY.code }); const res = await rpc("rechenstern_push", { p_code: SY.code, p_base: remote.version, p_state: stripState(S), p_device: SY.device });
-          if (res.ok){ SY.version = res.version; SY.base = stripState(S); SY.last = Date.now(); ls.set(SYNC_KEY, SY); }
-          syState.restoreQ = null; syState.hist = null; toast(t("syRestored")); render(); } break; }
+      case "syRestoreYes": { const v = +b.dataset.v; const st = v < 0 ? (ls.get("rechenstern-backups") || [])[-v - 1]?.state : await rpc("rechenstern_version_get", { p_code: SY.code, p_version: v });
+        if (!st || syBusy) break;
+        syBusy = true; let done = false;
+        try {
+          backupLocal();
+          for (let i = 0; i < 4 && !done; i++){
+            const remote = await rpc("rechenstern_pull", { p_code: SY.code });
+            const res = await rpc("rechenstern_push", { p_code: SY.code, p_base: remote.version, p_state: st, p_device: SY.device });
+            if (res && res.ok){ applyState(st); SY.version = res.version; SY.base = stripState(S); SY.last = Date.now(); ls.set(SYNC_KEY, SY); done = true; }
+          }
+        } finally { syBusy = false; }
+        syState.restoreQ = null; syState.hist = null;
+        if (done) toast(t("syRestored")); else { syState.err = true; syState.msg = "syErr"; }
+        render(); break; }
       case "syOff": syState.offQ = true; render(); break;
       case "syOffNo": syState.offQ = false; render(); break;
-      case "syOffYes": if (RM.on) await pushDisable(); SY = null; ls.set(SYNC_KEY, null); syState = { msg: "", err: false, show: false, joinErr: "", hist: null, offQ: false, restoreQ: null }; render(); break;
+      case "syOffYes": if (RM.on) await pushDisable(); ls.set(SYNC_KEY + "-alt", SY); SY = null; ls.set(SYNC_KEY, null); syState = { msg: "", err: false, show: false, joinErr: "", hist: null, offQ: false, restoreQ: null }; render(); break;
       case "puOn": RM.time = $("#pu-time").value || "16:00"; RM.days = $$('input[name="pu-day"]:checked').map(i => +i.value); if (!RM.days.length) RM.days = [1, 2, 3, 4, 5, 6, 7]; await pushEnable(); break;
       case "puOff": await pushDisable(); break;
       case "puTest": await pushTest(); break;
@@ -1700,7 +1755,7 @@ document.addEventListener("pointerdown", e => {
   e.preventDefault(); duelAnswer(+b.dataset.duel, +b.dataset.v);
 });
 document.addEventListener("keydown", e => {
-  if (!A || A.kind !== "duel" || A.done || e.target.closest("input")) return;
+  if (!A || A.kind !== "duel" || A.done || V !== "act" || e.repeat || e.target.closest("input")) return;
   const k1 = { "1": 0, "2": 1, "3": 2, "4": 3 }[e.key], k2 = { "7": 0, "8": 1, "9": 2, "0": 3 }[e.key];
   if (k1 != null) duelAnswer(0, A.pl[0].q.opts[k1]); else if (k2 != null) duelAnswer(1, A.pl[1].q.opts[k2]);
 });
@@ -1739,7 +1794,7 @@ document.addEventListener("click", e => {
     case "skipName": S.skipName = true; save(); render(); break;
     case "redeem": RD = { id: b.dataset.id, err: "" }; render(); break;
     case "rdCancel": RD = null; render(); break;
-    case "parents": $("#settings").close(); show("eltern"); break;
+    case "parents": $("#settings").close(); if (P){ clearInterval(P.timer); P = null; } A = null; show("eltern"); break;
     case "addReward": { const id = "r" + Date.now().toString(36); S.rewards.push({ id, name: t("newReward"), cost: 50 }); save(); render(); $(`#rw-n-${id}`)?.select(); break; }
     case "delReward": { const i = S.rewards.findIndex(r => r.id === b.dataset.id); if (i < 0) break; const [r] = S.rewards.splice(i, 1); undoBuf = { r, i }; save(); render(); toast(t("deleted", { r: rwName(r) }), true); break; }
     case "undo": if (undoBuf){ S.rewards.splice(Math.min(undoBuf.i, S.rewards.length), 0, undoBuf.r); undoBuf = null; save(); render(); $("#toast").hidden = true; } break;
@@ -1748,7 +1803,7 @@ document.addEventListener("click", e => {
     case "lock": show("home"); break;
     case "reset": EL.reset = true; render(); break;
     case "resetNo": EL.reset = false; render(); break;
-    case "resetYes": { const keep = { goal: S.goal, sound: S.sound, pinH: S.pinH, pinFail: S.pinFail, rewards: S.rewards, name: S.name, skipName: S.skipName };
+    case "resetYes": { const keep = { goal: S.goal, sound: S.sound, pinH: S.pinH, pinFail: S.pinFail, rewards: S.rewards, name: S.name, skipName: S.skipName, speech: S.speech, resetAt: Date.now() };
       S = Object.assign(DEFAULT(), keep); save(); EL.reset = false; render(); toast(t("pResetDone")); break; }
   }
 });

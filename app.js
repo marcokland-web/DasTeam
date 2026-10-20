@@ -307,6 +307,18 @@ function setData(part, docs){
 }
 
 
+
+/* ---------- Kopieren-Knöpfe bei den Befehlen ---------- */
+document.querySelectorAll(".cmd .copy").forEach(btn=>{
+  btn.addEventListener("click", async ()=>{
+    const code = btn.parentElement.querySelector("code");
+    const text = code.textContent;
+    const done = ok => { btn.textContent = ok ? "Kopiert" : "Markiert – jetzt kopieren"; btn.classList.toggle("done", ok); setTimeout(()=>{ btn.textContent="Kopieren"; btn.classList.remove("done"); }, 2000); };
+    try { await navigator.clipboard.writeText(text); done(true); }
+    catch(e){ const r = document.createRange(); r.selectNodeContents(code); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); done(false); }
+  });
+});
+
 /* ---------- Aufklappbare Bereiche: Zustand pro Gerät merken ---------- */
 (function(){
   const secs = [...document.querySelectorAll("details.sec")];

@@ -73,6 +73,10 @@
         {
           "datum": "2026-10-20",
           "text": "Getestet wird in beiden Themen und beiden Sprachen: Umschalten wirkt sofort, bleibt nach dem Neuladen erhalten und „Automatisch“ folgt wieder dem Gerät."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Nicht nur prüfen, ob Knöpfe klickbar sind, sondern auch, ob das Layout stimmt (z. B. Ziffernblock wirklich 3 Spalten). Ein klickbarer, aber zerschossener Block fiel sonst durch."
         }
       ],
       "motto": "Was passiert eigentlich bei minus 3 Cent?",
@@ -81,7 +85,7 @@
       "persoenlichkeit": "Unerbittlich, aber nie gemein. Freut sich über jeden gefundenen Fehler.",
       "rolle": "Fehlersucher",
       "seit": "2026-10-19",
-      "version": "1.3"
+      "version": "1.4"
     },
     {
       "id": "daten-dieter",
@@ -199,6 +203,10 @@
         {
           "datum": "2026-10-20",
           "text": "Dunkel-Farben nur über Tokens setzen, nicht über eigene Dunkel-Selektoren: sonst überschreiben sie Sonderfälle (OK-Taste war im Dunkeln unsichtbar)."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Neue CSS-Klassen immer auf ihren Bereich begrenzen (.pond .lily statt .pad). Eine doppelte Klasse hat sonst Bausteine in anderen Ansichten überschrieben."
         }
       ],
       "motto": "Das haben wir doch im Styleguide anders festgelegt, Schatz.",
@@ -207,7 +215,7 @@
       "persoenlichkeit": "Sieht jeden falschen Abstand. Korrigiert freundlich, lässt aber nichts durchgehen.",
       "rolle": "Prüferin für Aussehen und Bedienung",
       "seit": "2026-10-19",
-      "version": "1.3"
+      "version": "1.4"
     },
     {
       "id": "doku-doerte",
@@ -359,14 +367,19 @@
           "stufe": 4
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-20",
+          "text": "Erst verstehen, dann üben: Jede Reihe bekommt einen Entdeckerpfad. Hinweise zeigen den Rechenweg, nie das Ergebnis, und Sterne gibt es nur für eigenes Denken (erster Versuch, Tageslimit)."
+        }
+      ],
       "motto": "Ein Kind soll wiederkommen wollen, nicht müssen.",
       "name": "Lern-Lotte",
       "nr": "P-024",
       "persoenlichkeit": "Geduldig, neugierig und ehrlich. Denkt wie eine gute Grundschullehrerin: lobt die Mühe, nicht nur das Ergebnis, und merkt sofort, wenn ein Spiel nur noch Sterne sammelt statt zu lehren.",
       "rolle": "Lernpädagogin",
       "seit": "2026-10-20",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "logo-luisa",
@@ -1032,6 +1045,34 @@
       "datum": "2026-10-20T21:15:00+02:00",
       "text": "beginnt als Lernpädagogin in Planung & Wissen und berichtet an Wissens-Wilma. Erste Aufgabe: Rechenstern im Alltag begleiten.",
       "typ": "Neuzugang"
+    },
+    {
+      "id": "c046",
+      "agent": "chef",
+      "datum": "2026-10-20T21:20:00+02:00",
+      "text": "wünscht, dass Rechenstern das Einmaleins auch spielerisch erklärt, mit Zufallsmodus.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c047",
+      "agent": "lern-lotte",
+      "datum": "2026-10-20T22:30:00+02:00",
+      "text": "baut mit dem Team den Lernbereich: Entdeckerpfad, Schokoladen-Werkstatt, Frosch-Sprünge, 7 Zaubertricks, Geschichten, Muster-Detektiv und „Überrasch mich!“.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c048",
+      "agent": "rant-randy",
+      "datum": "2026-10-20T22:45:00+02:00",
+      "text": "findet mit Lern-Lotte 13 Punkte, darunter zwei falsche Muster-Erklärungen und einen zerschossenen Ziffernblock. Alles behoben.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c049",
+      "agent": "bug-bodo",
+      "datum": "2026-10-20T22:55:00+02:00",
+      "text": "testet alle Lernspiele auf iPhone, iPad und Desktop in beiden Themen: bestanden. Die Freigabe-Prüfung ist bestanden.",
+      "typ": "Prüfung"
     }
   ],
   "ideen": [

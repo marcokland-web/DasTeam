@@ -42,7 +42,7 @@ Kommt eine Abteilung dazu, werden die Icons beim nächsten Erzeugen der Seite ne
 
 | App | Ordner | Adresse |
 |---|---|---|
-| Rechenstern (Einmaleins-Spiel) | `apps/rechenstern/` | https://marcokland-web.github.io/DasTeam/apps/rechenstern/ |
+| Rechenstern (Einmaleins: Lernen mit Entdeckerpfad und Lernspielen, Üben, Belohnungen) | `apps/rechenstern/` | https://marcokland-web.github.io/DasTeam/apps/rechenstern/ |
 
 Rechenstern speichert den Spielstand nur im Browser des Geräts. Quelle der App ist eine einzelne HTML-Datei; die installierbare Fassung (eigene CSS- und JS-Dateien, Manifest, Icon-Set) wird daraus gebaut.
 

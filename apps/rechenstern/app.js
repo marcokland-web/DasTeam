@@ -8,7 +8,7 @@ let LANG = document.documentElement.lang === "en" ? "en" : "de";
 const LOC = () => LANG === "en" ? "en-GB" : "de-DE";
 const STR = {
   tagline:["Das Einmaleins-Spiel","The times tables game"],
-  tabPlay:["Spielen","Play"], tabColl:["Sammlung","Collection"], tabChest:["Schatztruhe","Treasure chest"], navAria:["Bereiche","Sections"],
+  tabPlay:["Spielen","Play"], tabColl:["Sammlung","Collection"], tabChest:["Schatztruhe","Treasure"], navAria:["Bereiche","Sections"],
   starsAria:["{n} Sterne, zur Schatztruhe","{n} stars, open treasure chest"], home:["Rechenstern, zum Start","Rechenstern, go to start"],
   hello:["Hallo, {n}!","Hi, {n}!"], helloNo:["Hallo!","Hi there!"],
   obTitle:["Wie heißt du?","What's your name?"], obSub:["Dann kann ich dich begrüßen. Dein Name bleibt nur auf diesem Gerät.","Then I can greet you. Your name stays on this device only."],
@@ -92,7 +92,7 @@ const fmtDate = ts => new Date(ts).toLocaleDateString(LOC(), { day:"numeric", mo
 const KEY = "rechenstern-v1";
 const DEFAULT = () => ({ v:1, name:"", skipName:false, facts:{}, stars:0, xp:0, reihe:{}, badges:{},
   day:{ date:"", count:0, goalDone:false }, streak:{ days:0, last:"" }, bestStreak:0, blitzBest:0, rounds:0,
-  goal:20, sound:true, pinH:"", pinFail:{ n:0, until:0 }, bonusDay:{}, knobelHad:false,
+  path:{}, tricks:{}, cases:{}, stories:0, goal:20, sound:true, pinH:"", pinFail:{ n:0, until:0 }, bonusDay:{}, knobelHad:false,
   rewards:[{ id:"r1", key:"rw_r1", cost:60 }, { id:"r2", key:"rw_r2", cost:100 }, { id:"r3", key:"rw_r3", cost:300 }], redeemed:[] });
 let S = load();
 function load(){
@@ -280,12 +280,12 @@ function toast(msg, withUndo){
 
 /* ---------- Ansichten ---------- */
 let V = "home", P = null, R = null, RD = null, EL = { open:false, err:"", reset:false, change:false, check:null }, roundId = 0;
-const VIEWS = ["home", "play", "result", "sammlung", "truhe", "eltern"];
+const VIEWS = ["lernen", "act", "home", "play", "result", "sammlung", "truhe", "eltern"];
 function show(v){
   V = v;
   for (const x of VIEWS) $("#v-" + x).hidden = x !== v;
-  document.body.classList.toggle("playing", v === "play");
-  const tab = v === "result" ? "home" : v;
+  document.body.classList.toggle("playing", v === "play" || v === "act");
+  const tab = v === "result" ? "home" : v === "act" ? "lernen" : v;
   $$("#tabbar [data-v], #toptabs [data-v]").forEach(b => { if (b.dataset.v === tab) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   if (v !== "eltern"){ EL = { open:false, err:"", reset:false, change:false, check:null }; }
   if (v !== "truhe") RD = null;
@@ -295,9 +295,10 @@ function show(v){
 function render(){
   $("#hdr-stars").textContent = fmt(S.stars);
   $("#starpill").setAttribute("aria-label", t("starsAria", { n: fmt(S.stars) }));
-  ({ home:renderHome, play:renderPlay, result:renderResult, sammlung:renderColl, truhe:renderChest, eltern:renderParents })[V]();
+  ({ lernen:renderLearn, act:renderAct, home:renderHome, play:renderPlay, result:renderResult, sammlung:renderColl, truhe:renderChest, eltern:renderParents })[V]();
   $$("[data-w]").forEach(e => e.style.width = e.dataset.w + "%");
   $$("[data-cols]").forEach(e => e.style.setProperty("--cols", e.dataset.cols));
+  $$("[data-x]").forEach(e => e.style.setProperty("--x", e.dataset.x));
 }
 
 function levelBlock(){
@@ -630,12 +631,499 @@ function renderParents(){
     <p class="note">${esc(t("pPrivacy"))}</p></div>`;
 }
 
+/* ==========================================================================
+   Lernbereich „Entdecken“ (Lern-Lotte, Wissens-Wilma, Design-Doris)
+   Erst verstehen, dann üben: Schokoladen-Werkstatt, Frosch-Sprünge,
+   Zaubertricks, Geschichten, Muster-Detektiv, Entdeckerpfad, Zufallsmodus.
+   ========================================================================== */
+Object.assign(STR, {
+  tabLearn:["Lernen","Learn"], tabPractice:["Üben","Practise"],
+  lHero:["Was entdeckst du heute?","What will you discover today?"],
+  lHeroSub:["Lass dich überraschen: Ein Lernspiel wird für dich ausgelost.","Let us surprise you: a learning game is picked for you."],
+  surprise:["Überrasch mich!","Surprise me!"], spinTitle:["Das Los entscheidet …","The draw decides …"],
+  pathTitle:["Dein Entdeckerpfad","Your discovery path"], pathSub:["Vier Stationen pro Reihe: verstehen, hüpfen, Trick lernen, üben.","Four stops per table: understand, hop, learn a trick, practise."],
+  pathPick:["Reihe wählen","Choose a table"],
+  st1:["Schokolade bauen","Build with chocolate"], st1s:["Baue die {a}er-Reihe aus Schokostückchen","Build the {a} times table with chocolate pieces"],
+  st2:["Frosch-Sprünge","Frog jumps"], st2s:["Hüpf in {a}er-Schritten über den Teich","Hop across the pond in steps of {a}"],
+  st3:["Zaubertrick","Magic trick"], st4:["Üben","Practise"], st4s:["{s} von 3 Sternen","{s} of 3 stars"],
+  stDone:["geschafft","done"], stOpen:["offen","to do"], stBonus:["+3 Sterne, wenn du sie schaffst","+3 stars when you finish it"],
+  allGames:["Alle Lernspiele","All learning games"],
+  gChoco:["Schokoladen-Werkstatt","Chocolate workshop"], gChocoS:["Bau Malaufgaben aus einer Schokoladentafel","Build times tables from a chocolate bar"],
+  gFrog:["Frosch-Sprünge","Frog jumps"], gFrogS:["Der Frosch hüpft die Reihe entlang","The frog hops along the table"],
+  gTrick:["Zaubertricks","Magic tricks"], gTrickS:["{n} von 7 Tricks gelernt","{n} of 7 tricks learned"],
+  gStory:["Geschichten","Stories"], gStoryS:["Spinnen, Eier, Wochen: Malrechnen im Alltag","Spiders, eggs, weeks: multiplying in real life"],
+  gDetect:["Muster-Detektiv","Pattern detective"], gDetectS:["{n} von 10 Fällen gelöst","{n} of 10 cases solved"],
+  back:["Zurück","Back"], stationDone:["Geschafft! +3 Sterne","Done! +3 stars"], muNext:["Nächster Fall","Next case"], frJump1:["1 Sprung = 1 × {a} = {a}","1 jump = 1 × {a} = {a}"],
+  nextStation:["Weiter zur nächsten Station","On to the next stop"], toLearn:["Zum Lernen","Back to learning"],
+  // Schokolade
+  chHint:["Zieh mit dem Finger über die Tafel oder tippe ein Stückchen an.","Drag your finger across the bar or tap a piece."],
+  chTask:["Baue {x} × {y}: {x} Reihen mit je {y} Stückchen.","Build {x} × {y}: {x} rows of {y} pieces each."],
+  chRows:["{x} Reihen mit je {y} Stückchen","{x} rows of {y} pieces each"], chEmpty:["Noch keine Schokolade ausgewählt","No chocolate picked yet"],
+  chRot:["Drehen","Turn"], chEat:["Aufessen","Eat it"], chAte:["Mmh! {n} Stückchen gezählt.","Yum! {n} pieces counted."],
+  chRotTxt:["Gedreht: {y} × {x} = {r}. Gleich viel Schokolade! Das ist der Tausch-Trick.","Turned: {y} × {x} = {r}. Same amount of chocolate! That’s the swap trick."],
+  chRight:["Genau! {x} × {y} = {r}","Exactly! {x} × {y} = {r}"], chTaskN:["Aufgabe {i} von {n}","Task {i} of {n}"], chFree:["Freies Bauen","Free building"],
+  chDone:["Du hast die {a}er-Reihe mit Schokolade gebaut!","You built the {a} times table with chocolate!"],
+  // Frosch
+  frQ:["Der Frosch springt immer {a} weiter. Wo landet er jetzt?","The frog always jumps {a} further. Where does it land now?"],
+  frHint:["Fast! Zähl {a} weiter: {p} + {a}","Almost! Count {a} more: {p} + {a}"], frJumps:["{k} Sprünge = {k} × {a} = {r}","{k} jumps = {k} × {a} = {r}"],
+  frDone:["Der Frosch ist über den ganzen Teich gehüpft: die {a}er-Reihe!","The frog hopped across the whole pond: the {a} times table!"],
+  frClap:["Klatsch die Reihe mit","Clap along with the table"], frAgain:["Andere Reihe","Another table"], frPond:["Teich mit Seerosen von 0 bis {m}","Pond with lily pads from 0 to {m}"],
+  // Tricks
+  trList:["Lerne die Tricks, dann musst du viel weniger auswendig wissen.","Learn the tricks and you’ll have much less to memorise."],
+  trLearned:["gelernt","learned"], trTry:["Probier den Trick aus","Try the trick"], trTask:["Trick-Aufgabe {i} von 3","Trick problem {i} of 3"],
+  trShowHint:["Trick zeigen","Show the trick"], trWrong:["Noch nicht. Schau dir den Trick an und probier nochmal.","Not yet. Look at the trick and try again."], trAgain:["Jetzt stimmt’s! Zur Übung kommt noch eine ähnliche Aufgabe.","Now it’s right! Here’s a similar one for practice."], muNoStar:["Fall gelöst! Diesmal waren es {n} Fehlversuche. Mit höchstens 3 gibt es Sterne.","Case solved! You had {n} wrong taps this time. With 3 or fewer you get stars."], sgCap:["Super! Für heute gibt es keine Geschichten-Sterne mehr, aber üben kannst du weiter.","Great! No more story stars today, but you can keep practising."],
+  trDone:["Superkraft freigeschaltet: {t}!","Superpower unlocked: {t}!"], trForRows:["Hilft bei: {r}","Helps with: {r}"],
+  otherNum:["Andere Zahl","Another number"],
+  // Geschichten
+  sgQ:["Wie viele sind das zusammen?","How many is that altogether?"], sgTip:["Tippe die Gruppen nacheinander an und zähle mit.","Tap the groups one after another and count along."],
+  sgRight:["Richtig! {n} × {p} = {r}","Correct! {n} × {p} = {r}"], sgWrong:["Noch nicht. Tippe die Gruppen an und zähl mit.","Not yet. Tap the groups and count along."],
+  sgN:["Geschichte {i} von {n}","Story {i} of {n}"], sgDone:["{n} Geschichten gelöst!","{n} stories solved!"],
+  // Muster
+  muPick:["Welchen Fall willst du lösen?","Which case do you want to solve?"], muTask:["Finde alle Zahlen der {a}er-Reihe auf der Hundertertafel.","Find all numbers of the {a} times table on the hundred square."],
+  muTaskQ:["Finde alle Quadratzahlen: 1 × 1, 2 × 2, 3 × 3 …","Find all square numbers: 1 × 1, 2 × 2, 3 × 3 …"],
+  muLeft:["Noch {n} zu finden","{n} left to find"], muNo:["{n} gehört nicht zur {a}er-Reihe.","{n} is not in the {a} times table."], muNoQ:["{n} ist keine Quadratzahl.","{n} is not a square number."],
+  muSolved:["Fall gelöst!","Case solved!"], muCaseQ:["Quadratzahlen","Square numbers"], muCase:["{a}er-Reihe","{a} times table"],
+  board100:["Hundertertafel","Hundred square"],
+});
+const PAT = {
+  2:["Jede zweite Zahl ist dabei, nur gerade Zahlen. Sie bilden fünf senkrechte Streifen.","Every second number, only even numbers. They form five vertical stripes."],
+  3:["Die 3er laufen in schrägen Linien. Und rechnest du die Ziffern zusammen, kommt wieder eine 3er-Zahl heraus: bei 27 ist 2 + 7 = 9, bei 48 ist 4 + 8 = 12.","The 3s run in diagonal lines. And if you add the digits, you get another number from the 3 times table: for 27, 2 + 7 = 9, for 48, 4 + 8 = 12."],
+  4:["Nur gerade Zahlen, davon jede zweite. Die Einer wiederholen sich: 4, 8, 2, 6, 0.","Only even numbers, every second one. The last digits repeat: 4, 8, 2, 6, 0."],
+  5:["Zwei Streifen: Alle Zahlen enden auf 5 oder auf 0.","Two stripes: every number ends in 5 or 0."],
+  6:["Alle sind gerade und gehören auch zur 3er-Reihe. Die Einer: 6, 2, 8, 4, 0 und wieder von vorn.","All are even and also in the 3 times table. The last digits: 6, 2, 8, 4, 0 and round again."],
+  7:["Schau auf die letzte Ziffer: 7, 4, 1, 8, 5, 2, 9, 6, 3, 0. Jede Ziffer kommt genau einmal vor!","Look at the last digit: 7, 4, 1, 8, 5, 2, 9, 6, 3, 0. Every digit appears exactly once!"],
+  8:["Die Einer zählen rückwärts in 2er-Schritten: 8, 6, 4, 2, 0.","The last digits count backwards in twos: 8, 6, 4, 2, 0."],
+  9:["Von 9 bis 81 eine schräge Linie: Die Zehner zählen hoch, die Einer runter, und die Ziffern ergeben zusammen 9. Bei 99 sind es 18, und 1 + 8 ist wieder 9!","From 9 to 81 a diagonal line: the tens count up, the ones count down, and the digits add up to 9. For 99 it’s 18, and 1 + 8 is 9 again!"],
+  10:["Eine einzige Spalte ganz rechts: Alle Zahlen enden auf 0.","One single column on the right: every number ends in 0."],
+  Q:["1, 4, 9, 16 … das sind 1 × 1, 2 × 2, 3 × 3: Quadratzahlen. Zu jeder gehört ein Quadrat aus Punkten, zum Beispiel 3 Reihen mit je 3.","1, 4, 9, 16 … these are 1 × 1, 2 × 2, 3 × 3: square numbers. Each one is a square of dots, like 3 rows of 3."],
+};
+const CASES = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Q"];
+for (const k of ["path", "tricks", "cases"]) if (!S[k] || typeof S[k] !== "object") S[k] = {};
+if (typeof S.stories !== "number") S.stories = 0;
+
+/* ---------- Zaubertricks ---------- */
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = l => l[Math.floor(Math.random() * l.length)];
+const dotRows = (rows, cols, hot = () => false) => `<div class="dgrid" data-cols="${cols}">${Array.from({ length: rows * cols }, (_, i) => `<i${hot(Math.floor(i / cols), i % cols) ? ' class="hot"' : ""}></i>`).join("")}</div>`;
+const TRICKS = [
+  { id:"eins", reihen:[1], n:["Eins-Trick","One trick"], d:["Mal 1 bleibt die Zahl, wie sie ist: 7 × 1 sind 7 Reihen mit je 1 Punkt, also 7.","Times 1 leaves the number as it is: 7 × 1 is 7 rows of 1 dot, so 7."],
+    demo:s => `${dotRows(s.n, 1)}<p class="demotx num">${s.n} × 1 = ${s.n}</p>`, init:() => ({ n:rnd(3, 8) }), op:s => { s.n = rnd(2, 9); },
+    gen:() => { const n = rnd(2, 10); return { q:`${n} × 1`, r:n, h:["Mal 1 bleibt die Zahl gleich.", "Times 1 keeps the number the same."] }; } },
+  { id:"null", reihen:[10], n:["Null-Trick","Zero trick"], d:["Mal 10 heißt: Schreib eine 0 hinter die Zahl. 7 × 10 = 70.","Times 10 means: write a 0 after the number. 7 × 10 = 70."],
+    demo:s => `<p class="bigdemo num"><span>${s.n}</span><span class="pop gold">0</span></p><p class="demotx num">${s.n} × 10 = ${s.n * 10}</p>`, init:() => ({ n:rnd(2, 9) }), op:s => { s.n = rnd(2, 9); },
+    gen:() => { const n = rnd(2, 10); return { q:`${n} × 10`, r:n * 10, h:[`Schreib eine 0 hinter die ${n}.`, `Write a 0 after the ${n}.`] }; } },
+  { id:"doppel", reihen:[2, 4, 8], n:["Verdoppel-Trick","Doubling trick"], d:["Die 4er-Reihe ist die 2er-Reihe doppelt, die 8er-Reihe ist die 4er-Reihe doppelt.","The 4 times table is the 2s doubled, the 8 times table is the 4s doubled."],
+    demo:s => `${dotRows(s.n, s.k, (r, c) => c >= s.k / 2 && s.k > 2)}<p class="demotx num">${s.n} × ${s.k} = ${s.k * s.n}${s.k > 2 ? ` = ${s.n} × ${s.k / 2} + ${s.n} × ${s.k / 2}` : ""}</p>`,
+    init:a => ({ n:rnd(3, 6), k:a === 8 ? 4 : 2 }), op:s => { s.k = s.k >= 8 ? 2 : s.k * 2; }, opLabel:["Verdoppeln","Double it"],
+    gen:a => { const k = a || pick([2, 4, 8]), n = rnd(3, 9);
+      return { q:`${n} × ${k}`, r:k * n, h:k === 2 ? [`Verdopple die ${n}: ${n} + ${n}`, `Double the ${n}: ${n} + ${n}`] : [`${n} × ${k / 2} = ${n * k / 2}. Jetzt verdoppeln!`, `${n} × ${k / 2} = ${n * k / 2}. Now double it!`] }; } },
+  { id:"fuenf", reihen:[5], n:["Fünfer-Trick","Five trick"], d:["Eine Zahl mal 5 ist die Hälfte von der Zahl mal 10. 6 × 5 ist die Hälfte von 60, also 30.","A number times 5 is half of that number times 10. 6 × 5 is half of 60, so 30."],
+    demo:s => `${dotRows(s.n, s.half ? 5 : 10, (r, c) => !s.half && c >= 5)}<p class="demotx num">${s.half ? `${s.n} × 5 = ${5 * s.n}` : `${s.n} × 10 = ${10 * s.n}`}</p>`,
+    init:() => ({ n:rnd(3, 6), half:false }), op:s => { s.half = !s.half; }, opLabel:["Halbieren","Halve it"],
+    gen:() => { const n = rnd(3, 10); return { q:`${n} × 5`, r:5 * n, h:[`${n} × 10 = ${10 * n}. Und jetzt die Hälfte davon.`, `${n} × 10 = ${10 * n}. Now take half of it.`] }; } },
+  { id:"tausch", reihen:[3], n:["Tausch-Trick","Swap trick"], d:["Du darfst die Zahlen tauschen: 8 × 3 ist gleich 3 × 8. Nimm die Aufgabe, die du schon kennst.","You can swap the numbers: 8 × 3 is the same as 3 × 8. Use the one you already know."],
+    demo:s => `${s.rot ? dotRows(s.y, s.x) : dotRows(s.x, s.y)}<p class="demotx num">${s.rot ? `${s.y} × ${s.x}` : `${s.x} × ${s.y}`} = ${s.x * s.y}</p>`,
+    init:() => ({ x:rnd(6, 8), y:3, rot:false }), op:s => { s.rot = !s.rot; }, opLabel:["Drehen","Turn"],
+    gen:() => { const n = rnd(6, 9); return { q:`${n} × 3`, r:3 * n, h:[`Dreh sie um: 3 × ${n}, also ${n} + ${n} + ${n}.`, `Swap it: 3 × ${n}, so ${n} + ${n} + ${n}.`] }; } },
+  { id:"nachbar", reihen:[6, 7], n:["Nachbar-Trick","Neighbour trick"], d:["Kennst du 5 × 7 = 35, dann ist 6 × 7 einfach eine 7 mehr: 42. Und 4 × 7 ist eine 7 weniger.","If you know 5 × 7 = 35, then 6 × 7 is just one more 7: 42. And 4 × 7 is one 7 less."],
+    demo:s => `${dotRows(s.k, s.n, r => r >= 5)}<p class="demotx num">${s.k} × ${s.n} = ${s.k * s.n}${s.k > 5 ? ` = 5 × ${s.n} + ${s.k - 5} × ${s.n}` : ""}</p>`,
+    init:a => ({ n:a || 7, k:5 }), op:s => { s.k = s.k >= 7 ? 5 : s.k + 1; }, opLabel:["Eine Reihe mehr","One more row"],
+    gen:a => { const n = a || pick([6, 7]), up = Math.random() < .65, k = up ? 6 : 4;
+      return { q:`${k} × ${n}`, r:k * n, h:up ? [`5 × ${n} = ${5 * n}. Jetzt noch eine ${n} dazu.`, `5 × ${n} = ${5 * n}. Now add one more ${n}.`] : [`5 × ${n} = ${5 * n}. Jetzt eine ${n} weg.`, `5 × ${n} = ${5 * n}. Now take one ${n} away.`] }; } },
+  { id:"finger", reihen:[9], n:["9er-Finger-Trick","Nine finger trick"], d:["Halte 10 Finger hoch und klappe für 4 × 9 den vierten Finger um. Links bleiben 3 Finger, rechts 6: das ist 36.","Hold up 10 fingers and fold down the fourth for 4 × 9. 3 fingers stay on the left, 6 on the right: that’s 36."],
+    demo:s => `<div class="hands" role="group">${Array.from({ length: 10 }, (_, i) => `<button type="button" class="finger${i + 1 === s.k ? " down" : ""}${i === 4 ? " gap" : ""}" data-act="trFinger" data-k="${i + 1}" aria-label="${i + 1}"><span></span></button>`).join("")}</div>
+      <p class="demotx num">${s.k} × 9 = ${9 * s.k} <small class="muted">(${s.k - 1} | ${10 - s.k})</small></p>`,
+    init:() => ({ k:4 }), op:() => {},
+    gen:() => { const n = rnd(2, 9); return { q:`${n} × 9`, r:9 * n, h:[`Klapp Finger ${n} um. Wie viele Finger sind links, wie viele rechts?`, `Fold down finger ${n}. How many fingers are left and right?`] }; } },
+];
+const TRICK_OF = { 1:"eins", 2:"doppel", 3:"tausch", 4:"doppel", 5:"fuenf", 6:"nachbar", 7:"nachbar", 8:"doppel", 9:"finger", 10:"null" };
+const trickBy = id => TRICKS.find(x => x.id === id);
+
+/* ---------- Geschichten ---------- */
+const svgI = (body, vb = "0 0 48 48") => `<svg viewBox="${vb}" aria-hidden="true">${body}</svg>`;
+const STORIES = [
+  { id:"bike", p:2, d:["{n} Kinder fahren Fahrrad. Jedes Fahrrad hat 2 Räder.","{n} children ride bikes. Every bike has 2 wheels."],
+    g:() => svgI('<circle cx="13" cy="31" r="9" class="ln"/><circle cx="35" cy="31" r="9" class="ln"/><path d="M13 31l8-14h10l4 14M21 17l3 14" class="ln"/>') },
+  { id:"clover", p:3, d:["Auf der Wiese wachsen {n} Kleeblätter mit je 3 Blättern.","{n} clovers grow in the meadow, each with 3 leaves."],
+    g:() => svgI('<circle cx="24" cy="15" r="8" class="lf"/><circle cx="15" cy="27" r="8" class="lf"/><circle cx="33" cy="27" r="8" class="lf"/><path d="M24 28v16" class="ln"/>') },
+  { id:"bug", p:4, d:["{n} Marienkäfer sitzen auf dem Blatt. Jeder hat 4 Punkte.","{n} ladybirds sit on the leaf. Each has 4 spots."],
+    g:() => svgI('<ellipse cx="24" cy="27" rx="15" ry="14" class="red"/><path d="M24 13v28" class="dk"/><circle cx="24" cy="12" r="5" class="blk"/><circle cx="17" cy="23" r="3" class="blk"/><circle cx="31" cy="23" r="3" class="blk"/><circle cx="17" cy="33" r="3" class="blk"/><circle cx="31" cy="33" r="3" class="blk"/>') },
+  { id:"flower", p:5, d:["Im Beet blühen {n} Blumen mit je 5 Blütenblättern.","{n} flowers bloom in the bed, each with 5 petals."],
+    g:() => svgI(Array.from({ length: 5 }, (_, i) => { const a = -Math.PI / 2 + i * 2 * Math.PI / 5; return `<circle cx="${(24 + 10 * Math.cos(a)).toFixed(1)}" cy="${(22 + 10 * Math.sin(a)).toFixed(1)}" r="6.5" class="lf2"/>`; }).join("") + '<circle cx="24" cy="22" r="5" class="gd"/>') },
+  { id:"eggs", p:6, d:["Mama kauft {n} Eierkartons. In jedem sind 6 Eier.","Mum buys {n} egg boxes. Each holds 6 eggs."],
+    g:() => svgI('<rect x="4" y="12" width="40" height="26" rx="5" class="box"/>' + [0, 1, 2].map(c => [0, 1].map(r => `<ellipse cx="${12 + c * 12}" cy="${19 + r * 12}" rx="4.5" ry="5.5" class="egg"/>`).join("")).join("")) },
+  { id:"week", p:7, d:["Die Ferien dauern {n} Wochen. Jede Woche hat 7 Tage.","The holidays last {n} weeks. Every week has 7 days."],
+    g:() => svgI('<rect x="2" y="10" width="44" height="28" rx="4" class="box"/>' + Array.from({ length: 7 }, (_, i) => `<rect x="${5 + (i % 4) * 10.3}" y="${i < 4 ? 15 : 27}" width="7.5" height="7.5" rx="1.5" class="day"/>`).join("")) },
+  { id:"spider", p:8, d:["Im Keller wohnen {n} Spinnen. Jede hat 8 Beine.","{n} spiders live in the cellar. Each has 8 legs."],
+    g:() => svgI([-1, 1].map(sx => [-14, -5, 5, 14].map(dy => `<path d="M24 26 l${sx * 9} ${dy * .5} l${sx * 7} ${dy * .6 + 4}" class="ln"/>`).join("")).join("") + '<ellipse cx="24" cy="26" rx="8" ry="9" class="blk"/><circle cx="24" cy="15" r="5" class="blk"/>') },
+  { id:"pins", p:9, d:["Auf {n} Kegelbahnen stehen je 9 Kegel.","{n} bowling lanes have 9 pins each."],
+    g:() => svgI([[24, 8], [19, 17], [29, 17], [14, 26], [24, 26], [34, 26], [19, 35], [29, 35], [24, 44]].map(([x, y]) => `<circle cx="${x}" cy="${y - 2}" r="3.6" class="pin"/>`).join("")) },
+  { id:"pens", p:10, d:["Im Regal liegen {n} Packungen Stifte. In jeder sind 10 Stifte.","There are {n} packs of pencils on the shelf. Each holds 10 pencils."],
+    g:() => svgI('<rect x="4" y="30" width="40" height="12" rx="2" class="box"/>' + Array.from({ length: 10 }, (_, i) => `<rect x="${5.5 + i * 3.8}" y="8" width="2.6" height="24" rx="1" class="${i % 2 ? "pen2" : "pen"}"/>`).join("")) },
+];
+
+/* ---------- Zustand, Stationen ---------- */
+let A = null, LR = null;
+const pathOf = a => S.path[a] || {};
+const stationDone = (a, st) => st === "trick" ? !!S.tricks[TRICK_OF[a]] : st === "ueben" ? reiheStars(a) >= 1 : !!pathOf(a)[st];
+const pathCount = a => ["schoko", "frosch", "trick", "ueben"].filter(st => stationDone(a, st)).length;
+function finishStation(a, st){
+  if (!a || pathOf(a)[st]) return false;
+  S.path[a] = { ...pathOf(a), [st]: Date.now() };
+  reward(3); tone(SND.win); burst();
+  return true;
+}
+function reward(n, quiet){
+  S.stars += n; const fresh = checkBadges({}); save();
+  if (!quiet) toast(t("stationDone").replace("3", String(n)));
+  if (fresh.length) setTimeout(() => { toast(t("newBadge") + ": " + L2(fresh[0].n)); tone(SND.win); }, quiet ? 300 : 2700);
+}
+const nextStationAct = a => !stationDone(a, "schoko") ? ["schoko", a] : !stationDone(a, "frosch") ? ["frosch", a] : !stationDone(a, "trick") ? ["trick", a] : ["ueben", a];
+
+BADGES.splice(BADGES.length - 1, 0,
+  { id:"choco", g:'<path class="gl" d="M18 18h20v20H18zM18 28h20M28 18v20M23 18v20M33 18v20M18 23h20M18 33h20"/>', n:["Schoko-Baumeister","Chocolate builder"], h:["Baue 5 Reihen aus Schokolade.","Build 5 tables from chocolate."], ok:() => ORDER.filter(a => pathOf(a).schoko).length >= 5 },
+  { id:"frog", g:'<path class="gl" d="M15 36q6-14 13 0q6-14 13 0"/><circle class="gf" cx="41" cy="36" r="2.2"/>', n:["Froschkönig","Frog king"], h:["Hüpf mit dem Frosch durch 5 Reihen.","Hop through 5 tables with the frog."], ok:() => ORDER.filter(a => pathOf(a).frosch).length >= 5 },
+  { id:"magic", g:'<path class="gl" d="M18 38l15-15"/><path class="gl" d="M36 14l1.6 3.4 3.4 1.6-3.4 1.6L36 24l-1.6-3.4L31 19l3.4-1.6z"/>', n:["Zauberlehrling","Magic apprentice"], h:["Lerne alle 7 Zaubertricks.","Learn all 7 magic tricks."], ok:() => TRICKS.every(x => S.tricks[x.id]) },
+  { id:"story", g:'<path class="gl" d="M16 19q6-3 12 0v18q-6-3-12 0zM28 19q6-3 12 0v18q-6-3-12 0z"/>', n:["Geschichtenerzähler","Storyteller"], h:["Löse 10 Geschichten.","Solve 10 stories."], ok:() => S.stories >= 10 },
+  { id:"detect", g:'<circle class="gl" cx="25" cy="25" r="8"/><path class="gl" d="M31 31l7 7"/>', n:["Meisterdetektiv","Master detective"], h:["Löse alle 10 Muster-Fälle.","Solve all 10 pattern cases."], ok:() => CASES.every(c => S.cases[c]) },
+);
+
+/* ---------- Seite „Lernen“ ---------- */
+const GAMEICON = {
+  choco:'<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 12h16M9.3 5v14M14.6 5v14"/>',
+  frog:'<path d="M3 18q4.5-10 9 0q4.5-10 9 0"/><circle cx="21" cy="18" r="1"/>',
+  trick:'<path d="M5 19L15 9"/><path d="M17 3l1.2 2.6L21 7l-2.8 1.2L17 11l-1.2-2.8L13 7l2.8-1.4z"/>',
+  story:'<path d="M4 6q4-2 8 0v13q-4-2-8 0zM12 6q4-2 8 0v13q-4-2-8 0z"/>',
+  detect:'<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>',
+};
+const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function renderLearn(){
+  if (LR == null) LR = recoReihe() ?? 1;
+  const a = LR, tr = trickBy(TRICK_OF[a]);
+  const chips = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
+    const c = pathCount(n);
+    return `<button type="button" class="rchip${n === a ? " on" : ""}${c === 4 ? " full" : ""}" data-act="learnReihe" data-a="${n}" aria-pressed="${n === a}" aria-label="${esc(t("reihe", { n }) + ": " + c + "/4")}"><b class="num">${n}</b><span class="pips">${[0, 1, 2, 3].map(i => `<i${i < c ? ' class="on"' : ""}></i>`).join("")}</span></button>`;
+  }).join("");
+  const st = [
+    ["schoko", "choco", t("st1"), t("st1s", { a })],
+    ["frosch", "frog", t("st2"), t("st2s", { a })],
+    ["trick", "trick", t("st3") + ": " + L2(tr.n), L2(tr.d)],
+    ["ueben", null, t("st4"), t("st4s", { s: reiheStars(a) })],
+  ].map(([id, ic, ti, sub], i) => {
+    const done = stationDone(a, id);
+    return `<button type="button" class="row station${done ? " done" : ""}" data-act="station" data-st="${id}" data-a="${a}">
+      <span class="stno num" aria-hidden="true">${done ? CHECK : i + 1}</span>
+      <span class="tx"><b>${esc(ti)}</b><small>${esc(sub)}</small>${!done && id !== "ueben" ? `<small class="gold-ink">${esc(t("stBonus"))}</small>` : ""}</span>
+      <span class="sr">${esc(done ? t("stDone") : t("stOpen"))}</span>${CHEV}</button>`;
+  }).join("");
+  const learned = TRICKS.filter(x => S.tricks[x.id]).length, solved = CASES.filter(c => S.cases[c]).length;
+  const games = [
+    ["choco", t("gChoco"), t("gChocoS")], ["frog", t("gFrog"), t("gFrogS")], ["trick", t("gTrick"), t("gTrickS", { n: learned })],
+    ["story", t("gStory"), t("gStoryS")], ["detect", t("gDetect"), t("gDetectS", { n: solved })],
+  ].map(([id, ti, sub]) => `<button type="button" class="game" data-act="game" data-g="${id}"><span class="gic"><svg viewBox="0 0 24 24" aria-hidden="true">${GAMEICON[id]}</svg></span><b>${esc(ti)}</b><small>${esc(sub)}</small></button>`).join("");
+  $("#v-lernen").innerHTML = `<div class="learn">
+    <div class="card surprise"><div class="spark" aria-hidden="true">${starSvg("")}</div><div class="tx"><h2>${esc(t("lHero"))}</h2><p class="muted m0">${esc(t("lHeroSub"))}</p></div>
+      <button type="button" class="btn primary" data-act="surprise">${esc(t("surprise"))}</button></div>
+    <section class="pathsec"><p class="kicker">${esc(t("pathTitle"))}</p>
+      <div class="card pathcard"><p class="muted m0 small">${esc(t("pathSub"))}</p>
+        <div class="rchips" role="group" aria-label="${esc(t("pathPick"))}">${chips}</div>
+        <h3 class="pathh">${esc(t("reihe", { n: a }))}</h3>
+        <div class="list flat">${st}</div></div></section>
+    <section><p class="kicker">${esc(t("allGames"))}</p><div class="games">${games}</div></section>
+  </div>`;
+}
+
+/* ---------- Aktivitäten: gemeinsamer Rahmen ---------- */
+function openAct(kind, opts = {}){
+  if (kind === "ueben"){ startRound("reihe", opts.a); return; }
+  A = { kind, ...opts };
+  if (kind === "schoko"){ A.rows = 0; A.cols = 0; A.rot = false; A.msg = null; A.ok = false; A.tasks = opts.a ? shuffle([2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 3).map(x => ({ x, y: opts.a })) : []; A.ti = 0; A.done = false; }
+  if (kind === "frosch"){ A.a = opts.a || recoReihe() || 2; A.pos = 0; A.done = false; frOpts(); }
+  if (kind === "trick"){ const tr = trickBy(opts.id || TRICK_OF[opts.a] || "tausch"); A.id = tr.id; A.ra = opts.a && TRICK_OF[opts.a] === tr.id ? opts.a : null; A.s = tr.init(A.ra); A.miss = false; A.step = 0; A.ok = 0; A.q = null; A.hint = false; A.msg = ""; }
+  if (kind === "story"){ A.list = shuffle(STORIES).slice(0, 5).map(s => ({ s, n: rnd(2, s.p >= 8 ? 5 : 6) })); A.i = 0; A.tapped = 0; A.msg = ""; A.ok = false; A.right = 0; }
+  if (kind === "muster"){ A.c = opts.c ?? null; A.found = new Set(); A.msg = ""; A.solved = false; }
+  show("act");
+}
+const actHead = (title, sub = "") => `<div class="pbar"><button type="button" class="x" data-act="actClose" aria-label="${esc(t("back"))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <div class="acttitle"><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}</div></div>`;
+function renderAct(){
+  if (!A){ show("lernen"); return; }
+  ({ schoko:renderChoco, frosch:renderFrog, tricks:renderTrickList, trick:renderTrick, story:renderStory, muster:renderMuster, spin:renderSpin })[A.kind]();
+}
+function doneBox(text, a){
+  const nx = a ? nextStationAct(a) : null;
+  return `<div class="card donebox"><div class="bigstars">${[0, 1, 2].map(() => `<svg viewBox="0 0 24 24" class="on" aria-hidden="true">${STAR}</svg>`).join("")}</div><h2>${esc(text)}</h2>
+    <div class="acts">${nx ? `<button type="button" class="btn primary wide" data-act="station" data-st="${nx[0]}" data-a="${a}">${esc(t("nextStation"))}</button>` : ""}
+    <button type="button" class="btn ${nx ? "plain" : "primary"} wide" data-act="actClose">${esc(t("toLearn"))}</button></div></div>`;
+}
+
+/* ---------- Schokoladen-Werkstatt ---------- */
+function renderChoco(){
+  const task = A.tasks[A.ti], r = A.rows * A.cols;
+  if (A.done){ $("#v-act").innerHTML = `<div class="act">${actHead(t("gChoco"), t("reihe", { n: A.a }))}${doneBox(t("chDone", { a: A.a }), A.a)}</div>`; return; }
+  let cells = ""; for (let i = 0; i < 100; i++){ const rr = Math.floor(i / 10), cc = i % 10; cells += `<span class="pc${rr < A.rows && cc < A.cols ? " on" : ""}" data-r="${rr}" data-c="${cc}"></span>`; }
+  $("#v-act").innerHTML = `<div class="act">${actHead(t("gChoco"), task ? t("chTaskN", { i: A.ti + 1, n: A.tasks.length }) : t("chFree"))}
+    <div class="card chocard">
+      <p class="m0 ${task ? "taskline" : "muted"}">${esc(task ? t("chTask", task) : t("chHint"))}</p>
+      <div class="chocowrap"><div class="choco" id="choco" role="application" aria-label="${esc(t("chHint"))}" tabindex="0">${cells}</div></div>
+      <div class="chinfo" aria-live="polite"><b class="num" id="ch-eq">${A.rows && A.cols ? `${A.rows} × ${A.cols} = ${r}` : "–"}</b>
+        <small id="ch-sub">${esc(A.msg ? t(A.msg[0], A.msg[1]) : (A.rows && A.cols ? t("chRows", { x: A.rows, y: A.cols }) : t("chEmpty")))}</small></div>
+      <div class="chacts">${A.ok ? `<button type="button" class="btn primary" data-act="chNext">${esc(t("next"))}</button>`
+        : `<button type="button" class="btn tinted" data-act="chRot"${A.rows ? "" : " disabled"}>${esc(t("chRot"))}</button><button type="button" class="btn tinted" data-act="chEat"${A.rows ? "" : " disabled"}>${esc(t("chEat"))}</button>`}</div>
+    </div></div>`;
+  bindChoco();
+}
+function chSet(rows, cols){
+  if (A.eating) return;
+  A.rows = Math.max(0, Math.min(10, rows)); A.cols = Math.max(0, Math.min(10, cols)); A.msg = null;
+  $$("#choco .pc").forEach(p => p.classList.toggle("on", +p.dataset.r < A.rows && +p.dataset.c < A.cols));
+  $("#ch-eq").textContent = A.rows && A.cols ? `${A.rows} × ${A.cols} = ${A.rows * A.cols}` : "–";
+  $("#ch-sub").textContent = A.rows && A.cols ? t("chRows", { x: A.rows, y: A.cols }) : t("chEmpty");
+  $$(".chacts .btn").forEach(b => b.disabled = !A.rows);
+}
+function chCheck(){
+  const task = A.tasks[A.ti]; if (!task || A.ok) return;
+  if ((A.rows === task.x && A.cols === task.y) || (A.rows === task.y && A.cols === task.x)){
+    A.ok = true; A.msg = ["chRight", { x: task.x, y: task.y, r: task.x * task.y }]; tone(SND.right); render();
+  }
+}
+function bindChoco(){
+  const g = $("#choco"); if (!g) return;
+  let down = false;
+  const at = e => { const el = document.elementFromPoint(e.clientX, e.clientY); return el && el.classList.contains("pc") && g.contains(el) ? el : null; };
+  g.addEventListener("pointerdown", e => { const c = at(e); if (!c) return; down = true; g.setPointerCapture?.(e.pointerId); chSet(+c.dataset.r + 1, +c.dataset.c + 1); e.preventDefault(); });
+  g.addEventListener("pointermove", e => { if (!down) return; const c = at(e); if (c) chSet(+c.dataset.r + 1, +c.dataset.c + 1); });
+  const up = () => { if (down){ down = false; chCheck(); } };
+  g.addEventListener("pointerup", up); g.addEventListener("pointercancel", up);
+  g.addEventListener("keydown", e => {
+    const k = { ArrowDown:[1, 0], ArrowUp:[-1, 0], ArrowRight:[0, 1], ArrowLeft:[0, -1] }[e.key];
+    if (k){ chSet(Math.max(1, A.rows + k[0]), Math.max(1, A.cols + k[1])); e.preventDefault(); }
+    if (e.key === "Enter") chCheck();
+  });
+}
+function chRot(){
+  const g = $("#choco"); if (!A.rows || A.eating || A.turning) return;
+  const x = A.rows, y = A.cols, me = A; A.turning = true;
+  g.classList.add("turn");
+  setTimeout(() => { if (A !== me || V !== "act") return; A.turning = false; chSet(y, x); A.msg = ["chRotTxt", { x, y, r: x * y }]; $("#ch-sub").textContent = t(...A.msg); g.classList.remove("turn"); chCheck(); }, 260);
+}
+function chEat(){
+  if (A.eating || A.turning || !A.rows) return;
+  const on = $$("#choco .pc.on"); let n = 0; A.eating = true; $$(".chacts .btn").forEach(b => b.disabled = true);
+  const iv = setInterval(() => {
+    if (!A || A.kind !== "schoko"){ clearInterval(iv); return; }
+    if (n < on.length){ on[n].classList.add("eaten"); n++; $("#ch-eq").textContent = String(n); if (n % 2) tone([[500 + n * 8, .05, 0]]); }
+    else { clearInterval(iv); setTimeout(() => { if (A && A.kind === "schoko" && V === "act"){ A.eating = false; $$("#choco .pc").forEach(p => p.classList.remove("eaten")); chSet(A.rows, A.cols); A.msg = ["chAte", { n }]; $("#ch-sub").textContent = t(...A.msg); } }, 700); }
+  }, Math.max(25, 900 / on.length));
+}
+function chNext(){
+  A.ti++; A.ok = false; A.rows = 0; A.cols = 0; A.msg = null;
+  if (A.ti >= A.tasks.length){ A.done = true; finishStation(A.a, "schoko"); }
+  render();
+}
+
+/* ---------- Frosch-Sprünge ---------- */
+const FROG = '<svg viewBox="0 0 48 40" aria-hidden="true"><ellipse cx="24" cy="26" rx="17" ry="12" class="fb"/><circle cx="14" cy="13" r="6.5" class="fb"/><circle cx="34" cy="13" r="6.5" class="fb"/><circle cx="14" cy="13" r="3" class="fw"/><circle cx="34" cy="13" r="3" class="fw"/><circle cx="14.6" cy="13.4" r="1.6" class="fe"/><circle cx="34.6" cy="13.4" r="1.6" class="fe"/><path d="M17 27q7 5 14 0" class="fm"/></svg>';
+function frOpts(){
+  const c = (A.pos + 1) * A.a;
+  const pool = [...new Set([c + 1, c - 1, c + A.a, c - 2, c + 2, c + 10, c - A.a + 1].filter(v => v > A.pos * A.a && v !== c))];
+  A.opts = shuffle([c, ...shuffle(pool).slice(0, 2)]); A.hint = false;
+}
+function renderFrog(){
+  const a = A.a, m = 10 * a;
+  const pads = Array.from({ length: 11 }, (_, k) => `<span class="lily${k <= A.pos ? " on" : ""}" data-x="${k}"><i></i><b class="num">${k <= A.pos ? k * a : ""}</b></span>`).join("");
+  $("#v-act").innerHTML = `<div class="act">${actHead(t("gFrog"), t("reihe", { n: a }))}
+    <div class="card frogcard">
+      <div class="pond" role="img" aria-label="${esc(t("frPond", { m }))}">${pads}<span class="frog" id="frog" data-x="${A.pos}">${FROG}</span></div>
+      <div id="fr-q">${frQuestion()}</div>
+    </div>
+    ${A.done ? "" : `<div class="frrows" id="fr-rows">${frRows()}</div>`}</div>`;
+}
+const frRows = () => Array.from({ length: A.pos }, (_, i) => `<span class="num">${esc(t(i ? "frJumps" : "frJump1", { k: i + 1, a: A.a, r: (i + 1) * A.a }))}</span>`).join("");
+function frQuestion(){
+  if (A.done) return `<h2 class="frdone">${esc(t("frDone", { a: A.a }))}</h2><div class="acts">
+    <button type="button" class="btn tinted wide" data-act="frClap">${esc(t("frClap"))}</button>
+    ${nextStationAct(A.a)[0] !== "frosch" ? `<button type="button" class="btn primary wide" data-act="station" data-st="${nextStationAct(A.a)[0]}" data-a="${A.a}">${esc(t("nextStation"))}</button>` : ""}
+    <button type="button" class="btn plain wide" data-act="actClose">${esc(t("toLearn"))}</button></div>`;
+  return `<p class="frq">${esc(t("frQ", { a: A.a }))}</p><div class="choices">${A.opts.map(v => `<button type="button" class="choice num" data-act="frPick" data-v="${v}">${v}</button>`).join("")}</div>
+    ${A.hint ? `<p class="err m0" role="alert">${esc(t("frHint", { a: A.a, p: A.pos * A.a }))}</p>` : ""}`;
+}
+function frPick(v, btn){
+  if (A.done || A.busy) return;
+  const c = (A.pos + 1) * A.a;
+  if (v !== c){ A.hint = true; btn.classList.add("nope"); tone(SND.wrong); setTimeout(() => { if (A && A.kind === "frosch"){ $("#fr-q").innerHTML = frQuestion(); } }, 380); return; }
+  A.busy = true; A.pos++; tone([[440 * Math.pow(2, A.pos / 12), .16, 0]]);
+  const f = $("#frog"); f.dataset.x = A.pos; f.style.setProperty("--x", A.pos); f.classList.remove("hop"); void f.offsetWidth; f.classList.add("hop");
+  setTimeout(() => {
+    if (!A || A.kind !== "frosch") return;
+    A.busy = false;
+    const pad = $$(".pond .lily")[A.pos]; pad.classList.add("on"); pad.querySelector("b").textContent = A.pos * A.a;
+    if (A.pos >= 10){ A.done = true; if (!finishStation(A.a, "frosch")) burst(); render(); return; }
+    frOpts(); $("#fr-q").innerHTML = frQuestion(); $("#fr-rows").innerHTML = frRows();
+  }, 480);
+}
+function frClap(){
+  const pads = $$(".pond .lily"); let k = 1;
+  clearInterval(A.clapIv);
+  const iv = A.clapIv = setInterval(() => {
+    if (!A || A.kind !== "frosch" || k > 10){ clearInterval(iv); pads.forEach(p => p.classList.remove("beat")); return; }
+    pads.forEach(p => p.classList.remove("beat")); pads[k].classList.add("beat"); tone([[330 + k * 33, .12, 0], [660 + k * 33, .08, .12]]); k++;
+  }, 520);
+}
+
+/* ---------- Zaubertricks ---------- */
+function renderTrickList(){
+  $("#v-act").innerHTML = `<div class="act wide">${actHead(t("gTrick"), t("gTrickS", { n: TRICKS.filter(x => S.tricks[x.id]).length }))}
+    <p class="muted m0">${esc(t("trList"))}</p>
+    <div class="tricks">${TRICKS.map(x => `<button type="button" class="card trickcard${S.tricks[x.id] ? " learned" : ""}" data-act="openTrick" data-id="${x.id}">
+      <span class="trbadge">${medal({ g: x.id === "eins" ? gt("×1") : x.id === "null" ? gt("×10") : x.id === "doppel" ? gt("2·2") : x.id === "fuenf" ? gt("½") : x.id === "tausch" ? gt("⇄") : x.id === "nachbar" ? gt("+1") : gt("9") })}</span>
+      <span class="tx"><b>${esc(L2(x.n))}</b><small>${esc(t("trForRows", { r: x.reihen.map(n => t("reihe", { n })).join(", ") }))}</small>${S.tricks[x.id] ? `<small class="gold-ink">${esc(t("trLearned"))}</small>` : ""}</span>${CHEV}</button>`).join("")}</div></div>`;
+}
+function renderTrick(){
+  const tr = trickBy(A.id);
+  let body;
+  if (A.step === 0){
+    body = `<div class="card trickdemo"><p class="m0">${esc(L2(tr.d))}</p><div class="demo">${tr.demo(A.s)}</div>
+      <div class="acts row2">${tr.opLabel ? `<button type="button" class="btn tinted" data-act="trOp">${esc(L2(tr.opLabel))}</button>` : tr.id === "finger" ? "" : `<button type="button" class="btn tinted" data-act="trOp">${esc(t("otherNum"))}</button>`}
+      <button type="button" class="btn primary" data-act="trStart">${esc(t("trTry"))}</button></div></div>`;
+  } else if (A.step > 3){
+    body = doneBox(t("trDone", { t: L2(tr.n) }), A.a && TRICK_OF[A.a] === A.id ? A.a : null);
+  } else {
+    const q = A.q;
+    body = `<div class="card qcard"><p class="qlabel">${esc(t("trTask", { i: A.step }))}</p>
+      <div class="q"><span class="num">${esc(q.q)}</span><span class="op">=</span><span class="ans${A.msgOk ? " right" : " empty"}">${A.msgOk ? q.r : "?"}</span></div>
+      ${A.hint || A.msg ? `<p class="tip"><b>${esc(L2(q.h))}</b></p>` : `<button type="button" class="tipbtn" data-act="trHint">${esc(t("trShowHint"))}</button>`}
+      ${A.msg ? `<p class="${A.msgOk ? "fb ok" : "err"} m0">${esc(A.msg === "trRight" ? t("right").split("|")[A.step % 6] : t(A.msg))}</p>` : ""}</div>
+      ${A.msgOk ? `<button type="button" class="btn primary wide" data-act="trNext">${esc(t("next"))}</button>`
+        : `<div class="choices">${q.opts.map(v => `<button type="button" class="choice num" data-act="trPick" data-v="${v}">${v}</button>`).join("")}</div>`}`;
+  }
+  $("#v-act").innerHTML = `<div class="act">${actHead(L2(tr.n), t("gTrick"))}${body}</div>`;
+}
+function trNewQ(){
+  const q = trickBy(A.id).gen(A.ra);
+  const pool = [...new Set([q.r + 1, q.r - 1, q.r + 10, q.r - 10, q.r + 2, q.r - 2].filter(v => v > 0 && v !== q.r))];
+  q.opts = shuffle([q.r, ...shuffle(pool).slice(0, 2)]); A.q = q; A.hint = false; A.msg = ""; A.msgOk = false; A.miss = false;
+}
+
+/* ---------- Geschichten ---------- */
+function renderStory(){
+  if (A.i >= A.list.length){
+    $("#v-act").innerHTML = `<div class="act">${actHead(t("gStory"))}${doneBox(t("sgDone", { n: A.right }), null)}</div>`; return;
+  }
+  const { s, n } = A.list[A.i], r = n * s.p;
+  const groups = Array.from({ length: n }, (_, i) => `<button type="button" class="grp${i < A.tapped || A.ok ? " on" : ""}" data-act="sgTap" data-i="${i}" aria-label="${i + 1}">
+    <span class="gimg">${s.g()}</span><b class="num">${i < A.tapped || A.ok ? (i + 1) * s.p : s.p}</b></button>`).join("");
+  const q = { opts: A.opts || (A.opts = shuffle([r, ...shuffle([...new Set([r + s.p, r - s.p, r + 1, r - 1, r + 10].filter(v => v > 0 && v !== r))]).slice(0, 2)])) };
+  $("#v-act").innerHTML = `<div class="act wide">${actHead(t("gStory"), t("sgN", { i: A.i + 1, n: A.list.length }))}
+    <div class="card storycard"><p class="storytx">${esc(L2(s.d).replace("{n}", n))}</p>
+      <div class="groups">${groups}</div>
+      <p class="muted m0 small">${esc(A.ok ? t("sgRight", { n, p: s.p, r }) + (A.cap ? " " + t("sgCap") : "") : t("sgTip"))}</p></div>
+    ${A.ok ? `<button type="button" class="btn primary wide" data-act="sgNext">${esc(t("next"))}</button>`
+      : `<p class="frq">${esc(t("sgQ"))}</p><div class="choices">${q.opts.map(v => `<button type="button" class="choice num" data-act="sgPick" data-v="${v}">${v}</button>`).join("")}</div>${A.msg ? `<p class="err m0" role="alert">${esc(t(A.msg))}</p>` : ""}`}</div>`;
+}
+
+/* ---------- Muster-Detektiv ---------- */
+const caseTargets = c => c === "Q" ? Array.from({ length: 10 }, (_, i) => (i + 1) ** 2) : Array.from({ length: Math.floor(100 / c) }, (_, i) => (i + 1) * c);
+function renderMuster(){
+  if (A.c == null){
+    $("#v-act").innerHTML = `<div class="act">${actHead(t("gDetect"), t("gDetectS", { n: CASES.filter(c => S.cases[c]).length }))}
+      <p class="frq">${esc(t("muPick"))}</p>
+      <div class="cases">${CASES.map(c => `<button type="button" class="case${S.cases[c] ? " solved" : ""}" data-act="muPick" data-c="${c}"><b class="num">${c === "Q" ? "□" : c}</b><small>${esc(c === "Q" ? t("muCaseQ") : t("muCase", { a: c }))}</small>${S.cases[c] ? CHECK : ""}</button>`).join("")}</div></div>`;
+    return;
+  }
+  const tg = caseTargets(A.c), left = tg.length - A.found.size;
+  let cells = ""; for (let n = 1; n <= 100; n++) cells += `<button type="button" class="hc num${A.found.has(n) ? " on" : ""}" data-act="muCell" data-n="${n}">${n}</button>`;
+  $("#v-act").innerHTML = `<div class="act wide">${actHead(t("gDetect"), A.c === "Q" ? t("muCaseQ") : t("muCase", { a: A.c }))}
+    <div class="mugrid"><div class="card"><p class="m0 taskline">${esc(A.c === "Q" ? t("muTaskQ") : t("muTask", { a: A.c }))}</p>
+      <p class="muted m0 small" aria-live="polite">${esc(A.solved ? (A.msg === "noStar" ? t("muNoStar", { n: A.err }) : t("muSolved")) : A.msg === "no" ? (A.c === "Q" ? t("muNoQ", { n: A.msgN }) : t("muNo", { n: A.msgN, a: A.c })) : t("muLeft", { n: left }))}</p></div>
+    <div class="hundred${A.solved ? " solved" : ""}" role="group" aria-label="${esc(t("board100"))}">${cells}</div>
+    ${A.solved ? `<div class="card donebox"><h2>${esc(t("muSolved"))}</h2><p class="m0">${esc(L2(PAT[A.c]))}</p>
+      <div class="acts"><button type="button" class="btn primary wide" data-act="muBack">${esc(t("muNext"))}</button><button type="button" class="btn plain wide" data-act="actClose">${esc(t("toLearn"))}</button></div></div>` : ""}</div></div>`;
+}
+
+/* ---------- Zufallsmodus ---------- */
+function surprise(){
+  const c = [];
+  for (const a of ORDER){ if (!stationDone(a, "schoko")) c.push(["schoko", { a }, t("gChoco")]); if (!stationDone(a, "frosch")) c.push(["frosch", { a }, t("gFrog")]); }
+  for (const x of TRICKS) if (!S.tricks[x.id]) c.push(["trick", { id: x.id }, L2(x.n)]);
+  for (const k of CASES) if (!S.cases[k]) c.push(["muster", { c: k }, t("gDetect")]);
+  c.push(["story", {}, t("gStory")], ["story", {}, t("gStory")]);
+  if (c.length < 4) c.push(["schoko", {}, t("gChoco")], ["frosch", { a: rnd(2, 9) }, t("gFrog")]);
+  const choice = pick(c);
+  A = { kind: "spin", choice, names: shuffle(["gChoco", "gFrog", "gTrick", "gStory", "gDetect"]), i: 0 };
+  show("act");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, steps = reduce ? 1 : 14;
+  let k = 0; const me = A;
+  const tick = () => {
+    if (A !== me || V !== "act") return;
+    k++; const el = $("#spin-name"); if (el) el.textContent = k >= steps ? choice[2] : t(me.names[k % me.names.length]);
+    if (k < steps){ tone([[600 + (k % 5) * 60, .03, 0]]); setTimeout(tick, 60 + k * 9); }
+    else { tone(SND.right); setTimeout(() => { if (A === me && V === "act") openAct(choice[0], choice[1]); }, 750); }
+  };
+  setTimeout(tick, 60);
+}
+function renderSpin(){
+  $("#v-act").innerHTML = `<div class="act">${actHead(t("surprise"))}<div class="card spincard"><div class="spinstar" aria-hidden="true">${starSvg("")}</div>
+    <p class="muted m0">${esc(t("spinTitle"))}</p><p class="spinname" id="spin-name" aria-live="polite">${esc(t(A.names[0]))}</p></div></div>`;
+}
+
+/* ---------- Bedienung Lernbereich ---------- */
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
+  switch (b.dataset.act){
+    case "learnReihe": LR = +b.dataset.a; render(); break;
+    case "station": openAct(b.dataset.st, { a: +b.dataset.a }); break;
+    case "game": { const g = b.dataset.g;
+      if (g === "choco") openAct("schoko", {}); else if (g === "frog") openAct("frosch", { a: LR ?? recoReihe() ?? 2 });
+      else if (g === "trick"){ A = { kind: "tricks" }; show("act"); } else if (g === "story") openAct("story"); else openAct("muster"); break; }
+    case "surprise": surprise(); break;
+    case "actClose": A = null; show("lernen"); break;
+    case "openTrick": openAct("trick", { id: b.dataset.id }); break;
+    case "chRot": chRot(); break;
+    case "chEat": chEat(); break;
+    case "chNext": chNext(); break;
+    case "frPick": frPick(+b.dataset.v, b); break;
+    case "frClap": frClap(); break;
+    case "trOp": trickBy(A.id).op(A.s); render(); break;
+    case "trFinger": A.s.k = +b.dataset.k; tone([[520, .08, 0]]); render(); break;
+    case "trStart": A.step = 1; trNewQ(); render(); break;
+    case "trHint": A.hint = true; render(); break;
+    case "trPick": { const v = +b.dataset.v;
+      if (v === A.q.r){ A.msgOk = true; A.msg = A.miss ? "trAgain" : "trRight"; tone(SND.right); }
+      else { A.msgOk = false; A.msg = "trWrong"; A.miss = true; A.hint = true; tone(SND.wrong); }
+      render(); break; }
+    case "trNext": if (!A.miss) A.step++;
+      if (A.step > 3){ if (!S.tricks[A.id]){ S.tricks[A.id] = Date.now(); reward(3); } tone(SND.win); burst(); }
+      else trNewQ();
+      render(); break;
+    case "sgTap": if (!A.ok && +b.dataset.i === A.tapped){ A.tapped++; tone([[500 + A.tapped * 40, .08, 0]]); render(); } break;
+    case "sgPick": { const { s, n } = A.list[A.i];
+      if (+b.dataset.v === n * s.p){
+        A.ok = true; A.right++; S.stories++; tone(SND.right);
+        touchDay(); S.day.sg = S.day.sg || 0;
+        if (!A.miss && S.day.sg < 10){ S.day.sg++; reward(1, true); } else { if (S.day.sg >= 10) A.cap = true; checkBadges({}); save(); }
+      }
+      else { A.msg = "sgWrong"; A.miss = true; tone(SND.wrong); }
+      render(); break; }
+    case "sgNext": A.i++; A.tapped = 0; A.ok = false; A.msg = ""; A.opts = null; A.miss = false; A.cap = false; if (A.i >= A.list.length){ tone(SND.win); burst(); } render(); break;
+    case "muPick": A.c = b.dataset.c === "Q" ? "Q" : +b.dataset.c; A.found = new Set(); A.msg = ""; A.solved = false; A.err = 0; render(); break;
+    case "muBack": A.c = null; render(); break;
+    case "muCell": { if (A.solved) break; const n = +b.dataset.n, tg = caseTargets(A.c);
+      if (A.found.has(n)) break;
+      if (tg.includes(n)){ A.found.add(n); A.msg = ""; tone([[520 + A.found.size * 25, .07, 0]]);
+        if (A.found.size === tg.length){ A.solved = true; if ((A.err || 0) <= 3){ if (!S.cases[A.c]){ S.cases[A.c] = Date.now(); reward(3); } } else A.msg = "noStar"; tone(SND.win); burst(); }
+        render(); }
+      else { A.err = (A.err || 0) + 1; A.msg = "no"; A.msgN = n; b.classList.add("nope"); tone(SND.wrong); setTimeout(() => { if (A && A.kind === "muster") renderMuster(); }, 450); }
+      break; }
+  }
+});
+
 /* ---------- Bedienung ---------- */
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-act]"); if (!b || b.disabled || b.getAttribute("aria-disabled") === "true") return;
   const act = b.dataset.act;
   switch (act){
-    case "tab": if (P){ clearInterval(P.timer); P = null; } show(b.dataset.v); break;
+    case "tab": if (P){ clearInterval(P.timer); P = null; } A = null; show(b.dataset.v); break;
     case "start": { const m = b.dataset.mode; startRound(m, m === "reihe" ? Number(b.dataset.a) : null); break; }
     case "key": typeKey(b.dataset.k); break;
     case "del": delKey(); break;
@@ -745,5 +1233,5 @@ function applyTheme(v){
   const fav = $("#favicon"); if (fav && fav.getAttribute("href") === "data:,") fav.href = "data:image/svg+xml," + encodeURIComponent(logoSvg("f"));
   applyTheme(storedTheme());
   applyLang();
-  show("home");
+  show("lernen");
 })();

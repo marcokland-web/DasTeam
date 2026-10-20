@@ -26,6 +26,7 @@ async function overflow(page, tag) {
       const page = await ctx.newPage();
       const errs = []; page.on("pageerror", e => errs.push(String(e))); page.on("console", m => m.type() === "error" && errs.push(m.text()));
       await page.goto(URL); await page.waitForTimeout(300);
+      await page.evaluate(() => show("home"));
       const tag = `${name}-${scheme}`;
       await overflow(page, tag + " start");
       if (scheme === "light") await page.screenshot({ path: `${OUT}/${tag}-1-start.png`, fullPage: true });
@@ -52,6 +53,9 @@ async function overflow(page, tag) {
       await page.evaluate(() => show("home"));
       await page.click('.tile[data-a="10"]');
       await page.screenshot({ path: `${OUT}/${tag}-4-frage.png` });
+      const padOk = await page.evaluate(() => { const p = document.querySelector("#v-play .pad"), k = [...document.querySelectorAll("#v-play .key")].map(e => e.getBoundingClientRect());
+        return getComputedStyle(p).gridTemplateColumns.split(" ").length === 3 && getComputedStyle(p).position === "static" && k[0].top === k[1].top && k[0].width > 60; });
+      ok(padOk, tag + ": Ziffernblock 3 Spalten, Tasten breit");
       await overflow(page, tag + " frage");
       for (let i = 0; i < 10; i++) { await answer(page, true); await page.waitForTimeout(820); }
       const txt = await page.textContent("#v-result");

@@ -6,7 +6,7 @@ Diese Regeln gelten in jedem Projekt von Marco. Sie stammen aus dem Repository D
 
 Marco ist Chef. Für Fachaufgaben gibt es Agenten (Subagents) mit Alliterationsnamen, je Abteilung mit einer Teamleitung:
 
-- Planung & Wissen (Wissens-Wilma): plan-paula, doku-doerte, organigramm-olga
+- Planung & Wissen (Wissens-Wilma): plan-paula, doku-doerte, organigramm-olga, lern-lotte (Lernpädagogin, für jede Lern-App)
 - Gestaltung (Gestaltungs-Greta): design-doris, logo-luisa, text-tina
 - Technik & Betrieb (Technik-Toni): daten-dieter, deploy-dennis
 - Qualität & Sicherheit (Qualitäts-Quentin): bug-bodo, rant-randy, sicherheits-siggi

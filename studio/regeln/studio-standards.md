@@ -14,13 +14,17 @@ Marco ist Chef. Für Fachaufgaben gibt es Agenten (Subagents) mit Alliterationsn
 
 **Das ganze Team einbeziehen:** Prüfungen und Fachaufgaben gehen an die zuständigen Agenten, nicht alles selbst machen. Bei größeren Änderungen mindestens Design-Doris (Ansicht), Bug-Bodo (Funktion) und, wo Daten betroffen sind, Daten-Dieter bzw. Sicherheits-Siggi beauftragen.
 
-## Die fünf Team-Standards
+## Die sieben Team-Standards
 
 1. **Desktop, iPad und iPhone prüfen** (1440×900, 820×1180, 390×844, jeweils hell und dunkel). Fertig ist nur, was auf allen drei optimal aussieht: kein seitliches Scrollen, kein Zoomen, nichts abgeschnitten, nichts unter Tab-Leiste oder schwebenden Knöpfen.
 2. **Das ganze Team einbeziehen** (siehe oben).
 3. **Das Logo wird mitentwickelt** und sofort eingebaut, nicht erst auf Nachfrage.
 4. **Jede App ist installierbar** und zeigt dabei das richtige Logo: `apple-touch-icon` 180 px (iPhone-Home-Bildschirm), Web-Manifest mit Icons 192 und 512 px, `purpose: "maskable"` 512 px, Favicon 32 px und SVG, `id` und `start_url` `./`, `lang: "de"`.
 5. **Vor jeder Auslieferung läuft die Freigabe-Prüfung** (`/studio-freigabe`). Ausgeliefert wird nur, was alle Punkte besteht.
+6. **Hell, Dunkel und Automatisch.** Jede App hat einen hellen und einen dunklen Modus und folgt im Modus „Automatisch“ der Systemeinstellung. Standard ist „Automatisch“. Die Wahl wird pro Gerät gemerkt und vor dem ersten Zeichnen angewendet (kein Aufblitzen).
+7. **Deutsch und Englisch.** Jede App lässt sich zwischen Deutsch und Englisch umschalten. Standard ist immer Deutsch. Alle sichtbaren Texte sind übersetzt, auch Fehlermeldungen, leere Zustände und Rückfragen; `<html lang>`, Datums- und Zahlenformat wechseln mit. Von Nutzern eingegebene Namen werden nie übersetzt.
+
+**Einstellungsmenü in jeder App:** Darstellung (Standard 6) und Sprache (Standard 7) stehen immer in einem Einstellungsmenü im einheitlichen Studio-Look (Aufbau siehe `studio-designsystem.md`, Abschnitt „Einstellungsmenü“).
 
 ## Weitere feste Regeln
 

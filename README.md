@@ -28,6 +28,8 @@ Diese Regeln hat Marco festgelegt. Sie gelten für jede Seite und jede App des S
 3. **Das Logo wird direkt mitentwickelt** und sofort eingebaut, zuständig ist Logo-Luisa.
 4. **Jede App ist installierbar und zeigt dabei das richtige Logo.** Dazu gehören auf dem iPhone „Zum Home-Bildschirm“ (`apple-touch-icon`, 180 px) und auf dem Desktop die Installation als App (Web-Manifest mit Icons in 192 und 512 px plus Masken-Icon). Zuständig sind Logo-Luisa (Icons), Deploy-Dennis (Manifest) und Bug-Bodo (Test auf beiden Geräten).
 5. **Vor jeder Auslieferung läuft die Freigabe-Prüfung** (`tools/freigabe-check.js`). Ausgeliefert wird nur, was alle Punkte besteht.
+6. **Hell, Dunkel und Automatisch** in jeder App, Standard Automatisch (folgt der Systemeinstellung).
+7. **Deutsch und Englisch** in jeder App umschaltbar, Standard Deutsch. Beides steht in einem Einstellungsmenü im einheitlichen Studio-Look.
 
 ## App-Installation
 

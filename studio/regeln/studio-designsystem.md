@@ -23,7 +23,7 @@
 - `--brand` heißt „hier kann man tippen“: Hauptknopf, aktiver Tab, Links, Auswahl, Fokusring. Höchstens ein gefüllter Hauptknopf pro Ansicht.
 - `--gold` nur als Schmuck (Symbole, Fortschrittsringe, erreichte Ziele), nie als Text auf hellem Grund; Gold-Text heißt `--gold-ink`.
 - Grün/Ocker/Rot nie als einziges Merkmal: immer mit Vorzeichen oder Text.
-- Hell / Dunkel / Automatisch in jeder App umschaltbar, Standard Automatisch.
+- Hell / Dunkel / Automatisch in jeder App umschaltbar, Standard Automatisch (Team-Standard 6).
 - `<meta name="theme-color">` je Thema mit `media` auf `--bg`; Manifest: `theme_color` `#5A1028`, `background_color` `#FAF7F2`.
 
 ## Schrift
@@ -40,6 +40,19 @@
 - iPhone: Tab-Leiste unten (max. 5), großer Titel, Eingabe als Bottom-Sheet mit Zahlenblock. iPad: Seitenleiste oder Pille oben, zweispaltig. Desktop: Seitenleiste links, kompakt.
 - Gruppierte Listen im iOS-Stil („inset grouped“), Trennlinien ab Textanfang.
 - Kopfleisten beim Scrollen deckend oder unscharf, nie durchsichtig über Text.
+
+## Einstellungsmenü (in jeder App gleich)
+
+- **Zugang:** Zahnrad-Symbol (Linien-Icon, 44 × 44 px) oben rechts in der Kopfzeile; am Desktop zusätzlich unten in der Seitenleiste. Beschriftung für Screenreader „Einstellungen“ / „Settings“.
+- **Form:** iPhone: Sheet von unten (Ecken 20 px, Griff oben); iPad und Desktop: Dialog, höchstens 440 px breit. Kopf: Titel „Einstellungen“, rechts „Fertig“ (schlichter Knopf in `--brand`).
+- **Inhalt immer in dieser Reihenfolge**, als gruppierte Listen:
+  1. **Darstellung:** Segment-Steuerung „Automatisch | Hell | Dunkel“ (Standard Automatisch).
+  2. **Sprache:** Segment-Steuerung „Deutsch | English“ (Standard Deutsch).
+  3. App-eigene Einstellungen (z. B. Konten, Sync, Erinnerungen).
+  4. **Über:** App-Icon, Name, Langform, Version/Build, „Teil des Familien-App-Studios“.
+- **Segment-Steuerung:** Fläche `--fill`, gewählter Teil `--surface` mit leichtem Schatten und Text in `--ink` (halbfett), Ecken 8 px, Höhe mindestens 36 px innerhalb einer 44-px-Zeile; technisch als Radio-Gruppe (Tastatur und Screenreader).
+- **Verhalten:** Änderungen gelten sofort, ohne Speichern-Knopf; gemerkt pro Gerät in `localStorage` unter `studio-theme` (`auto|light|dark`) und `studio-lang` (`de|en`). Thema vor dem ersten Zeichnen setzen (kleines Skript im `<head>`), `meta theme-color` mitändern.
+- **Sprache:** Texte über ein Wörterbuch bzw. `T(de, en)`; Datum und Zahlen mit `Intl` (`de-DE` bzw. `en-GB`); Eingaben in beiden Formaten akzeptieren.
 
 ## App-Icons
 

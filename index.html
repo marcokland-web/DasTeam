@@ -17,6 +17,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141012" media="(prefers-color-scheme: dark)">
+<script src="early.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,33 +26,34 @@
     <div class="brand">
       <span id="logo" aria-hidden="true"></span>
       <div class="brand-text">
-        <span class="eyebrow">Personalakte · Familien-App-Studio</span>
-        <h1>Das Studio-<em>Team</em></h1>
+        <span class="eyebrow" data-i18n="eyebrow">Personalakte · Familien-App-Studio</span>
+        <h1 data-i18n-html="h1">Das Studio-<em>Team</em></h1>
       </div>
+      <button type="button" class="gear" id="open-settings" aria-haspopup="dialog" data-i18n-aria="gear" aria-label="Einstellungen"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2 5.5 5.5"/><circle cx="12" cy="12" r="6.6"/></svg></button>
     </div>
-    <p class="lede">Hier siehst du, wer bei uns was macht, wer an wen berichtet und wer zuletzt etwas dazugelernt hat. Tippe auf ein Teammitglied, um seinen Steckbrief zu öffnen. Neue Teammitglieder und neue Lektionen erscheinen hier automatisch.</p>
+    <p class="lede" data-i18n-html="lede">Hier siehst du, wer bei uns was macht, wer an wen berichtet und wer zuletzt etwas dazugelernt hat. Tippe auf ein Teammitglied, um seinen Steckbrief zu öffnen. Neue Teammitglieder und neue Lektionen erscheinen hier automatisch.</p>
     <dl class="facts">
-      <div><dt>Teammitglieder</dt><dd id="f-team">–</dd></div>
-      <div><dt>Abteilungen</dt><dd id="f-depts">–</dd></div>
-      <div><dt>Lektionen</dt><dd id="f-lessons">–</dd></div>
-      <div><dt>Zuletzt geändert</dt><dd id="f-last">–</dd></div>
+      <div><dt data-i18n="f1">Teammitglieder</dt><dd id="f-team">–</dd></div>
+      <div><dt data-i18n="f2">Abteilungen</dt><dd id="f-depts">–</dd></div>
+      <div><dt data-i18n="f3">Lektionen</dt><dd id="f-lessons">–</dd></div>
+      <div><dt data-i18n="f4">Zuletzt geändert</dt><dd id="f-last">–</dd></div>
     </dl>
     <div class="banner" id="banner" role="status" hidden></div>
-    <div class="toggle-all"><button type="button" id="open-all" class="link-btn">Alle aufklappen</button><button type="button" id="close-all" class="link-btn">Alle zuklappen</button></div>
+    <div class="toggle-all"><button type="button" id="open-all" class="link-btn" data-i18n="openall">Alle aufklappen</button><button type="button" id="close-all" class="link-btn" data-i18n="closeall">Alle zuklappen</button></div>
   </header>
 
   <details class="sec" id="organigramm" open>
-    <summary><span class="sum-title">Organigramm</span><span class="sum-hint">Gepflegt von Organigramm-Olga</span></summary>
+    <summary><span class="sum-title" data-i18n="t-org">Organigramm</span><span class="sum-hint" data-i18n="h-org">Gepflegt von Organigramm-Olga</span></summary>
     <div class="sec-body">
       <div class="chart" id="chart">
-        <div class="notice"><strong>Das Team wird geladen …</strong><span>Einen Moment bitte.</span></div>
+        <div class="notice"><strong data-i18n="load1">Das Team wird geladen …</strong><span data-i18n="load2">Einen Moment bitte.</span></div>
       </div>
     </div>
   </details>
 
   <details class="sec" id="anleitung">
-    <summary><span class="sum-title">Befehle und Tipps für Claude Code</span><span class="sum-hint">Spickzettel für die Arbeit an den Apps auf dem Mac</span></summary>
-    <div class="sec-body guide">
+    <summary><span class="sum-title" data-i18n="t-guide">Befehle und Tipps für Claude Code</span><span class="sum-hint" data-i18n="h-guide">Spickzettel für die Arbeit an den Apps auf dem Mac</span></summary>
+    <div class="sec-body guide" data-i18n-html="guide">
       <p class="lede">So arbeitet das Team auf deinem Mac mit: Die Studio-Regeln gelten in jeder App, alle Teammitglieder stehen als Agenten bereit, und drei Befehle erledigen die wiederkehrenden Aufgaben. Tippe auf „Kopieren“ und füge den Befehl im Terminal oder in Claude Code ein.</p>
 
       <details class="sub" open>
@@ -127,6 +129,7 @@ claude</code></pre><button type="button" class="copy">Kopieren</button></div>
             <li>Fehlen die Agenten unter <code>/agents</code>: Claude Code neu starten, sonst das Installationsskript erneut ausführen.</li>
             <li>Das Repository DasTeam ist öffentlich. In Lektionen keine Passwörter, Kontonummern oder persönlichen Daten schreiben.</li>
             <li>Ausgeliefert wird nur nach bestandener <code>/studio-freigabe</code>.</li>
+            <li>Jede App bekommt das Einstellungsmenü mit Darstellung und Sprache. <code>/studio-umstellung</code> baut es mit ein.</li>
           </ul>
         </div>
       </details>
@@ -134,8 +137,8 @@ claude</code></pre><button type="button" class="copy">Kopieren</button></div>
   </details>
 
   <details class="sec" id="arbeiten">
-    <summary><span class="sum-title">So arbeiten wir</span><span class="sum-hint">Ideen, Personal, Teamleiter-Runde</span></summary>
-    <div class="sec-body">
+    <summary><span class="sum-title" data-i18n="t-work">So arbeiten wir</span><span class="sum-hint" data-i18n="h-work">Ideen, Personal, Teamleiter-Runde</span></summary>
+    <div class="sec-body" data-i18n-html="work">
       <div class="flows">
         <article class="flow">
           <h3>Neue Ideen</h3>
@@ -170,12 +173,14 @@ claude</code></pre><button type="button" class="copy">Kopieren</button></div>
         <li><b>Das Logo wird mitentwickelt</b> und sofort eingebaut.</li>
         <li><b>Jede App ist installierbar</b> und zeigt auf iPhone und Desktop das richtige Logo.</li>
         <li><b>Vor jeder Auslieferung läuft die Freigabe-Prüfung.</b></li>
+        <li><b>Hell, Dunkel und Automatisch</b> in jeder App; Standard Automatisch, folgt der Systemeinstellung.</li>
+        <li><b>Deutsch und Englisch</b> in jeder App umschaltbar; Standard Deutsch. Beides steht in einem Einstellungsmenü im Studio-Look.</li>
       </ol>
     </div>
   </details>
 
   <details class="sec" id="ideen">
-    <summary><span class="sum-title">Ideen der Teams</span><span class="sum-hint" id="ideen-hint">Eingebracht von den Teamleitungen · Marco entscheidet</span></summary>
+    <summary><span class="sum-title" data-i18n="t-ideas">Ideen der Teams</span><span class="sum-hint" id="ideen-hint" data-i18n="h-ideas">Eingebracht von den Teamleitungen · Marco entscheidet</span></summary>
     <div class="sec-body">
       <div class="filters" id="idea-filters" role="group" aria-label="Ideen nach Abteilung filtern"></div>
       <div class="ideas" id="ideas"><p class="hint">Noch keine Ideen eingebracht.</p></div>
@@ -183,7 +188,7 @@ claude</code></pre><button type="button" class="copy">Kopieren</button></div>
   </details>
 
   <details class="sec chronik" id="chronik-sec">
-    <summary><span class="sum-title">Chronik</span><span class="sum-hint">Neuzugänge, Beförderungen, neue Lektionen</span></summary>
+    <summary><span class="sum-title" data-i18n="t-chron">Chronik</span><span class="sum-hint" data-i18n="h-chron">Neuzugänge, Beförderungen, neue Lektionen</span></summary>
     <div class="sec-body">
       <div class="filters" id="filters" role="group" aria-label="Chronik filtern"></div>
       <ol id="chronik"><li><span></span><span class="hint">Noch keine Einträge.</span></li></ol>
@@ -191,8 +196,8 @@ claude</code></pre><button type="button" class="copy">Kopieren</button></div>
   </details>
 
   <details class="sec" id="marke">
-    <summary><span class="sum-title">Marke und Design</span><span class="sum-hint">Brand-Portal: so sehen alle Apps aus</span></summary>
-    <div class="sec-body brand-portal">
+    <summary><span class="sum-title" data-i18n="t-brand">Marke und Design</span><span class="sum-hint" data-i18n="h-brand">Brand-Portal: so sehen alle Apps aus</span></summary>
+    <div class="sec-body brand-portal" data-i18n-html="brand">
       <p class="lede">Alle Apps des Studios folgen einer Designsprache: <b>Apple-Klarheit in Familienfarben.</b> Bordeaux und Gold kommen aus dem Familienwappen, die klare Form, die Systemschrift und die Bedienung kommen von Apple. Verantwortlich ist Gestaltungs-Greta, die Icons zeichnet Logo-Luisa.</p>
 
       <details class="sub" open>
@@ -247,6 +252,19 @@ claude</code></pre><button type="button" class="copy">Kopieren</button></div>
             <li>Große Beträge dünn und gerundet, Ziffern immer gleich breit, Beträge rechtsbündig.</li>
             <li>Format „1.234,56 €“, Minus als „−“, Datum „20. Oktober 2026“ oder „20.10.2026“.</li>
             <li>iPhone und iPad in Apple-Größen (Text 17 px), Desktop kompakt (14 px).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Einstellungsmenü</summary>
+        <div class="sub-body">
+          <ul class="rules">
+            <li>Jede App hat oben rechts ein <b>Zahnrad</b>. Es öffnet die Einstellungen: auf dem iPhone als Sheet von unten, auf iPad und Desktop als Dialog.</li>
+            <li>Immer in dieser Reihenfolge: <b>Darstellung</b> (Automatisch · Hell · Dunkel, Standard Automatisch), <b>Sprache</b> (Deutsch · English, Standard Deutsch), dann App-Eigenes, zuletzt <b>Über</b> mit Icon, Name und Version.</li>
+            <li>Änderungen gelten sofort, ohne Speichern, und werden pro Gerät gemerkt.</li>
+            <li>Auf Englisch ist alles übersetzt, auch Fehlermeldungen. Eigene Namen von Kategorien, Konten oder Personen bleiben, wie sie sind.</li>
+            <li>Probier es hier aus: Das Zahnrad oben rechts auf dieser Seite funktioniert genauso.</li>
           </ul>
         </div>
       </details>
@@ -308,10 +326,261 @@ claude</code></pre><button type="button" class="copy">Kopieren</button></div>
     </div>
   </details>
 
-  <footer>Diese Seite ist immer aktuell: Wenn HR-Heidi ein neues Teammitglied einstellt oder jemand aus deinem Feedback eine neue Lektion lernt, erscheint das hier von selbst. Das Logo wächst mit: Jede Abteilung ist ein goldener Punkt in der Runde.</footer>
+  <footer data-i18n="footer">Diese Seite ist immer aktuell: Wenn HR-Heidi ein neues Teammitglied einstellt oder jemand aus deinem Feedback eine neue Lektion lernt, erscheint das hier von selbst. Das Logo wächst mit: Jede Abteilung ist ein goldener Punkt in der Runde.</footer>
 </div>
 
 <dialog id="sb" aria-labelledby="sb-name"></dialog>
+
+<dialog id="settings" class="settings" aria-labelledby="st-title">
+  <div class="st">
+    <div class="st-grab" aria-hidden="true"></div>
+    <div class="st-bar"><span></span><b id="st-title" data-i18n="st-title">Einstellungen</b><button type="button" class="st-done" id="st-done" data-i18n="st-done">Fertig</button></div>
+    <p class="st-head" id="st-h-theme" data-i18n="st-appearance">Darstellung</p>
+    <div class="st-group">
+      <div class="seg" role="radiogroup" aria-labelledby="st-h-theme">
+        <label><input type="radio" name="st-theme" id="st-theme-auto" value="auto"><span data-i18n="st-auto">Automatisch</span></label>
+        <label><input type="radio" name="st-theme" id="st-theme-light" value="light"><span data-i18n="st-light">Hell</span></label>
+        <label><input type="radio" name="st-theme" id="st-theme-dark" value="dark"><span data-i18n="st-dark">Dunkel</span></label>
+      </div>
+    </div>
+    <p class="st-foot" data-i18n="st-autohint">„Automatisch“ folgt der Einstellung deines Geräts.</p>
+    <p class="st-head" id="st-h-lang" data-i18n="st-lang">Sprache</p>
+    <div class="st-group">
+      <div class="seg" role="radiogroup" aria-labelledby="st-h-lang">
+        <label><input type="radio" name="st-lang" id="st-lang-de" value="de"><span>Deutsch</span></label>
+        <label><input type="radio" name="st-lang" id="st-lang-en" value="en"><span>English</span></label>
+      </div>
+    </div>
+    <p class="st-head" data-i18n="st-about">Über</p>
+    <div class="st-group st-about"><span id="st-icon" aria-hidden="true"></span><span class="st-t"><b data-i18n="st-name">Das Studio-Team</b><small data-i18n="st-about-sub">Organigramm, Steckbriefe und Chronik des KI-Teams</small><small data-i18n="st-part">Teil des Familien-App-Studios</small></span></div>
+  </div>
+</dialog>
+<template data-en="h1">The Studio <em>Team</em></template>
+<template data-en="lede">Here you can see who does what, who reports to whom and who learned something recently. Tap a team member to open their profile. New team members and new lessons appear here automatically. Profiles, ideas and the chronicle are written in German.</template>
+<template data-en="work">
+      <div class="flows">
+        <article class="flow">
+          <h3>New ideas</h3>
+          <ol>
+            <li>The team lead develops ideas with their team on how the department can get better.</li>
+            <li>The team leads meeting aligns them across departments.</li>
+            <li>Marco decides.</li>
+            <li>The team implements them and records what it learned.</li>
+          </ol>
+        </article>
+        <article class="flow">
+          <h3>Staffing</h3>
+          <ol>
+            <li>The team lead reports a need to HR-Heidi.</li>
+            <li>HR-Heidi writes the role profile and gets Marco’s approval for the position.</li>
+            <li>Once approved, HR-Heidi hires and introduces the new member.</li>
+          </ol>
+        </article>
+        <article class="flow">
+          <h3>Team leads meeting</h3>
+          <ol>
+            <li>The four team leads meet every Monday morning.</li>
+            <li>They report what got better and improve how they work together.</li>
+            <li>New ideas and results show up on this page and in the chronicle.</li>
+          </ol>
+        </article>
+      </div>
+      <h3 class="sub-h">Team standards</h3>
+      <ol class="standards">
+        <li><b>Check desktop, iPad and iPhone.</b> Done means it looks right on all three: no sideways scrolling, no zooming.</li>
+        <li><b>Involve the whole team.</b> Reviews are done by the responsible specialists.</li>
+        <li><b>The logo is designed along with the app</b> and built in right away.</li>
+        <li><b>Every app can be installed</b> and shows the right logo on iPhone and desktop.</li>
+        <li><b>The release check runs before every release.</b></li>
+        <li><b>Light, dark and automatic</b> in every app; automatic by default, following the system setting.</li>
+        <li><b>German and English</b> switchable in every app; German by default. Both live in a settings menu with the studio look.</li>
+      </ol>
+</template>
+<template data-en="guide">
+      <p class="lede">This is how the team works with you on your Mac: the studio rules apply in every app, all team members are available as agents, and three commands handle the recurring tasks. Tap “Copy” and paste the command into Terminal or Claude Code.</p>
+
+      <details class="sub" open>
+        <summary>Set up once</summary>
+        <div class="sub-body">
+          <p class="step-note">In Terminal on the Mac. Fetches the studio kit and links rules, agents and commands to Claude Code.</p>
+          <div class="cmd"><pre><code>cd ~/Apps
+git clone https://github.com/marcokland-web/DasTeam.git
+bash ~/Apps/DasTeam/studio/installieren.sh</code></pre><button type="button" class="copy">Copy</button></div>
+          <p class="step-note">Then restart Claude Code. The release check needs Node.js on the Mac; if it is missing, the script tells you.</p>
+        </div>
+      </details>
+
+      <details class="sub" open>
+        <summary>Bring an app up to the new rules</summary>
+        <div class="sub-body">
+          <p class="step-note">In Terminal, go to the app’s folder and start Claude Code:</p>
+          <div class="cmd"><pre><code>cd ~/Apps/BASE
+claude</code></pre><button type="button" class="copy">Copy</button></div>
+          <p class="step-note">Then type in Claude Code:</p>
+          <div class="cmd"><pre><code>/studio-umstellung</code></pre><button type="button" class="copy">Copy</button></div>
+          <p class="step-note">Only one part: <code>/studio-umstellung icons</code>, <code>farben</code>, <code>texte</code> or <code>pruefbericht</code>. Order of the apps: B.A.S.E, Gewohnheiten, Zählerstände.</p>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Check before every release</summary>
+        <div class="sub-body">
+          <div class="cmd"><pre><code>/studio-freigabe</code></pre><button type="button" class="copy">Copy</button></div>
+          <p class="step-note">Checks iPhone, iPad and desktop in light and dark, app icons, manifest and installability. Only what is “freigegeben” (released) ships.</p>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>When you find a bug or give feedback</summary>
+        <div class="sub-body">
+          <div class="cmd"><pre><code>/studio-lektion</code></pre><button type="button" class="copy">Copy</button></div>
+          <p class="step-note">Claude Code suggests which agent is responsible and which rule they learn; you confirm. You can also say it directly:</p>
+          <div class="cmd"><pre><code>/studio-lektion bug-bodo Beträge mit Tausenderpunkt immer mit 1.234 testen</code></pre><button type="button" class="copy">Copy</button></div>
+          <p class="step-note">The lesson goes into the agent’s memory and into the inbox here. Say “Lektionen abholen” in Claude here, and HR-Heidi adds them to the team page.</p>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Get the team’s latest onto the Mac</summary>
+        <div class="sub-body">
+          <div class="cmd"><pre><code>git -C ~/Apps/DasTeam pull &amp;&amp; bash ~/Apps/DasTeam/studio/installieren.sh</code></pre><button type="button" class="copy">Copy</button></div>
+          <p class="step-note">Whenever the team has learned something or someone new joined, for example after the team leads meeting on Monday. <code>/studio-umstellung</code> also fetches the latest itself.</p>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Talk to the team directly</summary>
+        <div class="sub-body">
+          <div class="cmd"><pre><code>/agents</code></pre><button type="button" class="copy">Copy</button></div>
+          <p class="step-note">Shows all team members. Ask individual members in plain words, for example:</p>
+          <ul class="rules">
+            <li>“Have design-doris check the accounts view on iPhone, iPad and desktop.”</li>
+            <li>“Ask logo-luisa to create the icon set for Zählerstände.”</li>
+            <li>“Have bug-bodo and rant-randy review the last change.”</li>
+            <li>“hr-heidi should propose a role for accessibility.” (hiring only with your approval)</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Tips and things to keep in mind</summary>
+        <div class="sub-body">
+          <ul class="rules">
+            <li>After each update, <b>remove the home screen icon once and add it again</b>, otherwise the iPhone keeps the old logo. On the desktop, reinstall the app once.</li>
+            <li>Before larger changes, Claude Code shows a <b>plan</b> first. Read it briefly before you say “go”.</li>
+            <li>Each app has its own CLAUDE.md. The studio rules apply on top; if they conflict, the studio rules win unless you say otherwise.</li>
+            <li>If the agents are missing under <code>/agents</code>: restart Claude Code, otherwise run the install script again.</li>
+            <li>The DasTeam repository is public. Don’t put passwords, account numbers or personal data into lessons.</li>
+            <li>Only ship after <code>/studio-freigabe</code> passes.</li>
+            <li>Every app gets the settings menu with appearance and language. <code>/studio-umstellung</code> builds it in.</li>
+          </ul>
+        </div>
+      </details>
+</template>
+<template data-en="brand">
+      <p class="lede">All studio apps share one design language: <b>Apple clarity in family colours.</b> Bordeaux and gold come from the family crest; the clean shapes, the system font and the controls come from Apple. Gestaltungs-Greta is responsible, Logo-Luisa draws the icons.</p>
+
+      <details class="sub" open>
+        <summary>App icons</summary>
+        <div class="sub-body">
+          <div class="icon-row">
+            <figure><img src="brand/base-rund.svg" alt="" width="64" height="64"><figcaption>B.A.S.E</figcaption></figure>
+            <figure><img src="brand/gewohnheiten-rund.svg" alt="" width="64" height="64"><figcaption>Gewohnheiten</figcaption></figure>
+            <figure><img src="brand/zaehlerstaende-rund.svg" alt="" width="64" height="64"><figcaption>Zählerstände</figcaption></figure>
+            <figure><img src="brand/studio-team-rund.svg" alt="" width="64" height="64"><figcaption>Studio-Team</figcaption></figure>
+            <figure><img src="brand/vorlage-rund.svg" alt="" width="64" height="64"><figcaption>New app</figcaption></figure>
+          </div>
+          <ul class="rules">
+            <li>A bordeaux gradient as the background with <b>one</b> gold line symbol. No lettering, no shadows; the only exception is the “B” of B.A.S.E.</li>
+            <li>All apps share the same colours and differ only in their symbol.</li>
+            <li>Required set per app: iPhone icon 180 px, desktop 192 and 512 px, Android mask 512 px, favicon 32 px.</li>
+            <li>The logo of this page grows with the team: every department is a gold dot in the circle.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Colours</summary>
+        <div class="sub-body">
+          <div class="swatches">
+            <div class="sw"><span class="chip c-brand"></span><b>Bordeaux</b><small>Everything tappable: main button, active tab, links, selection</small></div>
+            <div class="sw"><span class="chip c-gold"></span><b>Gold</b><small>Decoration only: symbols, rings, reached goals. Never text on light backgrounds</small></div>
+            <div class="sw"><span class="chip c-cream"></span><b>Cream</b><small>Light page background</small></div>
+            <div class="sw"><span class="chip c-night"></span><b>Night black</b><small>Dark page background with a hint of bordeaux</small></div>
+            <div class="sw"><span class="chip c-green"></span><b>Green</b><small>Funded, income, done</small></div>
+            <div class="sw"><span class="chip c-ochre"></span><b>Ochre</b><small>Still missing, unusual</small></div>
+            <div class="sw"><span class="chip c-red"></span><b>Red</b><small>Overspent, delete, errors</small></div>
+          </div>
+          <ul class="rules">
+            <li>All text colours reach at least 4.5:1 in light and dark.</li>
+            <li>Green, ochre and red are never the only signal: always add a sign or text.</li>
+            <li>Light, dark and automatic can be switched in every app.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Type and numbers</summary>
+        <div class="sub-body">
+          <div class="type-demo">
+            <span class="td-big">€1,284.50</span>
+            <span class="td-title">October plan</span>
+            <span class="td-body">Weekly shop at Rewe · Current account · Today</span>
+          </div>
+          <ul class="rules">
+            <li>System font (SF Pro on Apple devices); nothing is loaded from Google.</li>
+            <li>Large amounts thin and rounded, digits always the same width, amounts right-aligned.</li>
+            <li>German: “1.234,56 €”, “20. Oktober 2026”. English: “€1,234.56”, “20 October 2026”. Minus as “−”.</li>
+            <li>iPhone and iPad in Apple sizes (text 17 px), desktop compact (14 px).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Settings menu</summary>
+        <div class="sub-body">
+          <ul class="rules">
+            <li>Every app has a <b>gear</b> at the top right. It opens the settings: as a sheet from the bottom on iPhone, as a dialog on iPad and desktop.</li>
+            <li>Always in this order: <b>Appearance</b> (Automatic · Light · Dark, automatic by default), <b>Language</b> (Deutsch · English, German by default), then app-specific settings, and <b>About</b> last with icon, name and version.</li>
+            <li>Changes apply right away, without saving, and are remembered per device.</li>
+            <li>In English everything is translated, including error messages. Your own names for categories, accounts or people stay as they are.</li>
+            <li>Try it here: the gear at the top right of this page works the same way.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Controls per device</summary>
+        <div class="sub-body">
+          <div class="table-wrap">
+            <table class="devices">
+              <thead><tr><th></th><th>iPhone</th><th>iPad</th><th>Desktop</th></tr></thead>
+              <tbody>
+                <tr><th>Navigation</th><td data-label="iPhone">Tab bar at the bottom, at most 5 tabs</td><td data-label="iPad">Sidebar or pill at the top</td><td data-label="Desktop">Sidebar on the left</td></tr>
+                <tr><th>Title</th><td data-label="iPhone">Large, shrinks on scroll</td><td data-label="iPad">Large</td><td data-label="Desktop">Medium</td></tr>
+                <tr><th>Input</th><td data-label="iPhone">Bottom sheet with number pad</td><td data-label="iPad">Sheet or popover</td><td data-label="Desktop">Dialog or inline in the table</td></tr>
+                <tr><th>Density</th><td data-label="iPhone">Apple sizes</td><td data-label="iPad">Apple sizes, two columns</td><td data-label="Desktop">Compact</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <ul class="rules">
+            <li>Every tappable area is at least 44 px, even if the symbol is smaller.</li>
+            <li>Nothing hides under the tab bar or floating buttons.</li>
+            <li>Deleting always asks first with a red button, or offers “Undo”.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub">
+        <summary>Family word list</summary>
+        <div class="sub-body">
+          <p class="step-note">The word list defines the German terms used in all apps. In English, the apps use the usual English terms (Plan, Assign, Ready to assign, Account, Transaction, Payee, Uncategorized, Cleared, Split, Target, Overspent, Streak, Meter reading).</p>
+        </div>
+      </details>
+
+      <p class="hint">All values, components and icon files are in the studio’s design system.</p>
+</template>
+
 
 <script src="app.js"></script>
 </body>

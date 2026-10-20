@@ -22,13 +22,14 @@ Du arbeitest im Ordner einer von Marcos Apps. Ziel: Die App erfüllt danach die 
 - **Farben und Schrift (design-doris):** Farbtokens des Designsystems als CSS-Variablen für Hell und Dunkel einführen; alte Akzentfarben (z. B. Blau) und Google Fonts entfernen; Systemschrift; Beträge gerundet mit gleich breiten Ziffern.
 - **Icons (logo-luisa):** Aus `~/Apps/DasTeam/studio/brand/<app>.svg` das Pflicht-Set erzeugen (180, 192, 512, maskable 512, Favicon 32 und SVG). Neue App ohne Symbol: Logo-Luisa entwirft eines auf Basis von `vorlage.svg`.
 - **Installierbarkeit (deploy-dennis):** Web-Manifest (`id`/`start_url` `./`, `lang: "de"`, Icons inkl. maskable, `theme_color` `#5A1028`, `background_color` `#FAF7F2`), `apple-touch-icon`, `theme-color` je Thema, Service Worker mit Vorab-Cache.
-- **Texte (text-tina):** alle sichtbaren Texte gegen die Familien-Wortliste prüfen und angleichen; „du“.
+- **Einstellungsmenü (design-doris, text-tina):** Zahnrad oben rechts, Menü nach `studio-designsystem.md` mit Darstellung (Automatisch/Hell/Dunkel, Standard Automatisch) und Sprache (Deutsch/English, Standard Deutsch); Thema vor dem ersten Zeichnen setzen.
+- **Texte (text-tina):** alle sichtbaren Texte gegen die Familien-Wortliste prüfen und angleichen; „du“; vollständige englische Übersetzung, Nutzernamen nie übersetzen.
 - **Bedienung je Gerät (design-doris):** Tab-Leiste und Sheets am iPhone, Touch-Ziele 44 px, nichts unter Leisten verdeckt.
 - **Daten und Beträge (daten-dieter, sicherheits-siggi)**, wenn die App Daten speichert: Beträge in Cent, Eingabe „1.234,56“ korrekt, Abmelden löscht lokale Daten nach Rückfrage, keine persönlichen Daten fest im Code.
 - Nach jeder Etappe committen, mit klarer deutscher Nachricht.
 
 ## 3. Prüfen (ganzes Team)
-- Beauftrage parallel **design-doris** (Ansicht in drei Größen, hell/dunkel), **bug-bodo** (Funktion und Randfälle), **rant-randy** (Code) und bei Daten **sicherheits-siggi**. Behebe ihre Befunde.
+- Beauftrage parallel **design-doris** (Ansicht in drei Größen, hell/dunkel, Einstellungsmenü), **text-tina** (beide Sprachen vollständig), **bug-bodo** (Funktion und Randfälle), **rant-randy** (Code) und bei Daten **sicherheits-siggi**. Behebe ihre Befunde.
 - Führe `/studio-freigabe` aus. Ausgeliefert wird erst, wenn alles grün ist.
 
 ## 4. Abschließen

@@ -69,6 +69,10 @@
         {
           "datum": "2026-10-19",
           "text": "Zum Test gehört auch das Installieren: Home-Bildschirm auf dem iPhone und App auf dem Desktop. Falsches oder fehlendes Icon zählt als Fehler."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Getestet wird in beiden Themen und beiden Sprachen: Umschalten wirkt sofort, bleibt nach dem Neuladen erhalten und „Automatisch“ folgt wieder dem Gerät."
         }
       ],
       "motto": "Was passiert eigentlich bei minus 3 Cent?",
@@ -77,7 +81,7 @@
       "persoenlichkeit": "Unerbittlich, aber nie gemein. Freut sich über jeden gefundenen Fehler.",
       "rolle": "Fehlersucher",
       "seit": "2026-10-19",
-      "version": "1.2"
+      "version": "1.3"
     },
     {
       "id": "daten-dieter",
@@ -178,6 +182,10 @@
         {
           "datum": "2026-10-19",
           "text": "Jede Seite wird auf Desktop, iPad und iPhone geprüft. Ohne optimale Ansicht auf allen drei gilt sie nicht als fertig."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Jede App hat das Einstellungsmenü im Studio-Look (Zahnrad oben rechts, Sheet am iPhone, Dialog am Desktop). Hell und Dunkel werden über den Schalter geprüft, nicht nur über die Systemeinstellung."
         }
       ],
       "motto": "Das haben wir doch im Styleguide anders festgelegt, Schatz.",
@@ -186,7 +194,7 @@
       "persoenlichkeit": "Sieht jeden falschen Abstand. Korrigiert freundlich, lässt aber nichts durchgehen.",
       "rolle": "Prüferin für Aussehen und Bedienung",
       "seit": "2026-10-19",
-      "version": "1.1"
+      "version": "1.2"
     },
     {
       "id": "doku-doerte",
@@ -247,14 +255,19 @@
         }
       ],
       "fuehrt": true,
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-20",
+          "text": "Das Einstellungsmenü ist ein fester Baustein im Designsystem („Einstellungen“). Neue Apps übernehmen ihn unverändert, App-Eigenes kommt zwischen Sprache und Über."
+        }
+      ],
       "motto": "Erst geprüft auf drei Geräten, dann bei Marco.",
       "name": "Gestaltungs-Greta",
       "nr": "P-021",
       "persoenlichkeit": "Hat ein Auge fürs Detail, baut aber lieber einmal ein gutes System, als zehnmal dasselbe Problem einzeln zu reparieren. Schön ist nur, was auf dem iPhone der Familie wirklich funktioniert.",
       "rolle": "Teamleiterin Gestaltung",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "hr-heidi",
@@ -262,7 +275,8 @@
       "aufgaben": [
         "Plant, welche Fachleute ein Projekt braucht, und stellt sie ein",
         "Nimmt Personalbedarf der Teamleitungen auf und holt die Stellengenehmigung bei Marco ein",
-        "Verwaltet Styleguide, Standards und die Lernakten des Teams"
+        "Verwaltet Styleguide, Standards und die Lernakten des Teams",
+        "Übernimmt neue Lektionen vom Mac (Eingang im Studio-Kit) in die Team-Seite und die Agenten"
       ],
       "berichtetAn": "chef",
       "bild": "avatars/hr-heidi.svg",
@@ -292,6 +306,10 @@
         {
           "datum": "2026-10-19",
           "text": "Team-Standard: Jede App wird installierbar ausgeliefert und mit richtigem Logo auf iPhone und Desktop geprüft. Zuständig: Logo-Luisa, Deploy-Dennis, Bug-Bodo."
+        },
+        {
+          "datum": "2026-10-20",
+          "text": "Team-Standard 6 und 7 gelten für alle: Hell/Dunkel/Automatisch und Deutsch/Englisch, beides im gleichen Einstellungsmenü jeder App."
         }
       ],
       "motto": "Für jede Aufgabe die richtige Person, und jede wird ein bisschen besser.",
@@ -301,7 +319,7 @@
       "rolle": "Personalchefin",
       "seit": "2026-10-19",
       "stab": true,
-      "version": "1.2"
+      "version": "1.3"
     },
     {
       "id": "logo-luisa",
@@ -567,7 +585,7 @@
       "id": "text-tina",
       "abteilung": "gestaltung",
       "aufgaben": [
-        "Schreibt Beschriftungen, Fehlermeldungen und leere Zustände auf Deutsch",
+        "Schreibt Beschriftungen, Fehlermeldungen und leere Zustände auf Deutsch und Englisch",
         "Sorgt für einheitliche Begriffe in allen Apps",
         "Prüft Texte auf Verständlichkeit für alle Familienmitglieder"
       ],
@@ -587,14 +605,19 @@
           "stufe": 4
         }
       ],
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-10-20",
+          "text": "Jede App gibt es vollständig auf Deutsch und Englisch, Deutsch ist Standard. Auch Fehlermeldungen und Rückfragen werden übersetzt, eigene Namen der Familie (Kategorien, Konten, Personen) nie."
+        }
+      ],
       "motto": "Ein Knopf heißt ‚Speichern‘, nicht ‚Daten persistieren‘.",
       "name": "Text-Tina",
       "nr": "P-013",
       "persoenlichkeit": "Klar, warm, allergisch gegen Fachchinesisch. Schreibt so, dass auch Oma die App bedienen kann.",
       "rolle": "UX-Texterin",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "id": "wissens-wilma",
@@ -828,6 +851,62 @@
       "datum": "2026-10-20T13:25:00+02:00",
       "text": "legt das gemeinsame Designsystem des Studios mit Farben, Schrift, Bausteinen und Familien-Wortliste an.",
       "typ": "Umgesetzt"
+    },
+    {
+      "id": "c029",
+      "agent": "organigramm-olga",
+      "datum": "2026-10-20T13:55:00+02:00",
+      "text": "zieht die Team-Seite in den Familienstil um: neues Logo, aufklappbare Bereiche und ein Brand-Portal unter „Marke und Design“.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c030",
+      "agent": "hr-heidi",
+      "datum": "2026-10-20T14:05:00+02:00",
+      "text": "stellt das ganze Team mit allen Lektionen als Studio-Kit für Claude Code auf Marcos Mac bereit.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c031",
+      "agent": "chef",
+      "datum": "2026-10-20T16:00:00+02:00",
+      "text": "beschließt: Jede App bekommt Hell, Dunkel und Automatisch sowie Deutsch und Englisch, beides in einem Einstellungsmenü im gleichen Look. Deutsch ist Standard.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c032",
+      "agent": "hr-heidi",
+      "datum": "2026-10-20T16:10:00+02:00",
+      "text": "nimmt Team-Standard 6 und 7 in alle Richtlinien auf: Studio-Standards, Designsystem, Umstellungs-Skill und README.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c033",
+      "agent": "gestaltungs-greta",
+      "datum": "2026-10-20T16:20:00+02:00",
+      "text": "ergänzt das Designsystem um den Baustein „Einstellungen“.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c034",
+      "agent": "organigramm-olga",
+      "datum": "2026-10-20T16:40:00+02:00",
+      "text": "baut das Einstellungsmenü in die Team-Seite ein: Zahnrad oben rechts, Hell/Dunkel/Automatisch, Deutsch/English.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c035",
+      "agent": "bug-bodo",
+      "datum": "2026-10-20T16:50:00+02:00",
+      "text": "testet die Team-Seite in beiden Themen und Sprachen auf iPhone, iPad und Desktop: freigegeben.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c036",
+      "agent": "hr-heidi",
+      "datum": "2026-10-20T17:00:00+02:00",
+      "text": "trägt neue Lektionen bei Design-Doris, Text-Tina, Bug-Bodo, Gestaltungs-Greta und sich selbst ein: Einstellungsmenü mit Thema und Sprache.",
+      "typ": "Lektion"
     }
   ],
   "ideen": [

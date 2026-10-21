@@ -53,7 +53,7 @@ const over = async (page, tag) => { const r = await page.evaluate(() => [documen
     const ctxA = await b.newContext(DEV.ipad), A = await ctxA.newPage(); await mock(A);
     const ctxB = await b.newContext(DEV.iphone), B = await ctxB.newPage(); await mock(B);
     const errs = []; for (const p of [A, B]){ p.on("pageerror", e => errs.push(String(e))); }
-    await A.goto(URL); await B.goto(URL); await sleep(400);
+    await A.goto(URL); await B.goto(URL); await sleep(600); for (const page of [A, B]) await page.evaluate(() => { const d = document.querySelector("#namepop"); if (d && d.open) d.close(); });
     await A.evaluate(() => { S.name = "Ben"; S.skipName = true; save(); });
     await round(A, 2); const starsA = await A.evaluate(() => S.stars);
     await parents(A); await A.click('[data-act="syNew"]'); await sleep(800);
@@ -103,7 +103,7 @@ const over = async (page, tag) => { const r = await page.evaluate(() => [documen
     const ctx = await b.newContext({ ...d, colorScheme: scheme }), page = await ctx.newPage(); await mock(page);
     const errs = []; page.on("pageerror", e => errs.push(String(e))); page.on("console", m => m.type() === "error" && errs.push(m.text()));
     const tag = `${name}-${scheme}`, shot = n => page.screenshot({ path: `${OUT}/${tag}-${n}.png`, fullPage: true });
-    await page.goto(URL); await sleep(300);
+    await page.goto(URL); await sleep(500); await page.evaluate(() => { const d = document.querySelector("#namepop"); if (d && d.open) d.close(); });
     await page.evaluate(() => { S.name = "Ben"; S.skipName = true; S.advPreview = true; save(); render(); });
     ok(await page.isVisible(".surprise .stella-svg"), tag + ": Stella auf der Lernseite");
     await page.click(".surprise .stella-fig"); await sleep(200);

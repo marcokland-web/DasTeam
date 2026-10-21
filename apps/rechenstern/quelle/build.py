@@ -20,6 +20,17 @@ js = re.search(r"<script>\n?(.*?)</script>", src, re.S).group(1)
 src = re.sub(r"<style>.*?</style>", '<link rel="stylesheet" href="style.css">', src, flags=re.S)
 src = re.sub(r"<script>.*?</script>", '<script src="app.js"></script>', src, flags=re.S)
 src = "\n".join(l for l in src.split("\n") if 'name="claude:viewport-fit-sides"' not in l)
+import collections
+_blocks = re.findall(r'const STR = \{(.*?)\n\};', js, re.S) + re.findall(r'Object\.assign\(STR, \{(.*?)\n\}\);', js, re.S)
+_keys = [k for blk in _blocks for k in re.findall(r'(?:^|[\s,{])([A-Za-z][A-Za-z0-9_]*):\[\"', blk)]
+if len(_blocks) < 2: sys.exit("Textblöcke nicht gefunden")
+_dup = [k for k, c in collections.Counter(_keys).items() if c > 1]
+_set = set(_keys)
+_clash = [k for k in _set if k.endswith("N") and k[:-1] in _set and ('t("' + k + '"') in js]
+if _clash:
+    sys.exit("Textschlüssel kollidiert mit der Namens-Variante: " + ", ".join(sorted(_clash)))
+if _dup:
+    sys.exit("doppelte Textschlüssel (würden sich überschreiben): " + ", ".join(sorted(_dup)))
 if "style=" in src or "style=" in js.replace("e.style", "").replace(".style.", ""):
     sys.exit("Inline-Style gefunden: verstößt gegen die Content-Security-Policy")
 

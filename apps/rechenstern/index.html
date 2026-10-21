@@ -56,6 +56,16 @@
 <div class="toast" id="toast" role="status" hidden></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 
+<dialog id="namepop" class="settings namepop" aria-labelledby="np-title">
+  <form class="st np" id="np-form">
+    <div class="np-stella" id="np-stella" aria-hidden="true"></div>
+    <h2 id="np-title" data-i18n="npTitle">Hallo! Ich bin Stella.</h2>
+    <p class="m0" data-i18n="npSub">Ich bin dein Rechenstern. Wie heißt du?</p>
+    <input id="np-name" maxlength="24" autocomplete="off" autocapitalize="words" aria-labelledby="np-title">
+    <div class="np-acts"><button type="submit" class="btn primary wide" data-i18n="obGo">Los geht’s</button><button type="button" class="btn plain wide" id="np-skip" data-i18n="obSkip">Später</button></div>
+  </form>
+</dialog>
+
 <dialog id="settings" class="settings" aria-labelledby="st-title">
   <div class="st">
     <div class="st-grab" aria-hidden="true"></div>
@@ -88,6 +98,9 @@
         <label><input type="radio" name="st-speech" id="st-speech-auto" value="auto"><span data-i18n="spAuto">Automatisch</span></label>
       </div>
       <p class="st-foot st-in" data-i18n="spHint">Stella liest Aufgaben, Geschichten und Tipps vor.</p>
+      <div class="st-voice" id="st-voice-g"><label for="st-voice" data-i18n="stVoice">Stimme</label>
+        <div class="voicerow"><select id="st-voice"></select><button type="button" class="btn tinted" id="st-voice-test" data-i18n="stVoiceTest">Probehören</button></div>
+        <p class="st-foot st-in" data-i18n="stVoiceHint">Klingt die Stimme blechern?</p></div>
       <button type="button" class="row" data-act="parents" id="st-parents"><span class="tx"><b data-i18n="parentsOpen">Eltern-Bereich</b></span><svg class="chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></button>
     </div>
     <p class="st-foot" data-i18n="stParentsHint">Belohnungen, Tagesziel und Lernstand. Geschützt mit einer Eltern-PIN.</p>

@@ -15,7 +15,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     const errs = []; page.on("pageerror", e => errs.push(String(e))); page.on("console", m => m.type() === "error" && errs.push(m.text()));
     const tag = `${name}-${scheme}`, shot = async n => page.screenshot({ path: `${OUT}/${tag}-${n}.png`, fullPage: true });
     const over = async w => { const r = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]); ok(r[0] <= r[1], `${tag} ${w}: seitlich ${r[0]}>${r[1]}`); };
-    await page.goto(URL); await sleep(300);
+    await page.goto(URL); await sleep(500); await page.evaluate(() => { const d = document.querySelector("#namepop"); if (d && d.open) d.close(); });
     ok(await page.isVisible("#v-lernen"), tag + ": Start im Lernbereich"); await over("lernen"); await shot("l1-lernen");
     // Station 1: Schokolade für die 7er-Reihe
     await page.click('.rchip[data-a="7"]');

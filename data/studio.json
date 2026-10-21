@@ -77,6 +77,10 @@
         {
           "datum": "2026-10-20",
           "text": "Nicht nur prüfen, ob Knöpfe klickbar sind, sondern auch, ob das Layout stimmt (z. B. Ziffernblock wirklich 3 Spalten). Ein klickbarer, aber zerschossener Block fiel sonst durch."
+        },
+        {
+          "datum": "2026-10-21",
+          "text": "Doppelte Textschlüssel überschreiben sich still: Im Einstellungsmenü stand „geschafft“ statt „Fertig“. Die Auslieferung bricht jetzt bei doppelten Schlüsseln ab, und der Test prüft die Beschriftung."
         }
       ],
       "motto": "Was passiert eigentlich bei minus 3 Cent?",
@@ -85,7 +89,7 @@
       "persoenlichkeit": "Unerbittlich, aber nie gemein. Freut sich über jeden gefundenen Fehler.",
       "rolle": "Fehlersucher",
       "seit": "2026-10-19",
-      "version": "1.4"
+      "version": "1.5"
     },
     {
       "id": "daten-dieter",
@@ -215,6 +219,10 @@
         {
           "datum": "2026-10-20",
           "text": "Neue CSS-Klassen immer auf ihren Bereich begrenzen (.pond .lily statt .pad). Eine doppelte Klasse hat sonst Bausteine in anderen Ansichten überschrieben."
+        },
+        {
+          "datum": "2026-10-21",
+          "text": "Liquid Glass gehört auf die Navigationsebene (Kopfzeile, Tab-Leiste, Menüs, Pop-ups); Inhalte bleiben ruhig. Bei „Transparenz reduzieren“ deckend."
         }
       ],
       "motto": "Das haben wir doch im Styleguide anders festgelegt, Schatz.",
@@ -223,7 +231,7 @@
       "persoenlichkeit": "Sieht jeden falschen Abstand. Korrigiert freundlich, lässt aber nichts durchgehen.",
       "rolle": "Prüferin für Aussehen und Bedienung",
       "seit": "2026-10-19",
-      "version": "1.4"
+      "version": "1.5"
     },
     {
       "id": "doku-doerte",
@@ -379,6 +387,10 @@
         {
           "datum": "2026-10-20",
           "text": "Erst verstehen, dann üben: Jede Reihe bekommt einen Entdeckerpfad. Hinweise zeigen den Rechenweg, nie das Ergebnis, und Sterne gibt es nur für eigenes Denken (erster Versuch, Tageslimit)."
+        },
+        {
+          "datum": "2026-10-21",
+          "text": "Sobald einzelne Reihen sitzen, mischen: Das Kind wählt selbst, welche Reihen zusammen geübt und entdeckt werden."
         }
       ],
       "motto": "Ein Kind soll wiederkommen wollen, nicht müssen.",
@@ -387,7 +399,7 @@
       "persoenlichkeit": "Geduldig, neugierig und ehrlich. Denkt wie eine gute Grundschullehrerin: lobt die Mühe, nicht nur das Ergebnis, und merkt sofort, wenn ein Spiel nur noch Sterne sammelt statt zu lehren.",
       "rolle": "Lernpädagogin",
       "seit": "2026-10-20",
-      "version": "1.1"
+      "version": "1.2"
     },
     {
       "id": "logo-luisa",
@@ -695,6 +707,14 @@
         {
           "datum": "2026-10-20",
           "text": "Jede App gibt es vollständig auf Deutsch und Englisch, Deutsch ist Standard. Auch Fehlermeldungen und Rückfragen werden übersetzt, eigene Namen der Familie (Kategorien, Konten, Personen) nie."
+        },
+        {
+          "datum": "2026-10-21",
+          "text": "Den Namen des Kindes überall nutzen, wo es persönlich wirkt (Begrüßung, Lob, „Bens Sammlung“), mit richtigem Genitiv (Bens, Max’)."
+        },
+        {
+          "datum": "2026-10-21",
+          "text": "Vorlesen nie mit der ersten Systemstimme: die beste vorhandene Stimme wählen, Roboter- und Effektstimmen ausschließen, Auswahl zum Probehören anbieten."
         }
       ],
       "motto": "Ein Knopf heißt ‚Speichern‘, nicht ‚Daten persistieren‘.",
@@ -703,7 +723,7 @@
       "persoenlichkeit": "Klar, warm, allergisch gegen Fachchinesisch. Schreibt so, dass auch Oma die App bedienen kann.",
       "rolle": "UX-Texterin",
       "seit": "2026-10-19",
-      "version": "1.1"
+      "version": "1.2"
     },
     {
       "id": "wissens-wilma",
@@ -1137,6 +1157,41 @@
       "agent": "bug-bodo",
       "datum": "2026-10-20T23:00:00+02:00",
       "text": "testet Abgleich zwischen zwei Geräten, Abbruch, Wiederverbinden, Duell und alle neuen Teile auf iPhone, iPad und Desktop.",
+      "typ": "Prüfung"
+    },
+    {
+      "id": "c057",
+      "agent": "chef",
+      "datum": "2026-10-21T08:02:00+02:00",
+      "text": "wünscht eine bessere Vorlese-Stimme, gemischte Reihen beim Lernen, die Namensabfrage beim Start und Liquid Glass in allen Apps.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c058",
+      "agent": "design-doris",
+      "datum": "2026-10-21T08:40:00+02:00",
+      "text": "nimmt Liquid Glass ins Designsystem auf und baut es in Rechenstern und die Team-Seite ein.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c059",
+      "agent": "text-tina",
+      "datum": "2026-10-21T08:45:00+02:00",
+      "text": "lässt Stella beim Start nach dem Namen fragen und spricht das Kind überall persönlich an; die Vorlese-Stimme ist jetzt wählbar.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c060",
+      "agent": "lern-lotte",
+      "datum": "2026-10-21T08:50:00+02:00",
+      "text": "ergänzt den Entdeckerpfad um gemischte Reihen nach eigener Wahl.",
+      "typ": "Umgesetzt"
+    },
+    {
+      "id": "c061",
+      "agent": "bug-bodo",
+      "datum": "2026-10-21T09:00:00+02:00",
+      "text": "findet einen alten Fehler (Knopf „Fertig“ hieß „geschafft“) und baut einen Prüfpunkt gegen doppelte Textschlüssel ein.",
       "typ": "Prüfung"
     }
   ],

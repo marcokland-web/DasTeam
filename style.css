@@ -299,3 +299,22 @@ dialog.settings{width:min(440px,calc(100vw - 32px));background:var(--bg);color:v
 
 footer{font-size:var(--fs-s);color:var(--muted);border-top:1px solid var(--line);padding-top:16px;max-width:760px}
 @media (prefers-reduced-motion:reduce){.card{transition:none}}
+
+/* Liquid Glass (Studio-Designsystem, seit 21.10.2026) */
+:root{--glass:rgb(255 255 255 / .58);--glass-strong:rgb(255 255 255 / .76);--glass-edge:rgb(255 255 255 / .85);--glass-shine:rgb(255 255 255 / .9);--glass-line:rgb(122 30 58 / .10);
+  --glass-shadow:0 10px 30px rgb(90 16 40 / .12),0 2px 6px rgb(90 16 40 / .06);--glass-blur:blur(22px) saturate(185%);
+  --aura-1:rgb(229 122 152 / .20);--aura-2:rgb(227 184 102 / .22);--aura-3:rgb(122 30 58 / .08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--glass:rgb(40 30 34 / .55);--glass-strong:rgb(46 36 40 / .74);--glass-edge:rgb(255 255 255 / .16);--glass-shine:rgb(255 255 255 / .2);--glass-line:rgb(255 255 255 / .08);
+  --glass-shadow:0 12px 34px rgb(0 0 0 / .45),0 2px 6px rgb(0 0 0 / .3);--aura-1:rgb(229 122 152 / .14);--aura-2:rgb(227 184 102 / .10);--aura-3:rgb(122 30 58 / .28)}}
+:root[data-theme="dark"]{--glass:rgb(40 30 34 / .55);--glass-strong:rgb(46 36 40 / .74);--glass-edge:rgb(255 255 255 / .16);--glass-shine:rgb(255 255 255 / .2);--glass-line:rgb(255 255 255 / .08);
+  --glass-shadow:0 12px 34px rgb(0 0 0 / .45),0 2px 6px rgb(0 0 0 / .3);--aura-1:rgb(229 122 152 / .14);--aura-2:rgb(227 184 102 / .10);--aura-3:rgb(122 30 58 / .28)}
+body{background:radial-gradient(60vmax 50vmax at 8% -6%,var(--aura-1),transparent 60%),radial-gradient(55vmax 45vmax at 100% 18%,var(--aura-2),transparent 62%),radial-gradient(70vmax 60vmax at 40% 110%,var(--aura-3),transparent 60%),var(--bg);background-attachment:fixed}
+.brand{padding:10px 12px;border-radius:26px}
+.brand,.gear,dialog.settings{background:var(--glass);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow),inset 0 1px 0 var(--glass-shine),inset 0 -1px 0 var(--glass-line)}
+dialog.settings{background:var(--glass-strong)}
+dialog.settings::backdrop{background:rgb(20 10 15 / .28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+dialog.settings .st-group{background:var(--glass);border:1px solid var(--glass-line)}
+.gear:hover{background:var(--glass-strong)}
+.sec{box-shadow:inset 0 1px 0 var(--glass-shine)}
+@media (prefers-reduced-transparency:reduce){.brand,.gear,dialog.settings{background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none}body{background:var(--bg)}}
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.brand,.gear,dialog.settings{background:var(--surface)}}

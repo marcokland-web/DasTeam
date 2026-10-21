@@ -35,6 +35,21 @@ const STR = {
   dots:["{x}-mal {y} Punkte","{x} rows of {y} dots"], inarow:["{n} in Folge","{n} in a row"], kbd:["Tippe die Zahl und drücke Enter.","Type the number and press Enter."],
   progress:["Aufgabe {i} von {n}","Problem {i} of {n}"], timeLeft:["Noch {n} Sekunden","{n} seconds left"],
   rPerfect:["Volltreffer!","Perfect!"], rGood:["Super gemacht!","Well done!"], rOk:["Gut geübt!","Good practice!"],
+  rPerfectN:["Volltreffer, {name}!","Bullseye, {name}!"], rGoodN:["Super gemacht, {name}!","Well done, {name}!"], rOkN:["Gut geübt, {name}!","Good practice, {name}!"],
+  rightName:["Richtig, {name}!","Correct, {name}!"], boardN:["{gen} Einmaleins-Tafel","{gen} times table board"], badgesN:["{gen} Abzeichen","{gen} badges"],
+  yourLevelN:["{gen} Level","{gen} level"], balanceN:["{gen} Sterne","{gen} stars"], pathTitleN:["{gen} Entdeckerpfad","{gen} discovery path"],
+  stationDoneN:["Geschafft, {name}! +3 Sterne","Done, {name}! +3 stars"], chDoneN:["Super, {name}! Du hast die {a}er-Reihe mit Schokolade gebaut!","Great, {name}! You built the {a} times table with chocolate!"],
+  frDoneN:["Der Frosch ist mit dir über den ganzen Teich gehüpft, {name}: die {a}er-Reihe!","The frog hopped across the whole pond with you, {name}: the {a} times table!"],
+  advRightN:["Richtig, {name}! Hinter dem Türchen wartet ein Stern.","Correct, {name}! A star is waiting behind the door."], wkTitleN:["Wochenbericht für {name}","Weekly report for {name}"],
+  trDoneN:["Superkraft freigeschaltet, {name}: {t}!","Superpower unlocked, {name}: {t}!"], sgDoneN:["{n} Geschichten gelöst, {name}!","{n} stories solved, {name}!"], muSolvedN:["Fall gelöst, {name}!","Case solved, {name}!"],
+  npTitle:["Hallo! Ich bin Stella.","Hi! I’m Stella."], npSub:["Ich bin dein Rechenstern. Wie heißt du?","I’m your maths star. What’s your name?"], npHi:["Schön, dass du da bist, {name}!","Lovely to meet you, {name}!"],
+  stVoice:["Stimme","Voice"], stVoiceTest:["Probehören","Listen"], stVoiceAuto:["Beste Stimme automatisch","Best voice automatically"],
+  stVoiceHint:["Klingt die Stimme blechern? Auf iPhone und iPad unter Einstellungen › Bedienungshilfen › Gesprochene Inhalte › Stimmen › Deutsch eine Stimme mit „Premium“ oder „Erweitert“ laden, zum Beispiel Anna. Sie erscheint danach hier.","Does the voice sound robotic? On iPhone and iPad go to Settings › Accessibility › Spoken Content › Voices › English and download a “Premium” or “Enhanced” voice. It will then appear here."],
+  spSample:["Hallo {name}! Ich bin Stella. 7 × 8 = 56.","Hi {name}! I’m Stella. 7 × 8 = 56."],
+  mixed:["Gemischt","Mixed"], pmOne:["Eine Reihe","One table"], pmMix:["Mischen","Mix"], pmPick:["Tippe mindestens zwei Reihen an, die du mischen willst.","Tap at least two tables to mix."],
+  pmTitle:["Gemischt: {l}","Mixed: {l}"], mst1:["Baue Aufgaben aus deinen Reihen","Build problems from your tables"], mst2:["Hüpf mit einer Reihe aus deiner Mischung","Hop with one table from your mix"],
+  mst3:["Ein Zaubertrick zu einer deiner Reihen","A magic trick for one of your tables"], mst4:["10 gemischte Aufgaben aus deinen Reihen","10 mixed problems from your tables"],
+  chDoneMix:["Gemischte Schokolade gebaut!","Mixed chocolate built!"], chDoneMixN:["Gemischte Schokolade gebaut, {name}!","Mixed chocolate built, {name}!"],
   rSub:["{c} von {t} richtig","{c} of {t} correct"], rBlitz:["{n} Aufgaben in 60 Sekunden","{n} problems in 60 seconds"],
   rRecord:["Neuer Rekord!","New record!"], rKnobel:["Noch {n} in der Knobel-Kiste","{n} left in the tricky box"], rKnobel0:["Die Knobel-Kiste ist leer!","The tricky box is empty!"],
   earned:["+{n} Sterne","+{n} stars"], earned1:["+1 Stern","+1 star"], bonus:["inklusive {n} Bonus-Sterne für eine perfekte Runde","including {n} bonus stars for a perfect round"],
@@ -81,9 +96,13 @@ const STR = {
   stAbout:["Über","About"], aboutSub:["Das Einmaleins-Spiel · Version 2026.10.20","The times tables game · Version 2026.10.20"], aboutPart:["Teil des Familien-App-Studios","Part of the family app studio"],
   gear:["Einstellungen","Settings"], docTitle:["Rechenstern","Rechenstern"],
 };
+function genOf(n){ if (!n) return ""; return LANG === "en" ? n + "’s" : (/[sßxz]$/i.test(n) ? n + "’" : n + "s"); }
 function t(k, v = {}){
-  const e = STR[k]; const s = e ? (LANG === "en" ? e[1] : e[0]) : k;
-  return s.replace(/\{(\w+)\}/g, (m, x) => v[x] ?? m);
+  let e = STR[k], nm = "";
+  try { nm = (S && S.name) || ""; } catch(err){}
+  if (nm && STR[k + "N"]) e = STR[k + "N"];
+  const s = e ? (LANG === "en" ? e[1] : e[0]) : k, vv = { name: nm, gen: genOf(nm), ...v };
+  return s.replace(/\{(\w+)\}/g, (m, x) => vv[x] ?? m);
 }
 const fmt = n => Number(n).toLocaleString(LOC());
 const fmtDate = ts => new Date(ts).toLocaleDateString(LOC(), { day:"numeric", month:"long", year:"numeric" });
@@ -323,7 +342,7 @@ function renderHome(){
   const reco = recoReihe(), c = todayCount(), g = S.goal, done = todayGoalDone(), st = streakNow();
   const circ = 2 * Math.PI * 26, off = circ * (1 - Math.min(1, c / g));
   const kn = knobelList().length;
-  const ob = !S.name && !S.skipName && S.rounds === 0;
+  const ob = false;   // Name wird beim Öffnen der App abgefragt (Namens-Pop-up)
   const tiles = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(a => {
     const s = reiheStars(a);
     return `<button type="button" class="tile${s === 3 ? " master" : ""}${a === reco ? " reco" : ""}" data-act="start" data-mode="reihe" data-a="${a}" aria-label="${esc(t("reiheAria", { n: a, s }))}">
@@ -365,13 +384,15 @@ function modeRow(mode, ic, title, sub, disabled){
 /* ---------- Runde ---------- */
 const mk = (a, b) => ({ a, b, swap: Math.random() < 0.35 });
 const shown = q => q.swap ? [q.a, q.b] : [q.b, q.a];   // Schreibweise der Schule: 3 × 7 gehört zur 7er-Reihe
-function startRound(mode, a){
+function startRound(mode, a, sel){
   let qs = [];
+  if (mode === "sel") qs = pickWeighted(allFacts().filter(([x]) => (sel || []).includes(x)), 10).map(([x, y]) => mk(x, y));
   if (mode === "reihe") qs = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map(b => mk(a, b));
   else if (mode === "mix") qs = pickWeighted(allFacts(), 10).map(([x, y]) => mk(x, y));
+  if (!qs.length && mode !== "knobel" && mode !== "blitz" && mode !== "reihe" && mode !== "mix") return;
   else if (mode === "knobel"){ const l = knobelList(); if (!l.length) return; qs = shuffle(l).slice(0, 10).map(([x, y]) => mk(x, y)); }
   else if (mode === "blitz") qs = pickWeighted(allFacts(), 1).map(([x, y]) => mk(x, y));
-  P = { id: ++roundId, mode, a, queue: qs, base: mode === "blitz" ? Infinity : qs.length, idx: 0, score: 0, res: [], streak: 0, maxStreak: 0,
+  P = { id: ++roundId, mode, a, sel, queue: qs, base: mode === "blitz" ? Infinity : qs.length, idx: 0, score: 0, res: [], streak: 0, maxStreak: 0,
     requeued: new Set(), input: "", phase: "ask", tip: false, earned: 0, lvl0: lvlOf(S.xp), stars0: mode === "reihe" ? reiheStars(a) : 0,
     goalJust: false, blitz: 0, end: 0, timer: 0, fresh: [], quit: false, again: false, solid: mode === "reihe" && mastered(a) };
   if (mode === "blitz"){ P.end = Date.now() + 60000; P.timer = setInterval(tickBlitz, 200); }
@@ -394,7 +415,7 @@ function renderPlay(){
   let mid = "";
   if (P.phase === "right"){
     const msgs = t("right").split("|");
-    mid = `<p class="fb ok">${esc(msgs[(P.idx * 7 + r) % msgs.length])}</p><span class="plus">+1 ${starSvg("")}</span>`;
+    mid = `<p class="fb ok">${esc(S.name && P.idx % 3 === 1 ? t("rightName") : msgs[(P.idx * 7 + r) % msgs.length])}</p><span class="plus">+1 ${starSvg("")}</span>`;
   } else if (P.phase === "wrong"){
     mid = blitz ? `<p class="fb bad">${esc(t("wrongBlitz", { x, y, r }))}</p>`
       : `<p class="fb bad">${esc(t("wrong"))}</p><p class="fbsub">${esc(t(P.again ? "wrongSub" : "wrongSub2", { x, y, r }))}</p>
@@ -414,7 +435,7 @@ function renderPlay(){
       <span class="chip${P.streak >= 3 ? "" : " off"}">${FLAME}${esc(t("inarow", { n: P.streak }))}</span></div>
     ${blitz ? `<p class="sr" id="tleft"></p>` : ""}
     <div class="card qcard">
-      <p class="qlabel">${esc(blitz ? t("blitz") : P.mode === "reihe" ? t("reihe", { n: P.a }) : P.mode === "mix" ? t("mix") : t("knobel"))}</p>${blitz ? "" : spk(t("spQ", { x, y }))}
+      <p class="qlabel">${esc(blitz ? t("blitz") : P.mode === "reihe" ? t("reihe", { n: P.a }) : P.mode === "mix" ? t("mix") : P.mode === "sel" ? t("pmTitle", { l: P.sel.join(", ") }) : t("knobel"))}</p>${blitz ? "" : spk(t("spQ", { x, y }))}
       <div class="q" aria-live="polite"><span>${x}</span><span class="op">×</span><span>${y}</span><span class="op">=</span>
         <span class="ans${P.phase === "right" ? " right" : P.phase === "wrong" ? " wrong" : !P.input ? " empty" : ""}" id="ans">${esc(ans)}</span></div>
       ${mid}
@@ -488,9 +509,9 @@ function endRound(){
   const c = { perfect: false, mode: P.mode };
   S.rounds++;
   let bonus = 0;
-  if ((P.mode === "reihe" || P.mode === "mix") && P.score === P.base){
+  if ((P.mode === "reihe" || P.mode === "mix" || P.mode === "sel") && P.score === P.base){
     c.perfect = true;
-    const bk = P.mode === "reihe" ? "r" + P.a : "mix";
+    const bk = P.mode === "reihe" ? "r" + P.a : P.mode === "sel" ? "sel" + P.sel.join("-") : "mix";
     if (!P.solid && S.bonusDay[bk] !== today()){ bonus = 5; S.bonusDay[bk] = today(); }   // Bonus einmal pro Reihe und Tag
   }
   if (P.mode === "reihe"){ const x = S.reihe[P.a] || (S.reihe[P.a] = { best: 0 }); x.best = Math.max(x.best, P.score); }
@@ -499,7 +520,7 @@ function endRound(){
   S.stars += bonus; P.earned += bonus;
   const fresh = [...P.fresh, ...checkBadges(c)], l1 = lvlOf(S.xp);
   save();
-  R = { mode: P.mode, a: P.a, score: P.score, base: P.base, blitz: P.blitz, earned: P.earned, bonus, fresh, lvlUp: l1 > P.lvl0 ? l1 : 0,
+  R = { mode: P.mode, a: P.a, sel: P.sel, score: P.score, base: P.base, blitz: P.blitz, earned: P.earned, bonus, fresh, lvlUp: l1 > P.lvl0 ? l1 : 0,
     rec, perfect: c.perfect, stars0: P.stars0, solid: P.solid, total: P.res.filter(Boolean).length, asked: P.res.length };
   P = null;
   show("result");
@@ -540,7 +561,7 @@ function renderResult(){
     <div class="acts">
       ${nextR && nextR !== R.a ? `<button type="button" class="btn primary wide" data-act="start" data-mode="reihe" data-a="${nextR}">${esc(t("nextReihe", { n: nextR }))}</button>
         <button type="button" class="btn tinted wide" data-act="start" data-mode="reihe" data-a="${R.a}">${esc(t("again"))}</button>`
-      : `<button type="button" class="btn primary wide" data-act="start" data-mode="${R.mode}" data-a="${R.a ?? ""}"${R.mode === "knobel" && !knobelList().length ? " disabled" : ""}>${esc(t("again"))}</button>`}
+      : `<button type="button" class="btn primary wide" data-act="start" data-mode="${R.mode}" data-a="${R.a ?? ""}" data-sel="${(R.sel || []).join(",")}"${R.mode === "knobel" && !knobelList().length ? " disabled" : ""}>${esc(t("again"))}</button>`}
       ${newMaster ? `<button type="button" class="btn tinted wide" data-act="cert" data-a="${R.a}">${esc(t("certShow"))}</button>` : ""}
       <button type="button" class="btn plain wide" data-act="tab" data-v="home">${esc(t("toHome"))}</button>
     </div></div>`;
@@ -666,7 +687,7 @@ Object.assign(STR, {
   st1:["Schokolade bauen","Build with chocolate"], st1s:["Baue die {a}er-Reihe aus Schokostückchen","Build the {a} times table with chocolate pieces"],
   st2:["Frosch-Sprünge","Frog jumps"], st2s:["Hüpf in {a}er-Schritten über den Teich","Hop across the pond in steps of {a}"],
   st3:["Zaubertrick","Magic trick"], st4:["Üben","Practise"], st4s:["{s} von 3 Sternen","{s} of 3 stars"],
-  stDone:["geschafft","done"], stOpen:["offen","to do"], stBonus:["+3 Sterne, wenn du sie schaffst","+3 stars when you finish it"],
+  stIsDone:["geschafft","done"], stOpen:["offen","to do"], stBonus:["+3 Sterne, wenn du sie schaffst","+3 stars when you finish it"],
   allGames:["Alle Lernspiele","All learning games"],
   gChoco:["Schokoladen-Werkstatt","Chocolate workshop"], gChocoS:["Bau Malaufgaben aus einer Schokoladentafel","Build times tables from a chocolate bar"],
   gFrog:["Frosch-Sprünge","Frog jumps"], gFrogS:["Der Frosch hüpft die Reihe entlang","The frog hops along the table"],
@@ -681,7 +702,7 @@ Object.assign(STR, {
   chRows:["{x} Reihen mit je {y} Stückchen","{x} rows of {y} pieces each"], chEmpty:["Noch keine Schokolade ausgewählt","No chocolate picked yet"],
   chRot:["Drehen","Turn"], chEat:["Aufessen","Eat it"], chAte:["Mmh! {n} Stückchen gezählt.","Yum! {n} pieces counted."],
   chRotTxt:["Gedreht: {y} × {x} = {r}. Gleich viel Schokolade! Das ist der Tausch-Trick.","Turned: {y} × {x} = {r}. Same amount of chocolate! That’s the swap trick."],
-  chRight:["Genau! {x} × {y} = {r}","Exactly! {x} × {y} = {r}"], chTaskN:["Aufgabe {i} von {n}","Task {i} of {n}"], chFree:["Freies Bauen","Free building"],
+  chRight:["Genau! {x} × {y} = {r}","Exactly! {x} × {y} = {r}"], chTaskNo:["Aufgabe {i} von {n}","Task {i} of {n}"], chFree:["Freies Bauen","Free building"],
   chDone:["Du hast die {a}er-Reihe mit Schokolade gebaut!","You built the {a} times table with chocolate!"],
   // Frosch
   frQ:["Der Frosch springt immer {a} weiter. Wo landet er jetzt?","The frog always jumps {a} further. Where does it land now?"],
@@ -783,7 +804,7 @@ const STORIES = [
 ];
 
 /* ---------- Zustand, Stationen ---------- */
-let A = null, LR = null;
+let A = null, LR = null, LMIX = false; const LSEL = new Set();
 const pathOf = a => S.path[a] || {};
 const stationDone = (a, st) => st === "trick" ? !!S.tricks[TRICK_OF[a]] : st === "ueben" ? reiheStars(a) >= 1 : !!pathOf(a)[st];
 const pathCount = a => ["schoko", "frosch", "trick", "ueben"].filter(st => stationDone(a, st)).length;
@@ -822,9 +843,13 @@ function renderLearn(){
   if (LR == null) LR = recoReihe() ?? 1;
   const a = LR, tr = trickBy(TRICK_OF[a]);
   const chips = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
-    const c = pathCount(n);
-    return `<button type="button" class="rchip${n === a ? " on" : ""}${c === 4 ? " full" : ""}" data-act="learnReihe" data-a="${n}" aria-pressed="${n === a}" aria-label="${esc(t("reihe", { n }) + ": " + c + "/4")}"><b class="num">${n}</b><span class="pips">${[0, 1, 2, 3].map(i => `<i${i < c ? ' class="on"' : ""}></i>`).join("")}</span></button>`;
+    const c = pathCount(n), on = LMIX ? LSEL.has(n) : n === a;
+    return `<button type="button" class="rchip${on ? " on" : ""}${c === 4 ? " full" : ""}" data-act="learnReihe" data-a="${n}" aria-pressed="${on}" aria-label="${esc(t("reihe", { n }) + ": " + c + "/4")}"><b class="num">${n}</b><span class="pips">${[0, 1, 2, 3].map(i => `<i${i < c ? ' class="on"' : ""}></i>`).join("")}</span></button>`;
   }).join("");
+  const sel = [...LSEL].sort((x, y) => x - y);
+  const mixSt = !LMIX ? "" : sel.length < 2 ? `<p class="m0 muted">${esc(t("pmPick"))}</p>` : `<h3 class="pathh">${esc(t("pmTitle", { l: sel.join(", ") }))}</h3><div class="list flat">${[
+    ["schoko", t("st1"), t("mst1")], ["frosch", t("st2"), t("mst2")], ["trick", t("st3"), t("mst3")], ["ueben", t("st4"), t("mst4")]]
+    .map(([id, ti, sub], i) => `<button type="button" class="row station" data-act="mixStation" data-st="${id}"><span class="stno num" aria-hidden="true">${i + 1}</span><span class="tx"><b>${esc(ti)}</b><small>${esc(sub)}</small></span>${CHEV}</button>`).join("")}</div>`;
   const st = [
     ["schoko", "choco", t("st1"), t("st1s", { a })],
     ["frosch", "frog", t("st2"), t("st2s", { a })],
@@ -835,7 +860,7 @@ function renderLearn(){
     return `<button type="button" class="row station${done ? " done" : ""}" data-act="station" data-st="${id}" data-a="${a}">
       <span class="stno num" aria-hidden="true">${done ? CHECK : i + 1}</span>
       <span class="tx"><b>${esc(ti)}</b><small>${esc(sub)}</small>${!done && id !== "ueben" ? `<small class="gold-ink">${esc(t("stBonus"))}</small>` : ""}</span>
-      <span class="sr">${esc(done ? t("stDone") : t("stOpen"))}</span>${CHEV}</button>`;
+      <span class="sr">${esc(done ? t("stIsDone") : t("stOpen"))}</span>${CHEV}</button>`;
   }).join("");
   const learned = TRICKS.filter(x => S.tricks[x.id]).length, solved = CASES.filter(c => S.cases[c]).length;
   const games = [
@@ -848,9 +873,10 @@ function renderLearn(){
     ${adventCard()}
     <section class="pathsec"><p class="kicker">${esc(t("pathTitle"))}</p>
       <div class="card pathcard"><p class="muted m0 small">${esc(t("pathSub"))}</p>
+        <div class="seg pathmode" role="radiogroup" aria-label="${esc(t("pathPick"))}"><label><input type="radio" name="pmode" value="one"${LMIX ? "" : " checked"}><span>${esc(t("pmOne"))}</span></label><label><input type="radio" name="pmode" value="mix"${LMIX ? " checked" : ""}><span>${esc(t("pmMix"))}</span></label></div>
         <div class="rchips" role="group" aria-label="${esc(t("pathPick"))}">${chips}</div>
-        <h3 class="pathh">${esc(t("reihe", { n: a }))}</h3>
-        <div class="list flat">${st}</div></div></section>
+        ${LMIX ? mixSt : `<h3 class="pathh">${esc(t("reihe", { n: a }))}</h3>
+        <div class="list flat">${st}</div>`}</div></section>
     <section><p class="kicker">${esc(t("allGames"))}</p><div class="games">${games}</div></section>
   </div>`;
 }
@@ -860,7 +886,7 @@ function openAct(kind, opts = {}){
   lastAuto = "";
   if (kind === "ueben"){ startRound("reihe", opts.a); return; }
   A = { kind, ...opts };
-  if (kind === "schoko"){ A.rows = 0; A.cols = 0; A.rot = false; A.msg = null; A.ok = false; A.tasks = opts.a ? shuffle([2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 3).map(x => ({ x, y: opts.a })) : []; A.ti = 0; A.done = false; }
+  if (kind === "schoko"){ A.rows = 0; A.cols = 0; A.rot = false; A.msg = null; A.ok = false; A.tasks = opts.mix ? Array.from({ length: 4 }, () => ({ x: rnd(2, 9), y: pick(opts.mix) })) : opts.a ? shuffle([2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 3).map(x => ({ x, y: opts.a })) : []; A.ti = 0; A.done = false; }
   if (kind === "frosch"){ A.a = opts.a || recoReihe() || 2; A.pos = 0; A.done = false; frOpts(); }
   if (kind === "trick"){ const tr = trickBy(opts.id || TRICK_OF[opts.a] || "tausch"); A.id = tr.id; A.ra = opts.a && TRICK_OF[opts.a] === tr.id ? opts.a : null; A.s = tr.init(A.ra); A.miss = false; A.step = 0; A.ok = 0; A.q = null; A.hint = false; A.msg = ""; }
   if (kind === "story"){ A.list = shuffle(STORIES).slice(0, 5).map(s => ({ s, n: rnd(2, s.p >= 8 ? 5 : 6) })); A.i = 0; A.tapped = 0; A.msg = ""; A.ok = false; A.right = 0; }
@@ -883,9 +909,9 @@ function doneBox(text, a){
 /* ---------- Schokoladen-Werkstatt ---------- */
 function renderChoco(){
   const task = A.tasks[A.ti], r = A.rows * A.cols;
-  if (A.done){ $("#v-act").innerHTML = `<div class="act">${actHead(t("gChoco"), t("reihe", { n: A.a }))}${doneBox(t("chDone", { a: A.a }), A.a)}</div>`; return; }
+  if (A.done){ $("#v-act").innerHTML = `<div class="act">${actHead(t("gChoco"), A.mix ? t("mixed") : t("reihe", { n: A.a }))}${doneBox(A.mix ? t("chDoneMix") : t("chDone", { a: A.a }), A.a)}</div>`; return; }
   let cells = ""; for (let i = 0; i < 100; i++){ const rr = Math.floor(i / 10), cc = i % 10; cells += `<span class="pc${rr < A.rows && cc < A.cols ? " on" : ""}" data-r="${rr}" data-c="${cc}"></span>`; }
-  $("#v-act").innerHTML = `<div class="act">${actHead(t("gChoco"), task ? t("chTaskN", { i: A.ti + 1, n: A.tasks.length }) : t("chFree"))}
+  $("#v-act").innerHTML = `<div class="act">${actHead(t("gChoco"), task ? t("chTaskNo", { i: A.ti + 1, n: A.tasks.length }) : t("chFree"))}
     <div class="card chocard">
       <p class="m0 ${task ? "taskline" : "muted"}">${esc(task ? t("chTask", task) : t("chHint"))}</p>
       <div class="chocowrap"><div class="choco" id="choco" role="application" aria-label="${esc(t("chHint"))}" tabindex="0">${cells}</div></div>
@@ -1095,7 +1121,9 @@ function renderSpin(){
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
   switch (b.dataset.act){
-    case "learnReihe": LR = +b.dataset.a; render(); break;
+    case "learnReihe": { const n = +b.dataset.a; if (LMIX){ LSEL.has(n) ? LSEL.delete(n) : LSEL.add(n); } else LR = n; render(); break; }
+    case "mixStation": { const sel = [...LSEL]; if (sel.length < 2) break; const st = b.dataset.st;
+      if (st === "schoko") openAct("schoko", { mix: sel }); else if (st === "ueben") startRound("sel", null, sel); else openAct(st, { a: pick(sel) }); break; }
     case "station": openAct(b.dataset.st, { a: +b.dataset.a }); break;
     case "game": { const g = b.dataset.g;
       if (g === "choco") openAct("schoko", {}); else if (g === "frog") openAct("frosch", { a: LR ?? recoReihe() ?? 2 });
@@ -1377,12 +1405,32 @@ function speakText(text){
     const clean = String(text).replace(/×/g, LANG === "en" ? " times " : " mal ").replace(/=/g, LANG === "en" ? " equals " : " ist ").replace(/·/g, ", ").replace(/\?\s*$/, "?");
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(clean);
-    u.lang = LANG === "en" ? "en-GB" : "de-DE"; u.rate = 0.92; u.pitch = 1.1;
-    const v = speechSynthesis.getVoices().find(x => x.lang && x.lang.toLowerCase().startsWith(LANG));
-    if (v) u.voice = v;
+    u.lang = LANG === "en" ? "en-GB" : "de-DE"; u.rate = 0.95; u.pitch = 1.0;
+    const v = bestVoice(); if (v){ u.voice = v; u.lang = v.lang; }
     speechSynthesis.speak(u);
   } catch(e){}
 }
+/* Stimme: die beste vorhandene wählen, nie die alten Roboterstimmen (Eloquence, Effektstimmen) */
+const VOICE_KEY = "rechenstern-voice";
+const voicesFor = lang => { try { return speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().replace("_", "-").startsWith(lang)); } catch(e){ return []; } };
+function voiceScore(v){
+  const n = (v.name + " " + v.voiceURI).toLowerCase(); let s = 0;
+  if (/premium|enhanced|erweitert|verbessert|neural|natural|online|siri/.test(n)) s += 20;
+  if (/google/.test(n)) s += 12;
+  if (/anna|petra|helena|markus|yannick|katja|conrad|amala|seraphina|vicki|marlene|hans|daniel|serena|kate|arthur|martha|samantha|karen|moira|tessa/.test(n)) s += 4;
+  if (/de-de|en-gb/.test(n) || /^(de-de|en-gb)$/i.test(v.lang)) s += 2;
+  if (/eloquence|compact|novelty|grandma|grandpa|großmutter|großvater|oma|opa|bubbles|bells|bad news|good news|organ|zarvox|trinoids|whisper|jester|boing|cellos|albert|fred|junior|ralph|superstar|wobble|rocko|shelley|flo|reed|sandy|eddy|bahh|hysterical|pipe/.test(n)) s -= 50;
+  return s;
+}
+const voicesSorted = () => voicesFor(LANG).sort((a, b) => voiceScore(b) - voiceScore(a) || a.name.localeCompare(b.name));
+function bestVoice(){ const list = voicesSorted(); const want = (ls.get(VOICE_KEY) || {})[LANG]; return list.find(v => v.voiceURI === want) || list[0] || null; }
+function fillVoices(){
+  const sel = $("#st-voice"); if (!sel) return;
+  const list = voicesSorted(), want = (ls.get(VOICE_KEY) || {})[LANG] || "";
+  sel.innerHTML = `<option value="">${esc(t("stVoiceAuto"))}${list[0] ? " (" + esc(list[0].name) + ")" : ""}</option>` + list.filter(v => voiceScore(v) > -50).map(v => `<option value="${esc(v.voiceURI)}"${v.voiceURI === want ? " selected" : ""}>${esc(v.name)}${voiceScore(v) >= 20 ? " ★" : ""}</option>`).join("");
+  $("#st-voice-g").hidden = !canSpeak || S.speech === "off";
+}
+try { speechSynthesis.addEventListener("voiceschanged", fillVoices); } catch(e){}
 let lastAuto = "";
 function autoSpeak(key, text){ if (S.speech === "auto" && key !== lastAuto){ lastAuto = key; setTimeout(() => speakText(text), 250); } }
 
@@ -1773,8 +1821,10 @@ document.addEventListener("submit", async e => {
 document.addEventListener("change", e => {
   const el = e.target;
   if (el.id === "adv-prev"){ S.advPreview = el.checked; save(); }
+  else if (el.name === "pmode"){ LMIX = el.value === "mix"; if (LMIX && !LSEL.size && LR) LSEL.add(LR); render(); }
   else if (el.id === "cert-n" && A && A.kind === "cert"){ A.name = el.value.trim(); render(); }
-  else if (el.name === "st-speech"){ S.speech = el.value; save(); render(); }
+  else if (el.name === "st-speech"){ S.speech = el.value; save(); render(); fillVoices(); }
+  else if (el.id === "st-voice"){ const m = ls.get(VOICE_KEY) || {}; m[LANG] = el.value; ls.set(VOICE_KEY, m); speakText(t("spSample")); }
 });
 
 /* ---------- Bedienung ---------- */
@@ -1783,7 +1833,7 @@ document.addEventListener("click", e => {
   const act = b.dataset.act;
   switch (act){
     case "tab": if (P){ clearInterval(P.timer); P = null; } A = null; show(b.dataset.v); break;
-    case "start": { const m = b.dataset.mode; startRound(m, m === "reihe" ? Number(b.dataset.a) : null); break; }
+    case "start": { const m = b.dataset.mode; startRound(m, m === "reihe" ? Number(b.dataset.a) : null, b.dataset.sel ? b.dataset.sel.split(",").map(Number) : null); break; }
     case "key": typeKey(b.dataset.k); break;
     case "del": delKey(); break;
     case "ok": submit(); break;
@@ -1873,7 +1923,7 @@ function applyTheme(v){
 }
 (function(){
   const dlg = $("#settings");
-  const sync = () => { $(`#st-theme-${storedTheme()}`).checked = true; $(`#st-lang-${LANG}`).checked = true; $(`#st-sound-${S.sound ? "on" : "off"}`).checked = true; const sp = $(`#st-speech-${S.speech}`); if (sp) sp.checked = true; $("#st-speech-g").hidden = !canSpeak; };
+  const sync = () => { $(`#st-theme-${storedTheme()}`).checked = true; $(`#st-lang-${LANG}`).checked = true; $(`#st-sound-${S.sound ? "on" : "off"}`).checked = true; const sp = $(`#st-speech-${S.speech}`); if (sp) sp.checked = true; $("#st-speech-g").hidden = !canSpeak; fillVoices(); };
   $("#open-settings").addEventListener("click", () => { sync(); try { dlg.showModal(); } catch(e){ dlg.setAttribute("open", ""); } });
   $("#st-done").addEventListener("click", () => dlg.close());
   dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
@@ -1894,4 +1944,14 @@ function applyTheme(v){
   applyLang();
   show("lernen");
   setTimeout(() => syncNow(false), 800);
+  // Namens-Pop-up beim ersten Öffnen
+  const np = $("#namepop");
+  $("#np-stella").innerHTML = stellaSvg("happy", "np");
+  $("#np-name").placeholder = t("obPh");
+  $("#st-voice-test").addEventListener("click", () => speakText(t("spSample")));
+  $("#np-skip").addEventListener("click", () => { S.skipName = true; save(); np.close(); });
+  $("#np-form").addEventListener("submit", e => { e.preventDefault(); e.stopPropagation();
+    const n = $("#np-name").value.trim(); if (!n){ $("#np-name").focus(); return; }
+    S.name = n; save(); np.close(); render(); toast(t("npHi")); burst(); if (S.speech !== "off") speakText(t("npHi")); });
+  if (!S.name && !S.skipName) setTimeout(() => { try { np.showModal(); } catch(e){ np.setAttribute("open", ""); } $("#np-name").focus(); }, 350);
 })();

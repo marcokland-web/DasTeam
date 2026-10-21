@@ -20,6 +20,7 @@ Du arbeitest im Ordner einer von Marcos Apps. Ziel: Die App erfüllt danach die 
 
 ## 2. Umsetzen, Etappe für Etappe
 - **Farben und Schrift (design-doris):** Farbtokens des Designsystems als CSS-Variablen für Hell und Dunkel einführen; alte Akzentfarben (z. B. Blau) und Google Fonts entfernen; Systemschrift; Beträge gerundet mit gleich breiten Ziffern.
+- **Liquid Glass (design-doris):** Kopfzeile, Tab-Leiste, Navigationspille, Menüs, Pop-ups und Hinweise als Glas nach `studio-designsystem.md` (Abschnitt „Liquid Glass“), Farbschleier im Hintergrund, deckende Fallbacks bei „Transparenz reduzieren“. Inhalte bleiben ohne Glas.
 - **Icons (logo-luisa):** Aus `~/Apps/DasTeam/studio/brand/<app>.svg` das Pflicht-Set erzeugen (180, 192, 512, maskable 512, Favicon 32 und SVG). Neue App ohne Symbol: Logo-Luisa entwirft eines auf Basis von `vorlage.svg`.
 - **Installierbarkeit (deploy-dennis):** Web-Manifest (`id`/`start_url` `./`, `lang: "de"`, Icons inkl. maskable, `theme_color` `#5A1028`, `background_color` `#FAF7F2`), `apple-touch-icon`, `theme-color` je Thema, Service Worker mit Vorab-Cache.
 - **Einstellungsmenü (design-doris, text-tina):** Zahnrad oben rechts, Menü nach `studio-designsystem.md` mit Darstellung (Automatisch/Hell/Dunkel, Standard Automatisch) und Sprache (Deutsch/English, Standard Deutsch); Thema vor dem ersten Zeichnen setzen.

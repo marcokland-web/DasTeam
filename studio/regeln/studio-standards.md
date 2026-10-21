@@ -28,7 +28,7 @@ Marco ist Chef. Für Fachaufgaben gibt es Agenten (Subagents) mit Alliterationsn
 
 ## Weitere feste Regeln
 
-- **Designsystem:** Jede App folgt `studio-designsystem.md` (Bordeaux und Gold, Systemschrift, Apple-Bedienung). Keine Google Fonts, kein Blau als Akzentfarbe.
+- **Designsystem:** Jede App folgt `studio-designsystem.md` (Bordeaux und Gold, Systemschrift, Apple-Bedienung, **Liquid Glass** für Kopfzeile, Tab-Leiste, Menüs und Pop-ups). Keine Google Fonts, kein Blau als Akzentfarbe.
 - **Texte:** Deutsch, Ansprache „du“, Begriffe nach der Familien-Wortliste in `studio-designsystem.md`.
 - **Beträge:** intern als ganze Cent rechnen oder zentral auf Cent runden; Eingaben „1.234,56“, „1234,56“ und „1,234.56“ korrekt lesen; Anzeige „1.234,56 €“.
 - **Daten und Datenschutz:** keine Geheimnisse ins Repository; nach dem Abmelden lokale Finanzdaten löschen (nach Rückfrage); keine persönlichen Daten (Nachname, E-Mail) fest im Code; Git-Commits mit der noreply-Adresse von GitHub.

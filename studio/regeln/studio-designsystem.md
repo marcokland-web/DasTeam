@@ -63,6 +63,18 @@ Gleiche Familienfarben und derselbe Aufbau, aber größer und verspielter (erstm
 - Lob für Mühe, kein Zeitdruck außer in freiwilligen Spielen, keine Schuldgefühle bei Pausen, keine Käufe, keine Werbung.
 - Echte Belohnungen nur über einen Eltern-Bereich mit PIN; alle Daten bleiben auf dem Gerät.
 
+## Liquid Glass (Apple-Glasoptik, in jeder App)
+
+Marco hat am 21.10.2026 entschieden: Alle Apps bekommen die Glasoptik von Apple („Liquid Glass“, iOS 26). Glas gehört auf die **Navigationsebene**, Inhalte bleiben ruhig und gut lesbar.
+
+- **Aus Glas:** Kopfzeile (schwebend, `position: sticky`, Ecken 26 px), Tab-Leiste (schwebende Kapsel mit Abstand zum Rand, Ecken 32 px), Navigationspille, Zahnrad und kleine runde Knöpfe, Einstellungsmenü und Pop-ups, Hinweise (Toast), Sprechblasen, getönte Knöpfe.
+- **Nicht aus Glas:** Karten, Listen, Tabellen, Eingabefelder mit Inhalt, Beträge. Sie bekommen nur eine feine Lichtkante (`inset 0 1px 0`).
+- **Rezept:** `background: var(--glass)` (hell `rgb(255 255 255 / .58)`, dunkel `rgb(40 30 34 / .55)`), `backdrop-filter: blur(22px) saturate(185%)` (mit `-webkit-`), 1 px Rand `--glass-edge`, Schatten `--glass-shadow` plus Lichtkante oben `inset 0 1px 0 var(--glass-shine)`.
+- **Grund:** Damit das Glas schimmert, liegt hinter der App ein ruhiger Farbschleier aus Familienfarben (zwei bis drei weiche `radial-gradient` in Bordeaux und Gold über `--bg`, `background-attachment: fixed`).
+- **Hauptknopf:** bleibt deckend Bordeaux, bekommt aber Glanzkante und weichen Farbschatten.
+- **Barrierefreiheit:** Bei `prefers-reduced-transparency: reduce` und ohne `backdrop-filter` werden alle Glasflächen deckend (`--surface`). Text auf Glas muss weiterhin 4,5:1 erreichen; im Zweifel `--glass-strong` nehmen.
+- **Vorbild:** Rechenstern (`apps/rechenstern/`), Block „Liquid Glass“ im CSS.
+
 ## App-Icons
 
 - Bordeaux-Verlauf `#8C2545` → `#5A1028`, darauf **ein** goldenes Linien-Symbol, Verlauf `#F0D08A` → `#C8963E`. Keine Schrift (Ausnahme: das „B“ von B.A.S.E).

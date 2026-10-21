@@ -26,12 +26,12 @@ async function overflow(page, tag) {
       const page = await ctx.newPage();
       const errs = []; page.on("pageerror", e => errs.push(String(e))); page.on("console", m => m.type() === "error" && errs.push(m.text()));
       await page.goto(URL); await page.waitForTimeout(300);
-      await page.evaluate(() => show("home"));
       const tag = `${name}-${scheme}`;
       await overflow(page, tag + " start");
       if (scheme === "light") await page.screenshot({ path: `${OUT}/${tag}-1-start.png`, fullPage: true });
       // Name eingeben
-      await page.fill("#ob-name", "Testkind"); await page.click("#ob button[type=submit]");
+      await page.evaluate(() => show("lernen")); await page.waitForTimeout(400);
+      await page.fill("#np-name", "Testkind"); await page.click('#np-form button[type="submit"]'); await page.waitForTimeout(200); await page.evaluate(() => show("home"));
       ok((await page.textContent(".hello")).includes("Testkind"), tag + ": Begrüßung");
       // 1er-Reihe: 9 richtig, 1 falsch, Wiederholung richtig
       await page.click('.tile[data-a="1"]');

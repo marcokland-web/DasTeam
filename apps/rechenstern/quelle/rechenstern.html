@@ -53,6 +53,9 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1
 .wm small{font-size:13px;color:var(--muted)}
 .toptabs{display:none;margin-left:auto;background:var(--fill);border-radius:99px;padding:3px;gap:2px}
 .toptabs button{all:unset;cursor:pointer;padding:0 16px;min-height:38px;display:inline-flex;align-items:center;border-radius:99px;font:500 15px/1 var(--f-body);color:var(--muted)}
+/* Tippfläche 44 px bei 38 px Optik */
+.top .toptabs button{position:relative}
+.top .toptabs button::after{content:"";position:absolute;inset:-3px 0}
 .toptabs button[aria-current="page"]{background:var(--surface);color:var(--fg);font-weight:600;box-shadow:0 1px 3px rgb(0 0 0 / .12)}
 .toptabs button:focus-visible{outline:3px solid var(--accent)}
 .starpill{all:unset;cursor:pointer;margin-left:auto;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px 0 10px;border-radius:99px;background:var(--gold-tint);color:var(--gold-ink);font:700 18px/1 var(--f-round)}
@@ -656,17 +659,17 @@ body.playing .toast{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   --glass:rgb(255 255 255 / .58); --glass-strong:rgb(255 255 255 / .74); --glass-edge:rgb(255 255 255 / .85);
   --glass-line:rgb(122 30 58 / .10); --glass-shine:rgb(255 255 255 / .9); --glass-tint:rgb(122 30 58 / .06);
   --glass-shadow:0 10px 30px rgb(90 16 40 / .14),0 2px 6px rgb(90 16 40 / .08);
-  --glass-blur:blur(22px) saturate(185%);
+  --glass-blur:blur(22px) saturate(185%); --glass-sheen:rgb(255 255 255 / .35);
   --aura-1:rgb(229 122 152 / .22); --aura-2:rgb(227 184 102 / .26); --aura-3:rgb(122 30 58 / .10);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --glass:rgb(40 30 34 / .55); --glass-strong:rgb(46 36 40 / .72); --glass-edge:rgb(255 255 255 / .16);
-  --glass-line:rgb(255 255 255 / .08); --glass-shine:rgb(255 255 255 / .22); --glass-tint:rgb(229 122 152 / .08);
+  --glass-line:rgb(255 255 255 / .08); --glass-shine:rgb(255 255 255 / .22); --glass-tint:rgb(229 122 152 / .08); --glass-sheen:rgb(255 255 255 / .06);
   --glass-shadow:0 12px 34px rgb(0 0 0 / .45),0 2px 6px rgb(0 0 0 / .3);
   --aura-1:rgb(229 122 152 / .16); --aura-2:rgb(227 184 102 / .12); --aura-3:rgb(122 30 58 / .30)}}
 :root[data-theme="dark"]{
   --glass:rgb(40 30 34 / .55); --glass-strong:rgb(46 36 40 / .72); --glass-edge:rgb(255 255 255 / .16);
-  --glass-line:rgb(255 255 255 / .08); --glass-shine:rgb(255 255 255 / .22); --glass-tint:rgb(229 122 152 / .08);
+  --glass-line:rgb(255 255 255 / .08); --glass-shine:rgb(255 255 255 / .22); --glass-tint:rgb(229 122 152 / .08); --glass-sheen:rgb(255 255 255 / .06);
   --glass-shadow:0 12px 34px rgb(0 0 0 / .45),0 2px 6px rgb(0 0 0 / .3);
   --aura-1:rgb(229 122 152 / .16); --aura-2:rgb(227 184 102 / .12); --aura-3:rgb(122 30 58 / .30)}
 
@@ -688,7 +691,7 @@ body{background:
 /* Kopfzeile: schwebende Glasleiste */
 .top{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:25;border-radius:26px;padding:6px 8px 6px 10px;margin-top:4px;min-height:60px}
 .top .brandbtn{padding-right:6px}
-.starpill{background:linear-gradient(180deg,rgb(255 255 255 / .35),transparent),var(--glass);color:var(--gold-ink)}
+.starpill{background:linear-gradient(180deg,var(--glass-sheen),transparent),var(--glass);color:var(--gold-ink)}
 .gear{width:44px;height:44px}
 /* Tab-Leiste: schwebende Kapsel wie in iOS 26 */
 .tabbar{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));

@@ -7,17 +7,17 @@
   --glass:rgb(255 255 255 / .58); --glass-strong:rgb(255 255 255 / .74); --glass-edge:rgb(255 255 255 / .85);
   --glass-line:rgb(122 30 58 / .10); --glass-shine:rgb(255 255 255 / .9); --glass-tint:rgb(122 30 58 / .06);
   --glass-shadow:0 10px 30px rgb(90 16 40 / .14),0 2px 6px rgb(90 16 40 / .08);
-  --glass-blur:blur(22px) saturate(185%);
+  --glass-blur:blur(22px) saturate(185%); --glass-sheen:rgb(255 255 255 / .35);
   --aura-1:rgb(229 122 152 / .22); --aura-2:rgb(227 184 102 / .26); --aura-3:rgb(122 30 58 / .10);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --glass:rgb(40 30 34 / .55); --glass-strong:rgb(46 36 40 / .72); --glass-edge:rgb(255 255 255 / .16);
-  --glass-line:rgb(255 255 255 / .08); --glass-shine:rgb(255 255 255 / .22); --glass-tint:rgb(229 122 152 / .08);
+  --glass-line:rgb(255 255 255 / .08); --glass-shine:rgb(255 255 255 / .22); --glass-tint:rgb(229 122 152 / .08); --glass-sheen:rgb(255 255 255 / .06);
   --glass-shadow:0 12px 34px rgb(0 0 0 / .45),0 2px 6px rgb(0 0 0 / .3);
   --aura-1:rgb(229 122 152 / .16); --aura-2:rgb(227 184 102 / .12); --aura-3:rgb(122 30 58 / .30)}}
 :root[data-theme="dark"]{
   --glass:rgb(40 30 34 / .55); --glass-strong:rgb(46 36 40 / .72); --glass-edge:rgb(255 255 255 / .16);
-  --glass-line:rgb(255 255 255 / .08); --glass-shine:rgb(255 255 255 / .22); --glass-tint:rgb(229 122 152 / .08);
+  --glass-line:rgb(255 255 255 / .08); --glass-shine:rgb(255 255 255 / .22); --glass-tint:rgb(229 122 152 / .08); --glass-sheen:rgb(255 255 255 / .06);
   --glass-shadow:0 12px 34px rgb(0 0 0 / .45),0 2px 6px rgb(0 0 0 / .3);
   --aura-1:rgb(229 122 152 / .16); --aura-2:rgb(227 184 102 / .12); --aura-3:rgb(122 30 58 / .30)}
 
@@ -39,7 +39,7 @@ body{background:
 /* Kopfzeile: schwebende Glasleiste */
 .top{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:25;border-radius:26px;padding:6px 8px 6px 10px;margin-top:4px;min-height:60px}
 .top .brandbtn{padding-right:6px}
-.starpill{background:linear-gradient(180deg,rgb(255 255 255 / .35),transparent),var(--glass);color:var(--gold-ink)}
+.starpill{background:linear-gradient(180deg,var(--glass-sheen),transparent),var(--glass);color:var(--gold-ink)}
 .gear{width:44px;height:44px}
 /* Tab-Leiste: schwebende Kapsel wie in iOS 26 */
 .tabbar{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));

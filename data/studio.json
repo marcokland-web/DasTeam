@@ -1193,6 +1193,27 @@
       "datum": "2026-10-21T09:00:00+02:00",
       "text": "findet einen alten Fehler (Knopf „Fertig“ hieß „geschafft“) und baut einen Prüfpunkt gegen doppelte Textschlüssel ein.",
       "typ": "Prüfung"
+    },
+    {
+      "id": "c062",
+      "agent": "gestaltungs-greta",
+      "datum": "2026-10-26T07:58:00+01:00",
+      "text": "vereinbart in der Teamleiter-Runde mit Wissens-Wilma, Technik-Toni und Qualitäts-Quentin, dass jede neue Funktion mit einem kurzen Start-Treffen beginnt: Gestaltung, Technik und Qualität legen ihre Prüfpunkte schon vor dem Bauen fest, statt erst am Ende zu prüfen.",
+      "typ": "Teamleiter-Runde"
+    },
+    {
+      "id": "c063",
+      "agent": "chef",
+      "datum": "2026-10-26T22:02:00+01:00",
+      "text": "genehmigt Wunschkarte mit Fertig-Kriterien, Kinder-Modus, automatische Fehlermeldungen und Bildvergleich vor jeder Auslieferung.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c064",
+      "agent": "chef",
+      "datum": "2026-10-26T22:05:00+01:00",
+      "text": "genehmigt die Familien-Bedienhilfe je App und den Sync- und Backup-Prüfstand.",
+      "typ": "Entscheidung"
     }
   ],
   "ideen": [
@@ -1230,7 +1251,7 @@
       "beschreibung": "Doku-Dörte und Text-Tina schreiben für jede App eine kurze, bebilderte Hilfe direkt in der App: installieren, mit dem Handy erfassen, mit dem Desktop abgleichen. Plan-Paula ergänzt bei jeder neuen Version „Was ist neu“.",
       "datum": "2026-10-19T23:01:30+02:00",
       "nutzen": "Die Familie kommt ohne Rückfragen bei Marco zurecht und nutzt neue Funktionen wirklich.",
-      "status": "Wartet auf Marco",
+      "status": "Genehmigt",
       "titel": "Familien-Bedienhilfe je App auf einer Seite",
       "von": "wissens-wilma"
     },
@@ -1263,7 +1284,7 @@
       "beschreibung": "Daten-Dieter legt feste Testfälle an: offline am Handy erfassen, parallel am Desktop ändern, dann abgleichen, ohne Datenverlust. Dazu ein nächtliches, versioniertes Backup aufs NAS der FRITZ!Box mit monatlichem Wiederherstellungstest.",
       "datum": "2026-10-19T23:03:00+02:00",
       "nutzen": "Keine Buchung und kein Zählerstand geht verloren, und das ist nachweisbar.",
-      "status": "Wartet auf Marco",
+      "status": "Genehmigt",
       "titel": "Sync- und Backup-Prüfstand für Familiendaten",
       "von": "technik-toni"
     },
@@ -1288,6 +1309,50 @@
       "status": "Umgesetzt",
       "titel": "Neue Stelle: Lern-Lotte (Lernpädagogin)",
       "von": "hr-heidi"
+    },
+    {
+      "id": "i009",
+      "abteilung": "planung",
+      "art": "Verbesserung",
+      "beschreibung": "Plan-Paula macht aus jedem Wunsch von Marco eine kurze Wunschkarte mit drei bis fünf prüfbaren Fertig-Kriterien, bevor gebaut wird. Bug-Bodo testet am Ende genau gegen diese Kriterien und hakt sie sichtbar ab.",
+      "datum": "2026-10-26T07:54:00+01:00",
+      "nutzen": "Marco bekommt, was er gemeint hat, und muss Wünsche wie die Vorlese-Stimme nicht zweimal äußern.",
+      "status": "Genehmigt",
+      "titel": "Wunschkarte mit Fertig-Kriterien für jeden Auftrag",
+      "von": "wissens-wilma"
+    },
+    {
+      "id": "i010",
+      "abteilung": "gestaltung",
+      "art": "Neues Angebot",
+      "beschreibung": "Design-Doris, Text-Tina und Lern-Lotte legen einen Kinder-Modus fest: größere Touch-Flächen, wenig Text mit Vorlese-Knopf, Symbole statt Fachwörter und ruhige Animationen. Jede künftige Kinder-App übernimmt ihn wie das Einstellungsmenü.",
+      "datum": "2026-10-26T07:55:00+01:00",
+      "nutzen": "Neue Lern-Apps sind vom ersten Tag an kindgerecht, ohne dass jede Lösung aus Rechenstern neu erfunden wird.",
+      "status": "Genehmigt",
+      "titel": "Kinder-Modus als fester Baustein im Designsystem",
+      "von": "gestaltungs-greta"
+    },
+    {
+      "id": "i011",
+      "abteilung": "technik",
+      "art": "Verbesserung",
+      "beschreibung": "Deploy-Dennis lässt jede App technische Absturz- und Sync-Fehler ohne persönliche Daten in einen eigenen Supabase-Bereich melden; Sicherheits-Siggi prüft vorher den Datenschutz. Technik-Toni bekommt eine tägliche Übersicht und leitet Auffälliges ans zuständige Team.",
+      "datum": "2026-10-26T07:56:00+01:00",
+      "nutzen": "Fehler, die nur zu Hause auf dem iPhone der Familie auftreten, sieht das Team, bevor Marco sie bemerkt.",
+      "status": "Genehmigt",
+      "titel": "Automatische Fehlermeldungen aus den Apps sammeln",
+      "von": "technik-toni"
+    },
+    {
+      "id": "i012",
+      "abteilung": "qualitaet",
+      "art": "Verbesserung",
+      "beschreibung": "Bug-Bodo macht vor jeder Auslieferung automatisch Bildschirmfotos aller Hauptansichten in 3 Geräten × 2 Themen × 2 Sprachen und vergleicht sie mit der letzten freigegebenen Version. Jede unerwartete Abweichung muss Design-Doris abzeichnen.",
+      "datum": "2026-10-26T07:57:00+01:00",
+      "nutzen": "Verrutschte Layouts wie der zerschossene Ziffernblock oder falsche Beschriftungen fallen auf, auch wenn alle Knöpfe noch funktionieren.",
+      "status": "Genehmigt",
+      "titel": "Bildvergleich aller Ansichten vor jeder Auslieferung",
+      "von": "qualitaets-quentin"
     }
   ]
 }

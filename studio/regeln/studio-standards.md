@@ -20,7 +20,7 @@ Marco ist Chef. Für Fachaufgaben gibt es Agenten (Subagents) mit Alliterationsn
 2. **Das ganze Team einbeziehen** (siehe oben).
 3. **Das Logo wird mitentwickelt** und sofort eingebaut, nicht erst auf Nachfrage.
 4. **Jede App ist installierbar** und zeigt dabei das richtige Logo: `apple-touch-icon` 180 px (iPhone-Home-Bildschirm), Web-Manifest mit Icons 192 und 512 px, `purpose: "maskable"` 512 px, Favicon 32 px und SVG, `id` und `start_url` `./`, `lang: "de"`.
-5. **Vor jeder Auslieferung läuft die Freigabe-Prüfung** (`/studio-freigabe`). Ausgeliefert wird nur, was alle Punkte besteht.
+5. **Vor jeder Auslieferung läuft die Freigabe-Prüfung** (`/studio-freigabe`). Ausgeliefert wird nur, was alle Punkte besteht und wenn alle Tests der App (Unit- und Browser-Tests) vollständig grün durchgelaufen sind; ein noch laufender Test zählt nicht als grün (Marco, 30.10.2026).
 6. **Hell, Dunkel und Automatisch.** Jede App hat einen hellen und einen dunklen Modus und folgt im Modus „Automatisch“ der Systemeinstellung. Standard ist „Automatisch“. Die Wahl wird pro Gerät gemerkt und vor dem ersten Zeichnen angewendet (kein Aufblitzen).
 7. **Deutsch und Englisch.** Jede App lässt sich zwischen Deutsch und Englisch umschalten. Standard ist immer Deutsch. Alle sichtbaren Texte sind übersetzt, auch Fehlermeldungen, leere Zustände und Rückfragen; `<html lang>`, Datums- und Zahlenformat wechseln mit. Von Nutzern eingegebene Namen werden nie übersetzt.
 

@@ -5,6 +5,8 @@ Hier trägt `/studio-lektion` neue Lektionen ein, die in Claude Code auf dem Mac
 Format: `- JJJJ-MM-TT · agent · App · Regel`
 
 ## Neu
+
+## Übernommen
 - 2026-10-30 · bug-bodo · Zählerstände · Bei Apps mit Anmeldung den ganzen Konto-Ablauf testen: Registrieren mit neuer und mit schon vorhandener E-Mail, Anmelden mit falschem Passwort und „Passwort vergessen?“ bis zum neuen Passwort; Supabase meldet bei vorhandener E-Mail Erfolg ohne Mail, die App muss das an leeren identities erkennen und das Zurücksetzen anbieten.
 - 2026-10-23 · design-doris · BrainCraft · Übernommenes CSS aus einer Vorbild-App (Rechenstern) genauso streng prüfen wie neues: Tippflächen per elementFromPoint messen, Dunkel-Werte und Glas-Glanz nur als Tokens.
 - 2026-10-23 · logo-luisa · BrainCraft · Jedes neue Symbol auf Fehldeutung als Standard-Icon prüfen (Kiste + Pfeil liest sich als Export) und für 16–32 px eine Klein-Variante mit dickerer Linie bauen.
@@ -26,6 +28,4 @@ Format: `- JJJJ-MM-TT · agent · App · Regel`
 - 2026-10-30 · bug-bodo · BrainCraft · Test-Locatoren für Knöpfe über Rolle und Namen suchen (`getByRole`), nicht über Text: neue Hilfetexte können denselben Wortlaut enthalten.
 - 2026-10-30 · deploy-dennis · BrainCraft · Erst auf main pushen (= veröffentlichen), wenn alle Spec-Dateien und Unit-Tests der App grün sind; ein noch laufender Test zählt nicht als grün.
 - 2026-10-30 · plan-paula · BrainCraft · Bei Plänen für Lern-Apps die bestehenden Regeln von Lern-Lotte aus `docs/entscheidungen.md` als Abnahmekriterien in den Plan übernehmen.
-
-## Übernommen
 - 2026-10-30 · text-tina · B.A.S.E · Vor jeder Auslieferung mit sichtbaren Textänderungen und bei jeder Umstellung auf den Studio-Stil prüft Text-Tina alle gT-Paare, das Übersetzungswörterbuch und die gerenderte Oberfläche gegen die Familien-Wortliste, formuliert wörtliche Übersetzungen aus dem Englischen neu und prüft Fachaussagen gegen den Code. Automatischer Prüfpunkt: Wortlisten-Scan der sichtbaren deutschen Texte in der Freigabe-Prüfung.

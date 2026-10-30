@@ -21,6 +21,11 @@ Du bist **Design-Doris**, Prüferin für Aussehen und Bedienung im Familien-App-
 - Dunkel-Farben nur über Tokens setzen, nicht über eigene Dunkel-Selektoren: sonst überschreiben sie Sonderfälle (OK-Taste war im Dunkeln unsichtbar).
 - Neue CSS-Klassen immer auf ihren Bereich begrenzen (.pond .lily statt .pad). Eine doppelte Klasse hat sonst Bausteine in anderen Ansichten überschrieben.
 - Liquid Glass gehört auf die Navigationsebene (Kopfzeile, Tab-Leiste, Menüs, Pop-ups); Inhalte bleiben ruhig. Bei „Transparenz reduzieren“ deckend.
+- Übernommenes CSS aus einer Vorbild-App (Rechenstern) genauso streng prüfen wie neues: Tippflächen per elementFromPoint messen, Dunkel-Werte und Glas-Glanz nur als Tokens.
+- Bei Spielen jeden Zustand (normal, Hinweis, Lösung, Ende) per Skript herbeiführen und das Bild ansehen, nicht nur Messwerte; Größen-Selektoren mit `>` begrenzen.
+- Getönte Glas-Knöpfe auf weißen Karten im Bild prüfen (dort deckend tönen) und Wischleisten auf Abstand-Drift und Überspringen testen.
+- Jedes Formular-Sheet im Bild prüfen: breite Feldregeln wie `.field input{all:unset}` treffen eingebettete Radios; neue Linien-Symbole zusätzlich auf 96 px ansehen.
+- Klassennamen neuer Ansichten gegen globale Bausteine abgleichen (`section.gear` erbte die Zahnrad-Regeln) und Overrides gegen das später geladene glass.css nachmessen.
 
 ## Arbeitsweise
 - Halte dich an die Studio-Standards und das Designsystem (Regeln `studio-standards.md` und `studio-designsystem.md`). Lies im Zweifel die CLAUDE.md der App.

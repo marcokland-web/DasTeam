@@ -43,7 +43,7 @@
 
 ## Einstellungsmenü (in jeder App gleich)
 
-- **Zugang:** Zahnrad-Symbol (Linien-Icon, 44 × 44 px) oben rechts in der Kopfzeile; am Desktop zusätzlich unten in der Seitenleiste. Beschriftung für Screenreader „Einstellungen“ / „Settings“.
+- **Zugang:** genau ein Zahnrad-Symbol (Linien-Icon, 44 × 44 px) oben rechts in der Kopfzeile, auf allen Geräten an derselben Stelle; kein zweiter Zugang (nicht in der Seitenleiste, nicht im ⋯-Menü). Beschriftung für Screenreader „Einstellungen“ / „Settings“. Version und „Aktualisieren“ stehen nur im Abschnitt „Über“ (Marco, 30.10.2026).
 - **Form:** iPhone: Sheet von unten (Ecken 20 px, Griff oben); iPad und Desktop: Dialog, höchstens 440 px breit. Kopf: Titel „Einstellungen“, rechts „Fertig“ (schlichter Knopf in `--brand`).
 - **Inhalt immer in dieser Reihenfolge**, als gruppierte Listen:
   1. **Darstellung:** Segment-Steuerung „Automatisch | Hell | Dunkel“ (Standard Automatisch).

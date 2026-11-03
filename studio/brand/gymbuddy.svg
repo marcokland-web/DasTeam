@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg-gymbuddy" x1="0" y1="0" x2="0" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8C2545"/>
+      <stop offset="1" stop-color="#5A1028"/>
+    </linearGradient>
+    <linearGradient id="gold-gymbuddy" x1="0" y1="212" x2="0" y2="812" gradientUnits="userSpaceOnUse" gradientTransform="rotate(35 512 512)">
+      <stop offset="0" stop-color="#F0D08A"/>
+      <stop offset="1" stop-color="#C8963E"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1024" height="1024" fill="url(#bg-gymbuddy)"/>
+  <!-- Kurzhantel, 35 Grad schraeg -->
+  <g transform="rotate(-35 512 512)" fill="none" stroke="url(#gold-gymbuddy)" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="362" y1="512" x2="662" y2="512" stroke-width="56"/>
+    <line x1="330" y1="372" x2="330" y2="652" stroke-width="64"/>
+    <line x1="694" y1="372" x2="694" y2="652" stroke-width="64"/>
+    <line x1="236" y1="420" x2="236" y2="604" stroke-width="64"/>
+    <line x1="788" y1="420" x2="788" y2="604" stroke-width="64"/>
+  </g>
+
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg-zeitwort-rund" x1="0" y1="0" x2="0" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8C2545"/>
+      <stop offset="1" stop-color="#5A1028"/>
+    </linearGradient>
+    <linearGradient id="gold-zeitwort-rund" x1="0" y1="212" x2="0" y2="812" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F0D08A"/>
+      <stop offset="1" stop-color="#C8963E"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1024" height="1024" rx="230" ry="230" fill="url(#bg-zeitwort-rund)"/>
+  <g fill="none" stroke="url(#gold-zeitwort-rund)" stroke-width="56" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 342 262 H 682 A 110 110 0 0 1 792 372 V 592 A 110 110 0 0 1 682 702 H 452 L 322 802 L 342 702 A 110 110 0 0 1 232 592 V 372 A 110 110 0 0 1 342 262 Z"/>
+    <path d="M 512 332 L 512 482 L 602.9 534.5"/>
+  </g>
+</svg>

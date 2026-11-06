@@ -33,6 +33,7 @@ Marco ist Chef. Für Fachaufgaben gibt es Agenten (Subagents) mit Alliterationsn
 - **Beträge:** intern als ganze Cent rechnen oder zentral auf Cent runden; Eingaben „1.234,56“, „1234,56“ und „1,234.56“ korrekt lesen; Anzeige „1.234,56 €“.
 - **Daten und Datenschutz:** keine Geheimnisse ins Repository; nach dem Abmelden lokale Finanzdaten löschen (nach Rückfrage); keine persönlichen Daten (Nachname, E-Mail) fest im Code; Git-Commits mit der noreply-Adresse von GitHub.
 - **Löschen** immer mit Rückfrage und rotem Knopf, oder mit „Rückgängig“.
+- **Kein Modus nur per Tastatur:** Jeder Modus, jedes Pop-up und jedes Menü lässt sich immer auch mit einem sichtbaren Knopf beenden („Fertig“, „Abbrechen“, „Schließen“). Enter und Esc sind nur eine Ergänzung (Marco, 06.11.2026).
 
 ## Aus Fehlern lernen
 

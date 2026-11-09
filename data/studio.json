@@ -38,6 +38,41 @@
   ],
   "team": [
     {
+      "id": "backup-benno",
+      "abteilung": "technik",
+      "aufgaben": [
+        "Betreut die nächtlichen, versionierten Backups aller Familien-Apps aufs NAS der FRITZ!Box",
+        "Macht jeden Monat einen Wiederherstellungstest und dokumentiert das Ergebnis",
+        "Sichtet täglich die automatischen Fehlermeldungen aus den Apps und leitet Auffälliges ans zuständige Team",
+        "Betreut den Sync- und Backup-Prüfstand zusammen mit Daten-Dieter"
+      ],
+      "berichtetAn": "technik-toni",
+      "bild": "avatars/backup-benno.svg",
+      "datei": ".claude/agents/backup-benno.md",
+      "faehigkeiten": [
+        {
+          "name": "Datensicherung",
+          "stufe": 5
+        },
+        {
+          "name": "Wiederherstellung",
+          "stufe": 5
+        },
+        {
+          "name": "Betrieb und Überwachung",
+          "stufe": 4
+        }
+      ],
+      "lektionen": [],
+      "motto": "Ein Backup gibt es erst, wenn die Wiederherstellung geklappt hat.",
+      "name": "Backup-Benno",
+      "nr": "P-025",
+      "persoenlichkeit": "Gründlich und gelassen. Vertraut keinem Backup, das er nicht selbst zurückgespielt hat, und schreibt jeden Test mit Datum auf.",
+      "rolle": "Betrieb und Datensicherung",
+      "seit": "2026-11-09",
+      "version": "1.0"
+    },
+    {
       "id": "bug-bodo",
       "abteilung": "qualitaet",
       "aufgaben": [
@@ -47,6 +82,7 @@
       ],
       "berichtetAn": "qualitaets-quentin",
       "bild": "avatars/bug-bodo.svg",
+      "datei": ".claude/agents/bug-bodo.md",
       "faehigkeiten": [
         {
           "name": "Randfälle finden",
@@ -101,6 +137,14 @@
         {
           "datum": "2026-10-30",
           "text": "Test-Locatoren für Knöpfe über Rolle und Namen suchen (getByRole), nicht über Text: neue Hilfetexte können denselben Wortlaut enthalten."
+        },
+        {
+          "datum": "2026-11-06",
+          "text": "Die Anzeige der Anmeldeart (z. B. „Angemeldet mit Google“) immer aus der Sitzung ableiten (app_metadata/identities) und mit einer alten Sitzung der vorherigen Anmeldeart testen; bestehende Sitzungen überleben eine Umstellung."
+        },
+        {
+          "datum": "2026-11-06",
+          "text": "Browser-Tests immer mit eigenem Port und eigenem Build-Ordner starten und vorher prüfen, dass der Port frei ist; parallele Sitzungen können sonst fremde Server liefern."
         }
       ],
       "motto": "Was passiert eigentlich bei minus 3 Cent?",
@@ -109,7 +153,7 @@
       "persoenlichkeit": "Unerbittlich, aber nie gemein. Freut sich über jeden gefundenen Fehler.",
       "rolle": "Fehlersucher",
       "seit": "2026-10-19",
-      "version": "2.0"
+      "version": "2.2"
     },
     {
       "id": "daten-dieter",
@@ -121,6 +165,7 @@
       ],
       "berichtetAn": "technik-toni",
       "bild": "avatars/daten-dieter.svg",
+      "datei": ".claude/agents/daten-dieter.md",
       "faehigkeiten": [
         {
           "name": "Datenmodellierung",
@@ -151,6 +196,10 @@
         {
           "datum": "2026-10-30",
           "text": "Bei jeder Funktion zum Zurücksetzen oder Löschen prüfen, ob Offline-Warteschlangen anderer Geräte danach alte Antworten oder Sterne erneut buchen können (z. B. Zeitstempel am Profil)."
+        },
+        {
+          "datum": "2026-11-06",
+          "text": "SQL für das Einspielen über das MCP-Werkzeug nur mit ASCII-sicheren Ausdrücken schreiben (chr(...), [[:space:]], [.] statt Backslash-Escapes und unsichtbarer Zeichen); große Migrationen (über ~300 Zeilen) lässt Marco aus der Datei im SQL-Editor einspielen, danach lesend prüfen."
         }
       ],
       "motto": "Ein sauberes Schema spart hundert Bugfixes.",
@@ -159,7 +208,7 @@
       "persoenlichkeit": "Ruhig und gründlich. Denkt bei jeder Tabelle an die Daten von übermorgen und an Cent-Beträge ohne Rundungsfehler.",
       "rolle": "Datenbank-Architekt",
       "seit": "2026-10-19",
-      "version": "1.4"
+      "version": "1.5"
     },
     {
       "id": "deploy-dennis",
@@ -171,6 +220,7 @@
       ],
       "berichtetAn": "technik-toni",
       "bild": "avatars/deploy-dennis.svg",
+      "datei": ".claude/agents/deploy-dennis.md",
       "faehigkeiten": [
         {
           "name": "Auslieferung",
@@ -201,6 +251,18 @@
         {
           "datum": "2026-10-30",
           "text": "Erst auf main pushen (= veröffentlichen), wenn alle Spec-Dateien und Unit-Tests der App grün sind; ein noch laufender Test zählt nicht als grün."
+        },
+        {
+          "datum": "2026-10-31",
+          "text": "Wird ein App-Icon geändert, bekommen alle Icon-Adressen (apple-touch-icon, Favicon, Manifest-Icons, Manifest-Link) eine neue Version (z. B. ?v=2 oder neuer Dateiname), und Marco erfährt, wie er eine schon installierte App neu anlegt."
+        },
+        {
+          "datum": "2026-11-06",
+          "text": "Nach jeder Auslieferung die Live-Seite selbst abrufen und prüfen, dass die neue BUILD- bzw. Bundle-Kennung ankommt; ein erfolgreicher Push ist noch keine Auslieferung (GitHub Pages kann abbrechen)."
+        },
+        {
+          "datum": "2026-11-06",
+          "text": "Nach jedem Push auf eine Vercel-App prüfen, dass ein neues Production-Deployment mit genau diesem Commit entstanden ist; sonst mit der Vercel-CLI ausliefern und die Git-Verbindung reparieren."
         }
       ],
       "motto": "Wenn es nur auf meinem Rechner läuft, läuft es nicht.",
@@ -209,7 +271,7 @@
       "persoenlichkeit": "Pragmatisch und ein bisschen ungeduldig. Automatisiert alles, was er zweimal machen musste.",
       "rolle": "Auslieferung und Betrieb",
       "seit": "2026-10-19",
-      "version": "1.4"
+      "version": "1.6"
     },
     {
       "id": "design-doris",
@@ -221,6 +283,7 @@
       ],
       "berichtetAn": "gestaltungs-greta",
       "bild": "avatars/design-doris.svg",
+      "datei": ".claude/agents/design-doris.md",
       "faehigkeiten": [
         {
           "name": "UI-Konsistenz",
@@ -275,6 +338,10 @@
         {
           "datum": "2026-10-29",
           "text": "Klassennamen neuer Ansichten gegen globale Bausteine abgleichen (section.gear erbte die Zahnrad-Regeln) und Overrides gegen das später geladene glass.css nachmessen."
+        },
+        {
+          "datum": "2026-11-06",
+          "text": "Die Anzeige der Anmeldeart (z. B. „Angemeldet mit Google“) immer aus der Sitzung ableiten (app_metadata/identities) und mit einer alten Sitzung der vorherigen Anmeldeart testen; bestehende Sitzungen überleben eine Umstellung."
         }
       ],
       "motto": "Das haben wir doch im Styleguide anders festgelegt, Schatz.",
@@ -283,7 +350,7 @@
       "persoenlichkeit": "Sieht jeden falschen Abstand. Korrigiert freundlich, lässt aber nichts durchgehen.",
       "rolle": "Prüferin für Aussehen und Bedienung",
       "seit": "2026-10-19",
-      "version": "2.0"
+      "version": "2.1"
     },
     {
       "id": "doku-doerte",
@@ -295,6 +362,7 @@
       ],
       "berichtetAn": "wissens-wilma",
       "bild": "avatars/doku-doerte.svg",
+      "datei": ".claude/agents/doku-doerte.md",
       "faehigkeiten": [
         {
           "name": "Technische Doku",
@@ -369,6 +437,7 @@
       ],
       "berichtetAn": "chef",
       "bild": "avatars/hr-heidi.svg",
+      "datei": ".claude/agents/hr-heidi.md",
       "faehigkeiten": [
         {
           "name": "Personalplanung",
@@ -471,6 +540,7 @@
       ],
       "berichtetAn": "gestaltungs-greta",
       "bild": "avatars/logo-luisa.svg",
+      "datei": ".claude/agents/logo-luisa.md",
       "faehigkeiten": [
         {
           "name": "Logo-Design (SVG)",
@@ -541,6 +611,7 @@
       ],
       "berichtetAn": "wissens-wilma",
       "bild": "avatars/organigramm-olga.svg",
+      "datei": ".claude/agents/organigramm-olga.md",
       "faehigkeiten": [
         {
           "name": "Organigramme",
@@ -574,6 +645,7 @@
       ],
       "berichtetAn": "wissens-wilma",
       "bild": "avatars/plan-paula.svg",
+      "datei": ".claude/agents/plan-paula.md",
       "faehigkeiten": [
         {
           "name": "Anforderungen klären",
@@ -647,6 +719,7 @@
       ],
       "berichtetAn": "qualitaets-quentin",
       "bild": "avatars/rant-randy.svg",
+      "datei": ".claude/agents/rant-randy.md",
       "faehigkeiten": [
         {
           "name": "Code-Review",
@@ -685,6 +758,7 @@
       ],
       "berichtetAn": "qualitaets-quentin",
       "bild": "avatars/sicherheits-siggi.svg",
+      "datei": ".claude/agents/sicherheits-siggi.md",
       "faehigkeiten": [
         {
           "name": "Zugriffsrechte",
@@ -734,7 +808,7 @@
       "abteilung": "technik",
       "aufgaben": [
         "Entwickelt selbstständig Ideen, wie Technik & Betrieb besser wird",
-        "Führt Daten-Dieter und Deploy-Dennis und berichtet an Marco",
+        "Führt Daten-Dieter, Deploy-Dennis und Backup-Benno und berichtet an Marco",
         "Meldet Personalbedarf bei HR-Heidi",
         "Stimmt sich jede Woche in der Teamleiter-Runde ab"
       ],
@@ -755,14 +829,23 @@
         }
       ],
       "fuehrt": true,
-      "lektionen": [],
+      "lektionen": [
+        {
+          "datum": "2026-11-06",
+          "text": "Ein Bearbeitungs-Modus ist nie nur per Tastatur beendbar: immer sichtbare Knöpfe (Abbrechen/Fertig) und Menüpunkt; Fokus erst nach dem Schließen des Menüs holen, Tasten app-weit abfangen."
+        },
+        {
+          "datum": "2026-11-06",
+          "text": "Sichtbarkeit eines Mac-Fensters immer beim Fenster-Server prüfen (kCGWindowIsOnscreen), nicht über AppKit-isVisible, über mehrere Starts; Schreibtisch-Fenster nach dem Start und bei Space-/Bildschirmwechsel erneut nach vorn holen."
+        }
+      ],
       "motto": "Einmal automatisiert, nie wieder vergessen.",
       "name": "Technik-Toni",
       "nr": "P-022",
       "persoenlichkeit": "Ruhig und pragmatisch. Fragt bei jedem Fehler zuerst, welcher automatische Check ihn verhindert hätte, und baut genau diesen Check ein.",
       "rolle": "Teamleiter Technik & Betrieb",
       "seit": "2026-10-19",
-      "version": "1.0"
+      "version": "1.2"
     },
     {
       "id": "text-tina",
@@ -774,6 +857,7 @@
       ],
       "berichtetAn": "gestaltungs-greta",
       "bild": "avatars/text-tina.svg",
+      "datei": ".claude/agents/text-tina.md",
       "faehigkeiten": [
         {
           "name": "Kurze Bedientexte",
@@ -1306,16 +1390,65 @@
     },
     {
       "id": "c065",
-      "agent": "hr-heidi",
-      "datum": "2026-10-30T12:00:00+01:00",
-      "text": "übernimmt 21 Lektionen aus BrainCraft und Zählerstände: Bug-Bodo (5), Design-Doris (5), Sicherheits-Siggi (3), Logo-Luisa (2), Lern-Lotte (2), Daten-Dieter (2), Deploy-Dennis (1), Plan-Paula (1).",
-      "typ": "Lektion"
+      "agent": "technik-toni",
+      "datum": "2026-11-02T07:58:00+01:00",
+      "text": "vereinbart in der Teamleiter-Runde mit Wissens-Wilma, Gestaltungs-Greta und Qualitäts-Quentin, dass jede Runde mit dem Umsetzungsstand beginnt: Jede Teamleitung nennt für jede genehmigte Idee ihrer Abteilung den nächsten Schritt und einen Termin. Als Erstes bringen Planung und Qualität Lernregister und Fehler-Nachbetrachtung gemeinsam an den Start, weil beide dieselben Fehler auswerten.",
+      "typ": "Teamleiter-Runde"
     },
     {
       "id": "c066",
+      "agent": "chef",
+      "datum": "2026-11-02T08:30:00+01:00",
+      "text": "genehmigt Rückmelde-Knopf, dunkle und getönte App-Icons, Startvorlage für neue Apps und den wöchentlichen Sicherheits-Wächter.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c067",
       "agent": "hr-heidi",
-      "datum": "2026-10-30T12:10:00+01:00",
-      "text": "trägt bei Text-Tina die Lektion aus B.A.S.E nach: Wortlisten-Prüfung vor jeder Auslieferung mit Textänderungen.",
+      "datum": "2026-11-02T08:40:00+01:00",
+      "text": "übernimmt 23 Lektionen aus BrainCraft, Zählerständen und B.A.S.E in die Team-Seite: Bug-Bodo (5), Design-Doris (5), Sicherheits-Siggi (3), Daten-Dieter (2), Deploy-Dennis (2), Lern-Lotte (2), Logo-Luisa (2), Plan-Paula (1), Text-Tina (1).",
+      "typ": "Lektion"
+    },
+    {
+      "id": "c068",
+      "agent": "qualitaets-quentin",
+      "datum": "2026-11-09T07:58:00+01:00",
+      "text": "vereinbart in der Teamleiter-Runde mit Wissens-Wilma, Gestaltungs-Greta und Technik-Toni, dass jede Abteilung höchstens eine genehmigte Idee gleichzeitig bearbeitet und sie erst abschließt, bevor sie die nächste beginnt; jeder fertige Schritt wird sofort von der zuständigen Teamleitung in der Chronik eingetragen. Grund: Zwölf Ideen sind genehmigt, aber seit der letzten Runde ist kein Fortschritt dokumentiert.",
+      "typ": "Teamleiter-Runde"
+    },
+    {
+      "id": "c069",
+      "agent": "chef",
+      "datum": "2026-11-09T13:00:00+01:00",
+      "text": "genehmigt Steckbrief je App, Barrierefreiheits-Check, Update-Hinweis in installierten Apps, Testfamilie Muster und die neue Stelle Betrieb und Datensicherung.",
+      "typ": "Entscheidung"
+    },
+    {
+      "id": "c070",
+      "agent": "hr-heidi",
+      "datum": "2026-11-09T13:05:00+01:00",
+      "text": "stellt nach Marcos Genehmigung Backup-Benno für Betrieb und Datensicherung in Technik & Betrieb ein.",
+      "typ": "Neuzugang"
+    },
+    {
+      "id": "c071",
+      "agent": "backup-benno",
+      "datum": "2026-11-09T13:06:00+01:00",
+      "text": "beginnt in Technik & Betrieb und berichtet an Technik-Toni. Erste Aufgabe: Backup und Wiederherstellungstest im Sync- und Backup-Prüfstand.",
+      "typ": "Neuzugang"
+    },
+    {
+      "id": "c072",
+      "agent": "logo-luisa",
+      "datum": "2026-11-09T13:10:00+01:00",
+      "text": "zeichnet das Porträt von Backup-Benno.",
+      "typ": "Porträts"
+    },
+    {
+      "id": "c073",
+      "agent": "hr-heidi",
+      "datum": "2026-11-09T13:15:00+01:00",
+      "text": "übernimmt 8 Lektionen aus B.A.S.E, Zählerständen, BrainCraft und Zeitwort: Bug-Bodo (2), Deploy-Dennis (2), Technik-Toni (2), Design-Doris (1), Daten-Dieter (1).",
       "typ": "Lektion"
     }
   ],
@@ -1456,6 +1589,105 @@
       "status": "Genehmigt",
       "titel": "Bildvergleich aller Ansichten vor jeder Auslieferung",
       "von": "qualitaets-quentin"
+    },
+    {
+      "id": "i013",
+      "abteilung": "planung",
+      "art": "Verbesserung",
+      "beschreibung": "Jede App bekommt im Einstellungsmenü einen Knopf „Wunsch oder Ärger melden“, über den die Familie mit einem Satz und optional einem Bildschirmfoto Rückmeldung gibt. Plan-Paula sammelt die Meldungen jede Woche und macht daraus Wunschkarten.",
+      "datum": "2026-11-02T07:53:00+01:00",
+      "nutzen": "Wünsche und Stolpersteine der Familie kommen direkt beim Team an, ohne dass Marco sie weitergeben muss.",
+      "status": "Genehmigt",
+      "titel": "Rückmelde-Knopf für die Familie in jeder App",
+      "von": "wissens-wilma"
+    },
+    {
+      "id": "i014",
+      "abteilung": "gestaltung",
+      "art": "Verbesserung",
+      "beschreibung": "Logo-Luisa liefert zu jedem App-Icon zusätzlich eine dunkle und eine getönte Variante, wie sie das iPhone auf dem Home-Bildschirm anbietet. Design-Doris prüft alle Familien-Icons nebeneinander im echten Home-Bildschirm-Raster, damit sie auch klein unterscheidbar bleiben.",
+      "datum": "2026-11-02T07:54:00+01:00",
+      "nutzen": "Die Familien-Apps sehen auf jedem Home-Bildschirm stimmig aus und sind auf einen Blick auseinanderzuhalten.",
+      "status": "Genehmigt",
+      "titel": "App-Icons für dunkle und getönte iPhone-Ansicht",
+      "von": "gestaltungs-greta"
+    },
+    {
+      "id": "i015",
+      "abteilung": "technik",
+      "art": "Verbesserung",
+      "beschreibung": "Deploy-Dennis baut eine Vorlage, mit der eine neue App per Befehl entsteht: Designsystem, Einstellungsmenü mit Thema und Sprache, Manifest, Icon-Platzhalter, Freigabe-Prüfung und Fehlermeldungen sind von Anfang an eingebaut. Daten-Dieter ergänzt die Supabase-Anbindung mit getrenntem Bereich.",
+      "datum": "2026-11-02T07:55:00+01:00",
+      "nutzen": "Jede neue App erfüllt alle Team-Standards ab der ersten Zeile, und niemand vergisst mehr einen Pflichtteil.",
+      "status": "Genehmigt",
+      "titel": "Startvorlage für jede neue Familien-App",
+      "von": "technik-toni"
+    },
+    {
+      "id": "i016",
+      "abteilung": "qualitaet",
+      "art": "Verbesserung",
+      "beschreibung": "Sicherheits-Siggi lässt jeden Montag automatisch alle Apps prüfen: Supabase-Zugriffsregeln und Hinweise, veraltete Fremd-Bausteine mit bekannten Lücken und versehentlich veröffentlichte Schlüssel. Auffälliges kommt mit Lösungsvorschlag in die Teamleiter-Runde.",
+      "datum": "2026-11-02T07:56:00+01:00",
+      "nutzen": "Sicherheitslücken in Budget- und Kinderdaten fallen auch zwischen den Auslieferungen auf, bevor jemand sie ausnutzt.",
+      "status": "Genehmigt",
+      "titel": "Wöchentlicher Sicherheits-Wächter für alle Apps",
+      "von": "qualitaets-quentin"
+    },
+    {
+      "id": "i017",
+      "abteilung": "planung",
+      "art": "Verbesserung",
+      "beschreibung": "Doku-Dörte legt für jede App einen einseitigen Steckbrief an: Zweck, wo die Daten liegen, Supabase-Bereich, besondere Regeln, bekannte Stolperfallen und offene Wunschkarten. Wer an einer App weiterarbeitet, liest zuerst den Steckbrief und ergänzt ihn nach jeder Auslieferung.",
+      "datum": "2026-11-09T07:53:00+01:00",
+      "nutzen": "Jede neue Sitzung und jedes Teammitglied kann sofort weiterarbeiten, ohne Marco erneut nach Hintergründen zu fragen.",
+      "status": "Genehmigt",
+      "titel": "Steckbrief je App für nahtlose Übergaben",
+      "von": "wissens-wilma"
+    },
+    {
+      "id": "i018",
+      "abteilung": "gestaltung",
+      "art": "Verbesserung",
+      "beschreibung": "Design-Doris prüft jede App mit maximaler iPhone-Textgröße, VoiceOver und „Bewegung reduzieren“; Text-Tina schreibt verständliche Vorlese-Beschriftungen für alle Knöpfe und Symbole. Der Check wird fester Teil der Freigabe-Prüfung.",
+      "datum": "2026-11-09T07:54:00+01:00",
+      "nutzen": "Auch Großeltern und Kinder können alle Familien-Apps bequem bedienen, ohne dass Layouts bei großer Schrift zerbrechen.",
+      "status": "Genehmigt",
+      "titel": "Barrierefreiheits-Check mit großer Schrift und VoiceOver",
+      "von": "gestaltungs-greta"
+    },
+    {
+      "id": "i019",
+      "abteilung": "technik",
+      "art": "Verbesserung",
+      "beschreibung": "Deploy-Dennis baut in jede installierte App einen Hinweis „Neue Version verfügbar – jetzt aktualisieren“ ein, damit der Zwischenspeicher am iPhone keine alte Version festhält. Im Einstellungsmenü steht die Versionsnummer mit Datum.",
+      "datum": "2026-11-09T07:55:00+01:00",
+      "nutzen": "Die ganze Familie nutzt immer die aktuelle, geprüfte Version, und bei Fehlermeldungen ist sofort klar, welche Version betroffen ist.",
+      "status": "Genehmigt",
+      "titel": "Update-Hinweis und Versionsnummer in installierten Apps",
+      "von": "technik-toni"
+    },
+    {
+      "id": "i020",
+      "abteilung": "qualitaet",
+      "art": "Verbesserung",
+      "beschreibung": "Bug-Bodo legt einen festen Testdatensatz „Familie Muster“ an: zwei Jahre Buchungen und Zählerstände, drei Kinder, Umlaute, sehr lange Namen, 0 €, Schaltjahr und Monatswechsel. Jede App wird vor der Auslieferung zusätzlich mit diesen Daten statt nur leer getestet.",
+      "datum": "2026-11-09T07:56:00+01:00",
+      "nutzen": "Fehler, die erst mit vielen echten Daten auftreten, findet das Team, bevor die Familie sie im Alltag erlebt.",
+      "status": "Genehmigt",
+      "titel": "Testfamilie Muster mit realistischen Grenzfall-Daten",
+      "von": "qualitaets-quentin"
+    },
+    {
+      "id": "i021",
+      "abteilung": "technik",
+      "art": "Personal",
+      "beschreibung": "Technik & Betrieb bittet um eine Stelle für Betrieb und Datensicherung (Vorschlag: Backup-Benno), die nächtliche Backups, monatliche Wiederherstellungstests und die tägliche Fehlerübersicht betreut. Begründung: Mit Sync-Prüfstand, Fehlermeldungen und Startvorlage liegen drei genehmigte Technik-Vorhaben bei nur zwei Teammitgliedern, Daten-Dieter und Deploy-Dennis.",
+      "datum": "2026-11-09T07:57:00+01:00",
+      "nutzen": "Die genehmigten Technik-Ideen kommen schneller in Betrieb, und Datensicherung hängt nicht an Bauprojekten. HR-Heidi holt dafür Marcos Genehmigung ein.",
+      "status": "Umgesetzt",
+      "titel": "Neue Stelle: Betrieb und Datensicherung",
+      "von": "technik-toni"
     }
   ]
 }

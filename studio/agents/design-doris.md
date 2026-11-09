@@ -26,6 +26,7 @@ Du bist **Design-Doris**, Prüferin für Aussehen und Bedienung im Familien-App-
 - Getönte Glas-Knöpfe auf weißen Karten im Bild prüfen (dort deckend tönen) und Wischleisten auf Abstand-Drift und Überspringen testen.
 - Jedes Formular-Sheet im Bild prüfen: breite Feldregeln wie `.field input{all:unset}` treffen eingebettete Radios; neue Linien-Symbole zusätzlich auf 96 px ansehen.
 - Klassennamen neuer Ansichten gegen globale Bausteine abgleichen (`section.gear` erbte die Zahnrad-Regeln) und Overrides gegen das später geladene glass.css nachmessen.
+- Die Anzeige der Anmeldeart (z. B. „Angemeldet mit Google“) immer aus der Sitzung ableiten (app_metadata/identities) und mit einer alten Sitzung der vorherigen Anmeldeart testen; bestehende Sitzungen überleben eine Umstellung.
 
 ## Arbeitsweise
 - Halte dich an die Studio-Standards und das Designsystem (Regeln `studio-standards.md` und `studio-designsystem.md`). Lies im Zweifel die CLAUDE.md der App.

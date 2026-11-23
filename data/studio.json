@@ -1450,6 +1450,27 @@
       "datum": "2026-11-09T13:15:00+01:00",
       "text": "übernimmt 8 Lektionen aus B.A.S.E, Zählerständen, BrainCraft und Zeitwort: Bug-Bodo (2), Deploy-Dennis (2), Technik-Toni (2), Design-Doris (1), Daten-Dieter (1).",
       "typ": "Lektion"
+    },
+    {
+      "id": "c074",
+      "agent": "wissens-wilma",
+      "datum": "2026-11-16T07:58:00+01:00",
+      "text": "vereinbart in der Teamleiter-Runde mit Gestaltungs-Greta, Technik-Toni und Qualitäts-Quentin, dass die Abteilungen ihre eine aktive Idee in festen Patenschaften umsetzen: Planung und Technik helfen sich gegenseitig (Steckbrief je App, Sync- und Backup-Prüfstand mit Backup-Benno), Gestaltung und Qualität ebenso (Designsystem abschließen, Testfamilie Muster). Die Paten-Abteilung prüft jeden fertigen Schritt mit, und wer bis Freitag nichts in der Chronik eintragen kann, nennt sein Hindernis in der nächsten Runde. Grund: Seit der letzten Runde ist erneut kein Fortschritt an den genehmigten Ideen dokumentiert.",
+      "typ": "Teamleiter-Runde"
+    },
+    {
+      "id": "c075",
+      "agent": "gestaltungs-greta",
+      "datum": "2026-11-23T07:58:00+01:00",
+      "text": "vereinbart in der Teamleiter-Runde mit Wissens-Wilma, Technik-Toni und Qualitäts-Quentin, dass genehmigte Ideen nicht mehr als eigene Vorhaben warten, sondern beim nächsten echten App-Auftrag mitgebaut werden: Plan-Paula hängt an jede Wunschkarte die aktive Idee jeder Abteilung an, und die Freigabe-Prüfung gilt erst als bestanden, wenn mindestens ein Schritt davon in der Chronik steht. Genanntes Hindernis: Zum dritten Mal ist seit der letzten Runde kein Fortschritt dokumentiert, weil zwischen den Aufträgen keine Zeit für Team-Verbesserungen eingeplant ist.",
+      "typ": "Teamleiter-Runde"
+    },
+    {
+      "id": "c076",
+      "agent": "chef",
+      "datum": "2026-11-23T08:38:00+01:00",
+      "text": "genehmigt alle acht offenen Ideen: Lektionen-Checkliste, Druckansicht im Familienstil, Ladezeit-Budget, Update-Test mit Daten der Vorversion, Umsetzungstafel, klickbarer Entwurf vor dem Bauen, Vorschau-Adresse je Änderung und Rollen-Test.",
+      "typ": "Entscheidung"
     }
   ],
   "ideen": [
@@ -1688,6 +1709,94 @@
       "status": "Umgesetzt",
       "titel": "Neue Stelle: Betrieb und Datensicherung",
       "von": "technik-toni"
+    },
+    {
+      "id": "i022",
+      "abteilung": "planung",
+      "art": "Verbesserung",
+      "beschreibung": "Organigramm-Olga sucht vor jedem Auftrag die Lektionen der beteiligten Teammitglieder heraus, die dazu passen, und legt sie der Wunschkarte als kurze Checkliste bei. Bug-Bodo hakt sie bei der Abnahme mit ab.",
+      "datum": "2026-11-16T07:53:00+01:00",
+      "nutzen": "Die über 60 gesammelten Lektionen werden bei jedem Auftrag wirklich angewendet, statt nur auf der Team-Seite zu stehen.",
+      "status": "Genehmigt",
+      "titel": "Lektionen-Checkliste zu jedem neuen Auftrag",
+      "von": "wissens-wilma"
+    },
+    {
+      "id": "i023",
+      "abteilung": "gestaltung",
+      "art": "Neues Angebot",
+      "beschreibung": "Design-Doris ergänzt das Designsystem um eine Druck- und PDF-Vorlage mit Logo, Bordeaux-Gold-Akzenten auf weißem Papier und sauberen Seitenumbrüchen. Wochenberichte, Urkunden und Budget-Übersichten lassen sich damit direkt aus jeder App drucken.",
+      "datum": "2026-11-16T07:54:00+01:00",
+      "nutzen": "Ausdrucke für Kühlschrank oder Steuerunterlagen sehen ordentlich aus, ohne dass jede App eine eigene Lösung baut.",
+      "status": "Genehmigt",
+      "titel": "Druckansicht im Familienstil für Berichte und Urkunden",
+      "von": "gestaltungs-greta"
+    },
+    {
+      "id": "i024",
+      "abteilung": "technik",
+      "art": "Verbesserung",
+      "beschreibung": "Deploy-Dennis legt für jede App Grenzen fest, etwa Start in unter 2 Sekunden auf dem iPhone über Mobilfunk und eine Höchstgröße der Dateien. Die Freigabe-Prüfung misst beides und stoppt die Auslieferung bei Überschreitung.",
+      "datum": "2026-11-16T07:55:00+01:00",
+      "nutzen": "Die Apps bleiben auch mit wachsenden Funktionen schnell, statt unbemerkt Version für Version langsamer zu werden.",
+      "status": "Genehmigt",
+      "titel": "Ladezeit-Budget als Pflichtpunkt der Freigabe-Prüfung",
+      "von": "technik-toni"
+    },
+    {
+      "id": "i025",
+      "abteilung": "qualitaet",
+      "art": "Verbesserung",
+      "beschreibung": "Bug-Bodo installiert vor jeder Auslieferung die letzte freigegebene Version, füllt sie mit Daten und Einstellungen und spielt dann das Update ein. Geprüft wird, dass Spielstände, Buchungen, Thema, Sprache und Anmeldung danach unverändert da sind.",
+      "datum": "2026-11-16T07:56:00+01:00",
+      "nutzen": "Ein Update löscht nie mehr unbemerkt Daten oder Einstellungen, die die Familie in der installierten App gespeichert hat.",
+      "status": "Genehmigt",
+      "titel": "Update-Test mit gespeicherten Daten der Vorversion",
+      "von": "qualitaets-quentin"
+    },
+    {
+      "id": "i026",
+      "abteilung": "planung",
+      "art": "Verbesserung",
+      "beschreibung": "Organigramm-Olga ergänzt die Team-Seite um eine Tafel, die jede genehmigte Idee mit Stand (offen, aktiv, fertig), nächstem Schritt, Termin und Paten-Abteilung zeigt. Jede Teamleitung aktualisiert ihre Zeile, sobald sie einen Schritt in der Chronik einträgt.",
+      "datum": "2026-11-23T07:53:00+01:00",
+      "nutzen": "Marco sieht auf einen Blick, welche genehmigten Ideen wirklich vorankommen und wo etwas hängt.",
+      "status": "Genehmigt",
+      "titel": "Umsetzungstafel für alle genehmigten Ideen",
+      "von": "wissens-wilma"
+    },
+    {
+      "id": "i027",
+      "abteilung": "gestaltung",
+      "art": "Verbesserung",
+      "beschreibung": "Design-Doris zeigt Marco für jede neue Ansicht zuerst einen klickbaren Entwurf mit echten Texten von Text-Tina, den er direkt auf dem iPhone ausprobieren kann. Gebaut wird erst, wenn Marco ihn abgenickt oder kommentiert hat.",
+      "datum": "2026-11-23T07:54:00+01:00",
+      "nutzen": "Missverständnisse über Aussehen und Bedienung fallen auf, bevor Arbeit in die falsche Lösung fließt.",
+      "status": "Genehmigt",
+      "titel": "Klickbarer Entwurf auf dem iPhone vor dem Bauen",
+      "von": "gestaltungs-greta"
+    },
+    {
+      "id": "i028",
+      "abteilung": "technik",
+      "art": "Verbesserung",
+      "beschreibung": "Deploy-Dennis lässt für jede Änderung automatisch eine eigene Vorschau-Adresse mit Testdaten entstehen, die Marco und die Familie installieren und ausprobieren können. Erst nach Freigabe-Prüfung und Marcos Okay wird die Vorschau zur echten Version.",
+      "datum": "2026-11-23T07:55:00+01:00",
+      "nutzen": "Die Familie testet Neues gefahrlos, ohne dass ihre echte App oder ihre Daten betroffen sind.",
+      "status": "Genehmigt",
+      "titel": "Vorschau-Adresse für jede Änderung vor Auslieferung",
+      "von": "technik-toni"
+    },
+    {
+      "id": "i029",
+      "abteilung": "qualitaet",
+      "art": "Verbesserung",
+      "beschreibung": "Sicherheits-Siggi und Bug-Bodo prüfen jede App vor der Auslieferung mit getrennten Test-Konten für Elternteil, Kind und Gast, ob jede Rolle nur sieht und ändern kann, was sie darf. Jede neue Tabelle braucht dafür einen festen Prüffall.",
+      "datum": "2026-11-23T07:56:00+01:00",
+      "nutzen": "Kinder sehen keine Budgetdaten und Gäste nichts Privates, auch wenn neue Funktionen dazukommen.",
+      "status": "Genehmigt",
+      "titel": "Rollen-Test: Wer darf welche Familiendaten sehen",
+      "von": "qualitaets-quentin"
     }
   ]
 }
